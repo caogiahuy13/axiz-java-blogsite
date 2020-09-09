@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -19,7 +19,9 @@
 		<p class="error">${msg}</p>
 	</c:if>
 
-	<h3>キーワード検索</h3>
+	<h3>
+		<fmt:message key="screen.search.caption" />
+	</h3>
 
 	<form:form action="search" modelAttribute="searchForm">
 		<fieldset>
@@ -34,7 +36,8 @@
 	</form:form>
 
 	<c:forEach var="article" items="${articles}">
-		<div class="card">
+		<div class="card"
+			onclick="window.location='/article?id=${article.articleId}';">
 			<div class="container">
 				<h4>
 					<b>${fn:escapeXml(article.title)}</b>

@@ -16,4 +16,6 @@ public interface ArticleDao {
 	public List<Article> findArticleWithMostReaction();
 
 	public List<Article> findArticleReactedByUser(Integer userId);
+
+	public Article findById(Integer articleId);
 }

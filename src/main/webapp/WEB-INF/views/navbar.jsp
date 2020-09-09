@@ -10,7 +10,11 @@
 </head>
 <body>
 	<div class="navbar">
-		<a href="/search"><fmt:message key="btn.search" /></a> <a href="#news">News</a>
+		<a href="/search"><fmt:message key="btn.search" /></a>
+		<c:if test="${not empty sessionScope.currentUser}">
+			<a href="/createArticle"><fmt:message key="btn.createArticle" /></a>
+		</c:if>
+
 		<div class="dropdown">
 			<c:if test="${empty sessionScope.currentUser}">
 				<a href="/login"><fmt:message key="btn.login" /></a>

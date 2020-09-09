@@ -45,4 +45,9 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<Article> findArticleReactedByUser(Integer userId) {
 		return articleDao.findArticleReactedByUser(userId);
 	}
+
+	@Override
+	public Article findById(Integer articleId) {
+		return articleDao.findById(articleId);
+	}
 }

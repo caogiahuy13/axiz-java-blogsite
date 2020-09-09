@@ -49,7 +49,7 @@ public class AuthController {
 
 		session.setAttribute(SessionName.CURRENT_USER, user);
 
-		return ScreenName.LOGIN;
+		return "redirect:/" + ScreenName.SEARCH;
 	}
 
 	@GetMapping(LOGOUT)

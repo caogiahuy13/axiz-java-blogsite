@@ -11,6 +11,10 @@
 <link href="css/commons.css" rel="stylesheet">
 </head>
 <body>
+	<c:if test="${not empty sessionScope.currentUser}">
+		<c:redirect url="search" />
+	</c:if>
+
 	<%@ include file="/WEB-INF/views/navbar.jsp"%>
 
 	<c:if test="${not empty msg}">

@@ -19,12 +19,13 @@ public class ArticleDaoImpl implements ArticleDao {
 
 	@Override
 	public int create(Article article) {
-		String sql = "INSERT INTO articles (title, content, user_id) VALUES (:title, :content, :userId)";
+		String sql = "INSERT INTO articles (title, content, user_id, article_type_id) VALUES (:title, :content, :userId, :articleTypeId)";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("title", article.getTitle());
 		paramMap.addValue("content", article.getContent());
 		paramMap.addValue("userId", article.getUserId());
+		paramMap.addValue("articleTypeId", article.getArticleTypeId());
 
 		return jdbcTemplate.update(sql, paramMap);
 	}
@@ -77,5 +78,17 @@ public class ArticleDaoImpl implements ArticleDao {
 		paramMap.addValue("userId", userId);
 
 		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
+	}
+
+	@Override
+	public Article findById(Integer articleId) {
+		String sql = SELECT_BASE + " WHERE article_id = :articleId";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("articleId", articleId);
+
+		List<Article> articles = jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
+
+		return articles.isEmpty() ? null : articles.get(0);
 	}
 }
