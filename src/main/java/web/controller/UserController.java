@@ -48,6 +48,6 @@ public class UserController {
 			return ScreenName.REGISTER;
 		}
 
-		return ScreenName.LOGIN;
+		return "redirect:/" + ScreenName.LOGIN;
 	}
 }

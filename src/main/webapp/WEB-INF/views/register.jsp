@@ -15,6 +15,8 @@
 		<c:redirect url="search" />
 	</c:if>
 
+	<%@ include file="/WEB-INF/views/navbar.jsp"%>
+
 	<c:if test="${not empty msg}">
 		<p class="error">${msg}</p>
 	</c:if>

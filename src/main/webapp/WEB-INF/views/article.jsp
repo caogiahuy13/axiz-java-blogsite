@@ -15,5 +15,12 @@
 
 	<p>${fn:escapeXml(article.content)}</p>
 
+	<c:if test="${sessionScope.currentUser.userId == article.userId}">
+		<form action="editArticle">
+			<button>
+				<fmt:message key="btn.update" />
+			</button>
+		</form>
+	</c:if>
 </body>
 </html>
