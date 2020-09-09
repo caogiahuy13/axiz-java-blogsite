@@ -1,5 +1,7 @@
 package web.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,13 +16,18 @@ import web.form.LoginForm;
 import web.service.UserService;
 import web.util.Message;
 import web.util.ScreenName;
+import web.util.SessionName;
 
 @Controller
 public class AuthController {
 	private static final String LOGIN = "login";
+	private static final String LOGOUT = "logout";
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	HttpSession session;
 
 	@GetMapping(LOGIN)
 	public String getLogin(@ModelAttribute LoginForm loginForm) {
@@ -40,7 +47,15 @@ public class AuthController {
 			return ScreenName.LOGIN;
 		}
 
-		return ScreenName.MENU;
+		session.setAttribute(SessionName.CURRENT_USER, user);
+
+		return ScreenName.LOGIN;
+	}
+
+	@GetMapping(LOGOUT)
+	public String logout(@ModelAttribute LoginForm loginForm) {
+		session.removeAttribute(SessionName.CURRENT_USER);
+		return ScreenName.LOGIN;
 	}
 
 }

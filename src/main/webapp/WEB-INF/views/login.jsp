@@ -11,6 +11,8 @@
 <link href="css/commons.css" rel="stylesheet">
 </head>
 <body>
+	<%@ include file="/WEB-INF/views/navbar.jsp"%>
+
 	<c:if test="${not empty msg}">
 		<p class="error">${msg}</p>
 	</c:if>
@@ -35,7 +37,7 @@
 
 	<br>
 
-	<a href="/register"><fmt:message key="btn.register" /></a>
+	<a href="/register"><fmt:message key="btn.toRegister" /></a>
 
 </body>
 </html>

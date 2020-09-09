@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import web.entity.User;
 import web.form.RegisterForm;
 import web.service.UserService;
+import web.util.Message;
 import web.util.ScreenName;
 
 @Controller
@@ -34,6 +35,7 @@ public class UserController {
 		}
 
 		if (!registerForm.getPassword().equals(registerForm.getRePassword())) {
+			model.addAttribute("msg", Message.PASSWORD_IS_NOT_MATCH);
 			return ScreenName.REGISTER;
 		}
 
@@ -46,6 +48,6 @@ public class UserController {
 			return ScreenName.REGISTER;
 		}
 
-		return ScreenName.MENU;
+		return ScreenName.LOGIN;
 	}
 }
