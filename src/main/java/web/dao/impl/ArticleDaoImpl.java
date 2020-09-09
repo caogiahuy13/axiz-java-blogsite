@@ -53,10 +53,10 @@ public class ArticleDaoImpl implements ArticleDao {
 
 	@Override
 	public List<Article> findArticleByContent(String content) {
-		String sql = SELECT_BASE + "WHERE content LIKE %:content%";
+		String sql = SELECT_BASE + "WHERE content LIKE :content";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("content", content);
+		paramMap.addValue("content", "%" + content + "%");
 
 		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
 	}
