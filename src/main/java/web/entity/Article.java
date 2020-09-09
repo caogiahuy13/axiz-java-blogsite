@@ -7,6 +7,7 @@ public class Article {
 	private String title;
 	private String content;
 	private Integer userId;
+	private Integer articleTypeId;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 
@@ -14,12 +15,14 @@ public class Article {
 
 	}
 
-	public Article(Integer articleId, String title, String content, Integer userId, Timestamp createdAt,
+	public Article(Integer articleId, String title, String content, Integer userId, Integer articleTypeId,
+			Timestamp createdAt,
 			Timestamp updatedAt) {
 		this.articleId = articleId;
 		this.title = title;
 		this.content = content;
 		this.userId = userId;
+		this.articleTypeId = articleTypeId;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -54,6 +57,14 @@ public class Article {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public Integer getArticleTypeId() {
+		return articleTypeId;
+	}
+
+	public void setArticleTypeId(Integer articleTypeId) {
+		this.articleTypeId = articleTypeId;
 	}
 
 	public Timestamp getCreatedAt() {
