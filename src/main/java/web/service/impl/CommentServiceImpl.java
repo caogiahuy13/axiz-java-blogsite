@@ -1,11 +1,14 @@
 package web.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import web.dao.CommentDao;
 import web.entity.Comment;
+import web.entity.CommentWithUserInfo;
 import web.service.CommentService;
 
 @Service
@@ -28,4 +31,10 @@ public class CommentServiceImpl implements CommentService {
 	public int delete(Integer commentId) {
 		return commentDao.delete(commentId);
 	}
+
+	@Override
+	public List<CommentWithUserInfo> findByArticleId(Integer articleId) {
+		return commentDao.findByArticleId(articleId);
+	}
+
 }

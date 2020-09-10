@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <link href="css/navbar.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	<div class="navbar">
@@ -21,17 +23,14 @@
 			</c:if>
 			<c:if test="${not empty sessionScope.currentUser}">
 				<button class="dropbtn">
-					<fmt:message key="btn.user" />
-					<i class="fa fa-caret-down"></i>
+					${sessionScope.currentUser.userName} <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="dropdown-content">
 					<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="/logout"><fmt:message
 							key="btn.logout" /></a>
 				</div>
 			</c:if>
-
 		</div>
-		<a class="topnav-right" href="#news">News</a>
 	</div>
 </body>
 </html>

@@ -7,4 +7,6 @@ public final class ScreenName {
 	public static final String SEARCH = "search";
 	public static final String CREATE_ARTICLE = "createArticle";
 	public static final String ARTICLE = "article";
+	public static final String EDIT_ARTICLE = "editArticle";
+	public static final String ARTICLE_REACTIONS = "articleReactions";
 }

@@ -23,4 +23,14 @@ public class ReactionServiceImpl implements ReactionService {
 	public int delete(Integer articleId, Integer userId) {
 		return reactionDao.delete(articleId, userId);
 	}
+
+	@Override
+	public Reaction findByUserIdAndArticleId(Integer userId, Integer articleId) {
+		return reactionDao.findByUserIdAndArticleId(userId, articleId);
+	}
+
+	@Override
+	public int countByArticleId(Integer articleId) {
+		return reactionDao.countByArticleId(articleId);
+	}
 }

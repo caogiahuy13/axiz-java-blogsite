@@ -69,7 +69,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<User> findUsersReactAnArticle(Integer articleId) {
-		String sql = SELECT_BASE
+		String sql = "SELECT users.user_id, login_id, user_name, password, users.created_at, users.updated_at FROM users "
 				+ "JOIN reactions ON users.user_id = reactions.user_id WHERE reactions.article_id = :articleId";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();

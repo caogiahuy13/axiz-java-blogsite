@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import web.entity.Article;
+import web.entity.CommentWithUserInfo;
 import web.entity.User;
 import web.form.CreateArticleForm;
+import web.form.EditArticleForm;
 import web.form.SearchForm;
 import web.service.ArticleService;
+import web.service.CommentService;
+import web.service.ReactionService;
 import web.util.ScreenName;
 import web.util.SessionName;
 
@@ -27,9 +31,16 @@ public class ArticleController {
 	private static final String SEARCH = "search";
 	private static final String CREATE_ARTICLE = "createArticle";
 	private static final String ARTICLE = "article";
+	private static final String EDIT_ARTICLE = "editArticle";
 
 	@Autowired
 	ArticleService articleService;
+
+	@Autowired
+	ReactionService reactionService;
+
+	@Autowired
+	CommentService commentService;
 
 	@Autowired
 	HttpSession session;
@@ -86,14 +97,57 @@ public class ArticleController {
 	public String getArticle(@RequestParam String id, Model model) {
 
 		Article article = articleService.findById(Integer.parseInt(id));
+		int reactions = reactionService.countByArticleId(Integer.parseInt(id));
+		List<CommentWithUserInfo> comments = commentService.findByArticleId(Integer.parseInt(id));
 
 		if (article == null) {
 			return "redirect:/" + ScreenName.SEARCH;
 		}
 
 		model.addAttribute("article", article);
+		model.addAttribute("reactions", reactions);
+		model.addAttribute("comments", comments);
 
 		return ScreenName.ARTICLE;
+	}
+
+	@GetMapping(EDIT_ARTICLE)
+	public String getEditArticle(@RequestParam String id, @ModelAttribute EditArticleForm editArticleForm) {
+		Article article = articleService.findById(Integer.parseInt(id));
+		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
+
+		if (article == null || article.getUserId() != currentUser.getUserId()) {
+			return ScreenName.SEARCH;
+		}
+
+		editArticleForm.setArticleId(article.getArticleId());
+		editArticleForm.setTitle(article.getTitle());
+		editArticleForm.setContent(article.getContent());
+
+		return ScreenName.EDIT_ARTICLE;
+	}
+
+	@PostMapping(EDIT_ARTICLE)
+	public String postEditArticle(@Validated @ModelAttribute EditArticleForm editArticleForm,
+			BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return ScreenName.ARTICLE;
+		}
+
+		Article article = articleService.findById(editArticleForm.getArticleId());
+
+		if (article == null) {
+			return ScreenName.SEARCH;
+		}
+
+		article.setContent(editArticleForm.getContent());
+		article.setTitle(editArticleForm.getTitle());
+
+		if (articleService.update(article) <= 0) {
+			return ScreenName.ARTICLE;
+		}
+
+		return "redirect:/" + ScreenName.ARTICLE + "?id=" + article.getArticleId();
 	}
 
 }
