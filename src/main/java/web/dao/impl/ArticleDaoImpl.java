@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import web.dao.ArticleDao;
 import web.entity.Article;
+import web.entity.ArticleWithReactionCount;
 
 @Repository
 public class ArticleDaoImpl implements ArticleDao {
@@ -63,17 +64,21 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	@Override
-	public List<Article> findArticleWithMostReaction() {
-		String sql = SELECT_BASE
-				+ "JOIN reaction ON articles.article_id = reactions.article_id GROUP BY article_id ORDER BY COUNT(*)";
+	public List<ArticleWithReactionCount> findArticleWithMostReaction() {
+		String sql = "SELECT a.article_id, a.title, a.content, a.user_id, a.article_type_id, a.created_at, a.updated_at, COUNT(r.reaction_id) count"
+				+ " FROM articles a"
+				+ " JOIN reactions r ON a.article_id = r.article_id"
+				+ " GROUP BY a.article_id"
+				+ " ORDER BY count DESC";
 
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Article>(Article.class));
+		return jdbcTemplate.query(sql,
+				new BeanPropertyRowMapper<ArticleWithReactionCount>(ArticleWithReactionCount.class));
 	}
 
 	@Override
 	public List<Article> findArticleReactedByUser(Integer userId) {
 		String sql = SELECT_BASE
-				+ "JOIN reaction ON articles.article_id = reaction.article_id WHERE reaction.user_id = :userId ORDER BY article_id";
+				+ "JOIN reactions ON articles.article_id = reactions.article_id WHERE reactions.user_id = :userId ORDER BY articles.article_id";
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("userId", userId);
 

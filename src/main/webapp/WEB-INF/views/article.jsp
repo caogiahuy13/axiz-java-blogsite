@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title><fmt:message key="screen.article.title" /></title>
 <link href="css/commons.css" rel="stylesheet">
+<link href="css/popup.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -18,9 +19,15 @@
 
 	<p>${fn:escapeXml(article.content)}</p>
 
-	<c:if test="${not empty reactions}">
-		<a href="articleReactions?id=${article.articleId}" style="color: blue">${reactions}
-			いいね</a>
+	<c:if test="${sessionScope.currentUser.userId != article.userId}">
+		<div class="popup" onclick="togglePopup()">
+			<span style="color:blue">${reactions} いいね</span><span class="popuptext" id="myPopup">
+				<c:forEach var="user" items="${reactedUsers}">
+					<span>${user.userName}</span>
+					<br>
+				</c:forEach>
+			</span>
+		</div>
 	</c:if>
 
 	<c:if test="${sessionScope.currentUser.userId != article.userId}">
@@ -32,7 +39,6 @@
 			</button>
 		</form>
 	</c:if>
-
 
 	<c:if test="${sessionScope.currentUser.userId == article.userId}">
 		<form action="editArticle">
@@ -59,5 +65,11 @@
 		</div>
 	</c:forEach>
 
+	<script>
+		function togglePopup() {
+			var popup = document.getElementById("myPopup");
+			popup.classList.toggle("show");
+		}
+	</script>
 </body>
 </html>

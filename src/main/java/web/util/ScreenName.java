@@ -9,4 +9,7 @@ public final class ScreenName {
 	public static final String ARTICLE = "article";
 	public static final String EDIT_ARTICLE = "editArticle";
 	public static final String ARTICLE_REACTIONS = "articleReactions";
+	public static final String FAVORITES = "favorites";
+	public static final String RANKING = "ranking";
+
 }

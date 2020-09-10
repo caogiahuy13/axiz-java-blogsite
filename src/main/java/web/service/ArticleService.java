@@ -3,6 +3,7 @@ package web.service;
 import java.util.List;
 
 import web.entity.Article;
+import web.entity.ArticleWithReactionCount;
 
 public interface ArticleService {
 	public int create(Article article);
@@ -13,7 +14,7 @@ public interface ArticleService {
 
 	public List<Article> findArticleByContent(String content);
 
-	public List<Article> findArticleWithMostReaction();
+	public List<ArticleWithReactionCount> findArticleWithMostReaction();
 
 	public List<Article> findArticleReactedByUser(Integer userId);
 

@@ -26,8 +26,10 @@
 					${sessionScope.currentUser.userName} <i class="fa fa-caret-down"></i>
 				</button>
 				<div class="dropdown-content">
-					<a href="#">Link 1</a> <a href="#">Link 2</a> <a href="/logout"><fmt:message
-							key="btn.logout" /></a>
+					<a href="/information"><fmt:message key="btn.information" /></a> <a
+						href="/favorites"><fmt:message key="btn.favorites" /></a><a
+						href="/ranking"><fmt:message key="btn.ranking" /></a>
+					<a href="/logout"><fmt:message key="btn.logout" /></a>
 				</div>
 			</c:if>
 		</div>

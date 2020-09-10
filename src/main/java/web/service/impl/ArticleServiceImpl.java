@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import web.dao.ArticleDao;
 import web.entity.Article;
+import web.entity.ArticleWithReactionCount;
 import web.service.ArticleService;
 
 @Service
@@ -37,7 +38,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> findArticleWithMostReaction() {
+	public List<ArticleWithReactionCount> findArticleWithMostReaction() {
 		return articleDao.findArticleWithMostReaction();
 	}
 

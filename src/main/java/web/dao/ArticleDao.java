@@ -3,6 +3,7 @@ package web.dao;
 import java.util.List;
 
 import web.entity.Article;
+import web.entity.ArticleWithReactionCount;
 
 public interface ArticleDao {
 	public int create(Article article);
@@ -13,7 +14,7 @@ public interface ArticleDao {
 
 	public List<Article> findArticleByContent(String content);
 
-	public List<Article> findArticleWithMostReaction();
+	public List<ArticleWithReactionCount> findArticleWithMostReaction();
 
 	public List<Article> findArticleReactedByUser(Integer userId);
 
