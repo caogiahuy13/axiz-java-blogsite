@@ -7,6 +7,10 @@ public class User {
 	private String loginId;
 	private String userName;
 	private String password;
+	private String gender;
+	private Integer birthYear;
+	private String introduction;
+	private String mySpace;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 
@@ -14,12 +18,16 @@ public class User {
 
 	}
 
-	public User(Integer userId, String loginId, String userName, String password, Timestamp createdAt,
-			Timestamp updatedAt) {
+	public User(Integer userId, String loginId, String userName, String password, String gender, Integer birthYear,
+			String introduction, String mySpace, Timestamp createdAt, Timestamp updatedAt) {
 		this.userId = userId;
 		this.loginId = loginId;
 		this.userName = userName;
 		this.password = password;
+		this.gender = gender;
+		this.birthYear = birthYear;
+		this.introduction = introduction;
+		this.mySpace = mySpace;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -70,5 +78,37 @@ public class User {
 
 	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public Integer getBirthYear() {
+		return birthYear;
+	}
+
+	public void setBirthYear(Integer birthYear) {
+		this.birthYear = birthYear;
+	}
+
+	public String getIntroduction() {
+		return introduction;
+	}
+
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
+	}
+
+	public String getMySpace() {
+		return mySpace;
+	}
+
+	public void setMySpace(String mySpace) {
+		this.mySpace = mySpace;
 	}
 }

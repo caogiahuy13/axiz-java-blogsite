@@ -14,7 +14,7 @@ import web.entity.User;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-	private static final String SELECT_BASE = "SELECT user_id, login_id, user_name, password, created_at, updated_at FROM users ";
+	private static final String SELECT_BASE = "SELECT user_id, login_id, user_name, password, gender, birth_year, introduction, my_space, created_at, updated_at FROM users ";
 
 	@Autowired
 	NamedParameterJdbcTemplate jdbcTemplate;
@@ -34,12 +34,15 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public int register(User user) {
-		String sql = "INSERT INTO users (login_id, user_name, password) VALUES (:loginId, :userName, :password)";
+		String sql = "INSERT INTO users (login_id, user_name, password, gender, birth_year)"
+				+ " VALUES (:loginId, :userName, :password, :gender, :birthYear)";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("loginId", user.getLoginId());
 		paramMap.addValue("userName", user.getUserName());
 		paramMap.addValue("password", user.getPassword());
+		paramMap.addValue("gender", user.getGender());
+		paramMap.addValue("birthYear", user.getBirthYear());
 
 		return jdbcTemplate.update(sql, paramMap);
 	}

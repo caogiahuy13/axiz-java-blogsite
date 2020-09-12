@@ -15,16 +15,9 @@ public class RegisterForm {
 	@NotBlank
 	private String rePassword;
 
-	public RegisterForm() {
+	private String gender;
 
-	}
-
-	public RegisterForm(String loginId, String userName, String password, String rePassword) {
-		this.loginId = loginId;
-		this.userName = userName;
-		this.password = password;
-		this.rePassword = rePassword;
-	}
+	private Integer birthYear;
 
 	public String getLoginId() {
 		return loginId;
@@ -56,6 +49,22 @@ public class RegisterForm {
 
 	public void setRePassword(String rePassword) {
 		this.rePassword = rePassword;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public Integer getBirthYear() {
+		return birthYear;
+	}
+
+	public void setBirthYear(Integer birthYear) {
+		this.birthYear = birthYear;
 	}
 
 }
