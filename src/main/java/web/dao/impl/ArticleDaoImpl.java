@@ -53,38 +53,6 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	@Override
-	public List<Article> findArticleByContent(String content) {
-		String sql = SELECT_BASE + "WHERE content LIKE :content";
-
-		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("content", "%" + content + "%");
-
-		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
-	}
-
-	@Override
-	public List<ArticleWithReactionCount> findArticleWithMostReaction() {
-		String sql = "SELECT a.article_id, a.title, a.content, a.user_id, a.article_type_id, a.created_at, a.updated_at, COUNT(r.reaction_id) count"
-				+ " FROM articles a"
-				+ " JOIN reactions r ON a.article_id = r.article_id"
-				+ " GROUP BY a.article_id"
-				+ " ORDER BY count DESC";
-
-		return jdbcTemplate.query(sql,
-				new BeanPropertyRowMapper<ArticleWithReactionCount>(ArticleWithReactionCount.class));
-	}
-
-	@Override
-	public List<Article> findArticleReactedByUser(Integer userId) {
-		String sql = SELECT_BASE
-				+ "JOIN reactions ON articles.article_id = reactions.article_id WHERE reactions.user_id = :userId ORDER BY articles.article_id";
-		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("userId", userId);
-
-		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
-	}
-
-	@Override
 	public Article findById(Integer articleId) {
 		String sql = SELECT_BASE + " WHERE article_id = :articleId";
 
@@ -98,9 +66,39 @@ public class ArticleDaoImpl implements ArticleDao {
 
 	@Override
 	public List<Article> findByKeyword(String keyword) {
-		String sql = SELECT_BASE + "WHERE content LIKE :keyword OR title LIKE :keyword";
+		String sql = SELECT_BASE + " WHERE content LIKE :keyword OR title LIKE :keyword";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("keyword", "%" + keyword + "%");
+
+		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
+	}
+
+	@Override
+	public List<ArticleWithReactionCount> findByKeywordWithMostReaction(String keyword) {
+		String sql = "SELECT a.article_id, a.title, a.content, a.user_id, a.created_at, a.updated_at, COUNT(r.reaction_id) count"
+				+ " FROM articles a"
+				+ " JOIN reactions r ON a.article_id = r.article_id"
+				+ " WHERE a.content LIKE :keyword OR a.title LIKE :keyword"
+				+ " GROUP BY a.article_id"
+				+ " ORDER BY count DESC";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("keyword", "%" + keyword + "%");
+
+		return jdbcTemplate.query(sql, paramMap,
+				new BeanPropertyRowMapper<ArticleWithReactionCount>(ArticleWithReactionCount.class));
+	}
+
+	@Override
+	public List<Article> findByKeywordReactedByUser(Integer userId, String keyword) {
+		String sql = SELECT_BASE
+				+ " JOIN reactions ON articles.article_id = reactions.article_id"
+				+ " WHERE reactions.user_id = :userId AND (content LIKE :keyword OR title LIKE :keyword)"
+				+ " ORDER BY articles.article_id";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("userId", userId);
 		paramMap.addValue("keyword", "%" + keyword + "%");
 
 		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));

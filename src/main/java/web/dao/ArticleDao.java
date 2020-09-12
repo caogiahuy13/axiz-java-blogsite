@@ -12,13 +12,11 @@ public interface ArticleDao {
 
 	public int delete(Integer articleId);
 
-	public List<Article> findArticleByContent(String content);
-
-	public List<ArticleWithReactionCount> findArticleWithMostReaction();
-
-	public List<Article> findArticleReactedByUser(Integer userId);
-
 	public Article findById(Integer articleId);
 
 	public List<Article> findByKeyword(String keyword);
+
+	public List<ArticleWithReactionCount> findByKeywordWithMostReaction(String keyword);
+
+	public List<Article> findByKeywordReactedByUser(Integer userId, String keyword);
 }

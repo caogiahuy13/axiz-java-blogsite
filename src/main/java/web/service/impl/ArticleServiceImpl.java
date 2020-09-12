@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import web.dao.ArticleDao;
 import web.entity.Article;
-import web.entity.ArticleWithReactionCount;
 import web.service.ArticleService;
 
 @Service
@@ -33,27 +32,25 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> findArticleByContent(String content) {
-		return articleDao.findArticleByContent(content);
-	}
-
-	@Override
-	public List<ArticleWithReactionCount> findArticleWithMostReaction() {
-		return articleDao.findArticleWithMostReaction();
-	}
-
-	@Override
-	public List<Article> findArticleReactedByUser(Integer userId) {
-		return articleDao.findArticleReactedByUser(userId);
-	}
-
-	@Override
 	public Article findById(Integer articleId) {
 		return articleDao.findById(articleId);
 	}
 
 	@Override
-	public List<Article> find(String keyword, String type) {
-		return articleDao.findByKeyword(keyword);
+	public List<? extends Article> find(Integer userId, String keyword, String type) {
+		final String ALL = "all";
+		final String FAVORITES = "favorites";
+		final String RANKING = "ranking";
+
+		switch (type) {
+		case ALL:
+			return articleDao.findByKeyword(keyword);
+		case FAVORITES:
+			return articleDao.findByKeywordReactedByUser(userId, keyword);
+		case RANKING:
+			return articleDao.findByKeywordWithMostReaction(keyword);
+		default:
+			return articleDao.findByKeyword(keyword);
+		}
 	}
 }

@@ -75,6 +75,6 @@ public class Article {
 
 	public String getReviewContent() {
 		final int LENGTH = 50;
-		return content.length() > LENGTH ? content.substring(0, LENGTH) : content;
+		return content.length() > LENGTH ? content.substring(0, LENGTH) + "..." : content;
 	}
 }
