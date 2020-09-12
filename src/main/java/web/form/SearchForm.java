@@ -1,17 +1,16 @@
 package web.form;
 
-import javax.validation.constraints.NotBlank;
-
 public class SearchForm {
-	@NotBlank
 	private String keyword;
+	private String searchType;
 
 	public SearchForm() {
 
 	}
 
-	public SearchForm(String keyword) {
+	public SearchForm(String keyword, String searchType) {
 		this.keyword = keyword;
+		this.searchType = searchType;
 	}
 
 	public String getKeyword() {
@@ -20,6 +19,14 @@ public class SearchForm {
 
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
+	}
+
+	public String getSearchType() {
+		return searchType;
+	}
+
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
 	}
 
 }

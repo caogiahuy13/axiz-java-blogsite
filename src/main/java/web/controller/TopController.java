@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import web.entity.Article;
 import web.entity.User;
+import web.form.SearchForm;
 import web.service.ArticleService;
+import web.util.Message;
 import web.util.ScreenName;
 import web.util.SessionName;
 
@@ -28,22 +30,23 @@ public class TopController {
 	HttpSession session;
 
 	@GetMapping(TOP)
-	public String getTop() {
+	public String getTop(@ModelAttribute SearchForm searchForm) {
 		return ScreenName.TOP;
 	}
 
 	@PostMapping(TOP)
-	public String search(@RequestParam String searchType, @RequestParam String keyword, Model model) {
+	public String search(@ModelAttribute SearchForm searchForm, Model model) {
 		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
 
-		List<? extends Article> articles;
+		Integer userId = (currentUser == null) ? null : currentUser.getUserId();
+		String keyword = searchForm.getKeyword();
+		String searchType = searchForm.getSearchType();
 
-		if (currentUser == null) {
-			articles = articleService.find(null, keyword, searchType);
-		} else {
-			articles = articleService.find(currentUser.getUserId(), keyword, searchType);
+		List<? extends Article> articles = articleService.find(userId, keyword, searchType);
+
+		if (articles.isEmpty()) {
+			model.addAttribute("msg", Message.SEARCH_NO_RESULT);
 		}
-
 		model.addAttribute("articles", articles);
 
 		return ScreenName.TOP;

@@ -10,10 +10,6 @@
 
 <%@ include file="common/checkLogin.jsp"%>
 
-<c:if test="${not empty msg}">
-	<p class="error">${msg}</p>
-</c:if>
-
 <h3>
 	<fmt:message key="screen.editArticle.caption" />
 </h3>

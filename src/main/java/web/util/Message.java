@@ -9,6 +9,7 @@ public final class Message {
 
 	public static final String LOGIN_FAIL = getMessage("login.fail");
 	public static final String PASSWORD_IS_NOT_MATCH = getMessage("password.isNotMatch");
+	public static final String SEARCH_NO_RESULT = getMessage("search.noResult");
 
 	private static String getMessage(String key) {
 		return bundle.getString(key);

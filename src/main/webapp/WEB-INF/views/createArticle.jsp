@@ -10,10 +10,6 @@
 
 <%@ include file="common/checkLogin.jsp"%>
 
-<c:if test="${not empty msg}">
-	<p class="error">${msg}</p>
-</c:if>
-
 <form:form action="createArticle" modelAttribute="createArticleForm">
 	<div>
 		<label><fmt:message key="form.lbl.title" /></label>
