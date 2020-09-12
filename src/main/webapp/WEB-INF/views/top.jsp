@@ -6,12 +6,10 @@
 	<jsp:param name="title" value="screen.top.title" />
 </jsp:include>
 
-<jsp:include page="common/navbar.jsp" />
-
-<form action="/search">
+<form action="/top" method="post">
 	<input type="text" name="keyword">
 
-	<input type="radio" id="all" name="searchType" value="all"/>
+	<input type="radio" id="all" name="searchType" value="all" checked="checked"/>
 	<label for="all"><fmt:message key="form.lbl.all" /></label>
 
 	<input type="radio" id="favorites" name="searchType" value="favorites"/>
