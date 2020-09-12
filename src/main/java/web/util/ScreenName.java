@@ -11,15 +11,8 @@ public final class ScreenName {
 	public static final String CREATE_ARTICLE = "createArticle";
 	public static final String UPDATE_ARTICLE = "updateArticle";
 	public static final String DELETE_ARTICLE = "deleteArticle";
+	public static final String EDIT_ARTICLE = "editArticle";
 	public static final String MY_ARTICLES = "myArticles";
 	public static final String ANALYTICS = "analytics";
 	public static final String NOTIFICATION = "notification";
-
-	public static final String MENU = "menu";
-	public static final String SEARCH = "search";
-	public static final String EDIT_ARTICLE = "editArticle";
-	public static final String ARTICLE_REACTIONS = "articleReactions";
-	public static final String FAVORITES = "favorites";
-	public static final String RANKING = "ranking";
-
 }

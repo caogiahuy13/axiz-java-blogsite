@@ -20,4 +20,5 @@ public interface ArticleDao {
 
 	public Article findById(Integer articleId);
 
+	public List<Article> findByKeyword(String keyword);
 }

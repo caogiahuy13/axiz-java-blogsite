@@ -14,4 +14,5 @@ public interface CommentService {
 
 	public List<CommentWithUserInfo> findByArticleId(Integer articleId);
 
+	public Comment findById(Integer commentId);
 }

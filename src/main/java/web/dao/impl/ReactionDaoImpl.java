@@ -18,12 +18,12 @@ public class ReactionDaoImpl implements ReactionDao {
 
 	@Override
 	public int insert(Reaction reaction) {
-		String sql = "INSERT INTO reactions (article_id, user_id, reaction_icon_id) VALUES (:articleId, :userId, :reactionIconId)";
+		String sql = "INSERT INTO reactions (article_id, user_id, stamp_id) VALUES (:articleId, :userId, :stampId)";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("articleId", reaction.getArticleId());
 		paramMap.addValue("userId", reaction.getUserId());
-		paramMap.addValue("reactionIconId", reaction.getReactionIconId());
+		paramMap.addValue("stampId", reaction.getStampId());
 
 		return jdbcTemplate.update(sql, paramMap);
 	}

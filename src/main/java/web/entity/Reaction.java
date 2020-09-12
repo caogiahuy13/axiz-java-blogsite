@@ -6,7 +6,7 @@ public class Reaction {
 	private Integer reactionId;
 	private Integer articleId;
 	private Integer userId;
-	private Integer reactionIconId;
+	private Integer stampId;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 
@@ -14,12 +14,12 @@ public class Reaction {
 
 	}
 
-	public Reaction(Integer reactionId, Integer articleId, Integer userId, Integer reactionIconId, Timestamp createdAt,
+	public Reaction(Integer reactionId, Integer articleId, Integer userId, Integer stampId, Timestamp createdAt,
 			Timestamp updatedAt) {
 		this.reactionId = reactionId;
 		this.articleId = articleId;
 		this.userId = userId;
-		this.reactionIconId = reactionIconId;
+		this.stampId = stampId;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -48,12 +48,12 @@ public class Reaction {
 		this.userId = userId;
 	}
 
-	public Integer getReactionIconId() {
-		return reactionIconId;
+	public Integer getStampId() {
+		return stampId;
 	}
 
-	public void setReactionIconId(Integer reactionIconId) {
-		this.reactionIconId = reactionIconId;
+	public void setStampId(Integer stampId) {
+		this.stampId = stampId;
 	}
 
 	public Timestamp getCreatedAt() {

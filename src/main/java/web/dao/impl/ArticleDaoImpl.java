@@ -95,4 +95,14 @@ public class ArticleDaoImpl implements ArticleDao {
 
 		return articles.isEmpty() ? null : articles.get(0);
 	}
+
+	@Override
+	public List<Article> findByKeyword(String keyword) {
+		String sql = SELECT_BASE + "WHERE content LIKE :keyword OR title LIKE :keyword";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("keyword", "%" + keyword + "%");
+
+		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
+	}
 }

@@ -84,7 +84,7 @@ public class ArticleController {
 		List<User> reactedUsers = userService.findUsersReactAnArticle(Integer.parseInt(id));
 
 		if (article == null) {
-			return "redirect:/" + ScreenName.SEARCH;
+			return "redirect:/" + ScreenName.TOP;
 		}
 
 		model.addAttribute("article", article);
@@ -101,7 +101,7 @@ public class ArticleController {
 		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
 
 		if (article == null || article.getUserId() != currentUser.getUserId()) {
-			return ScreenName.SEARCH;
+			return ScreenName.TOP;
 		}
 
 		editArticleForm.setArticleId(article.getArticleId());
@@ -115,20 +115,20 @@ public class ArticleController {
 	public String postEditArticle(@Validated @ModelAttribute EditArticleForm editArticleForm,
 			BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
-			return ScreenName.ARTICLE;
+			return ScreenName.EDIT_ARTICLE;
 		}
 
 		Article article = articleService.findById(editArticleForm.getArticleId());
 
 		if (article == null) {
-			return ScreenName.SEARCH;
+			return ScreenName.TOP;
 		}
 
 		article.setContent(editArticleForm.getContent());
 		article.setTitle(editArticleForm.getTitle());
 
 		if (articleService.update(article) <= 0) {
-			return ScreenName.ARTICLE;
+			return "redirect:/" + ScreenName.ARTICLE;
 		}
 
 		return "redirect:/" + ScreenName.ARTICLE + "?id=" + article.getArticleId();

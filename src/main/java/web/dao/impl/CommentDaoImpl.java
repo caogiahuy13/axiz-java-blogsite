@@ -60,4 +60,17 @@ public class CommentDaoImpl implements CommentDao {
 		return jdbcTemplate.query(sql, paramMap,
 				new BeanPropertyRowMapper<CommentWithUserInfo>(CommentWithUserInfo.class));
 	}
+
+	@Override
+	public Comment findById(Integer commentId) {
+		String sql = "SELECT * FROM comments WHERE comment_id = :commentId";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("commentId", commentId);
+
+		List<Comment> comments = jdbcTemplate.query(sql, paramMap,
+				new BeanPropertyRowMapper<Comment>(Comment.class));
+
+		return comments.isEmpty() ? null : comments.get(0);
+	}
 }

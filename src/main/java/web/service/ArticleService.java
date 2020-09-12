@@ -20,4 +20,6 @@ public interface ArticleService {
 
 	public Article findById(Integer articleId);
 
+	public List<Article> find(String keyword, String type);
+
 }

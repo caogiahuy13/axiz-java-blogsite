@@ -37,4 +37,9 @@ public class CommentServiceImpl implements CommentService {
 		return commentDao.findByArticleId(articleId);
 	}
 
+	@Override
+	public Comment findById(Integer commentId) {
+		return commentDao.findById(commentId);
+	}
+
 }
