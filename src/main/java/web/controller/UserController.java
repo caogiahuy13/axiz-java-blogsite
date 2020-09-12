@@ -82,7 +82,12 @@ public class UserController {
 
 		List<Article> articles = articleService.findByUserId(user.getUserId());
 
+		if (articles.isEmpty()) {
+			model.addAttribute("msg", Message.MY_ARTICLES_NO_RESULT);
+		}
+
 		model.addAttribute("articles", articles);
+
 		return ScreenName.MY_ARTICLES;
 	}
 }

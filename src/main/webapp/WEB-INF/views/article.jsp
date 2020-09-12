@@ -40,6 +40,12 @@
 			<fmt:message key="btn.update" />
 		</button>
 	</form>
+	<form action="deleteArticle">
+		<input type="hidden" name="id" value="${article.articleId}" />
+		<button>
+			<fmt:message key="btn.delete" />
+		</button>
+	</form>
 </c:if>
 
 <form action="comment" method="post">
@@ -102,22 +108,20 @@
 		}
 	}
 
-	function post(path, params, method='post') {
-		// The rest of this code assumes you are not using a library.
-		// It can be made less wordy if you use one.
-		const form = document.createElement('form');
+	function post(path, params, method="post"){
+		const form = document.createElement("form");
 		form.method = method;
 		form.action = path;
 
-		for (const key in params) {
-		  if (params.hasOwnProperty(key)) {
-		    const hiddenField = document.createElement('input');
-		    hiddenField.type = 'hidden';
-		    hiddenField.name = key;
-		    hiddenField.value = params[key];
+		for (const key in params){
+			if (params.hasOwnProperty(key)){
+				const hiddenField = document.createElement("input");
+				hiddenField.type = "hidden";
+				hiddenField.name = key;
+				hiddenField.value = params[key];
 
-		    form.appendChild(hiddenField);
-		  }
+				form.appendChild(hiddenField);
+			}
 		}
 
 		document.body.appendChild(form);

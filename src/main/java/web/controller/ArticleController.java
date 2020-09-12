@@ -31,6 +31,7 @@ public class ArticleController {
 	private static final String CREATE_ARTICLE = "createArticle";
 	private static final String ARTICLE = "article";
 	private static final String EDIT_ARTICLE = "editArticle";
+	private static final String DELETE_ARTICLE = "deleteArticle";
 
 	@Autowired
 	ArticleService articleService;
@@ -132,6 +133,34 @@ public class ArticleController {
 		}
 
 		return "redirect:/" + ScreenName.ARTICLE + "?id=" + article.getArticleId();
+	}
+
+	@GetMapping(DELETE_ARTICLE)
+	public String getDeleteArticle(@RequestParam String id, Model model) {
+
+		Article article = articleService.findById(Integer.parseInt(id));
+
+		if (article == null) {
+			return ScreenName.TOP;
+		}
+
+		model.addAttribute("article", article);
+
+		return ScreenName.DELETE_ARTICLE;
+	}
+
+	@PostMapping(DELETE_ARTICLE)
+	public String postDeleteArticle(@RequestParam String articleId, Model model) {
+
+		Article article = articleService.findById(Integer.parseInt(articleId));
+
+		if (article == null) {
+			return ScreenName.TOP;
+		}
+
+		articleService.delete(Integer.parseInt(articleId));
+
+		return "redirect:/" + ScreenName.MY_PAGE;
 	}
 
 }

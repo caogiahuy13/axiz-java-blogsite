@@ -11,6 +11,10 @@
 
 <%@ include file="common/checkLogin.jsp"%>
 
+<c:if test="${not empty msg}">
+	<p class="error">${msg}</p>
+</c:if>
+
 <c:forEach var="article" items="${articles}">
 	<div class="card"
 		onclick="window.location='/article?id=${article.articleId}';">
