@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import web.entity.Article;
 import web.entity.User;
 import web.form.RegisterForm;
+import web.form.UpdateUserForm;
 import web.service.ArticleService;
 import web.service.UserService;
 import web.util.Message;
@@ -27,6 +28,8 @@ public class UserController {
 	private static final String REGISTER = "register";
 	private static final String MY_PAGE = "myPage";
 	private static final String MY_ARTICLES = "myArticles";
+	private static final String UPDATE_MEMBER = "updateMember";
+	private static final String DELETE_MEMBER = "deleteMember";
 
 	@Autowired
 	UserService userService;
@@ -78,9 +81,9 @@ public class UserController {
 
 	@GetMapping(MY_ARTICLES)
 	public String getMyArticles(Model model) {
-		User user = (User) session.getAttribute(SessionName.CURRENT_USER);
+		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
 
-		List<Article> articles = articleService.findByUserId(user.getUserId());
+		List<Article> articles = articleService.findByUserId(currentUser.getUserId());
 
 		if (articles.isEmpty()) {
 			model.addAttribute("msg", Message.MY_ARTICLES_NO_RESULT);
@@ -89,5 +92,74 @@ public class UserController {
 		model.addAttribute("articles", articles);
 
 		return ScreenName.MY_ARTICLES;
+	}
+
+	@GetMapping(UPDATE_MEMBER)
+	public String getUpdateMember(@ModelAttribute UpdateUserForm updateUserForm) {
+		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
+
+		updateUserForm.setUserId(currentUser.getUserId());
+		updateUserForm.setLoginId(currentUser.getLoginId());
+		updateUserForm.setUserName(currentUser.getUserName());
+		updateUserForm.setPassword(currentUser.getPassword());
+		updateUserForm.setGender(currentUser.getGender());
+		updateUserForm.setBirthYear(currentUser.getBirthYear());
+		updateUserForm.setIntroduction(currentUser.getIntroduction());
+		updateUserForm.setMySpace(currentUser.getMySpace());
+
+		return ScreenName.UPDATE_MEMBER;
+	}
+
+	@PostMapping(UPDATE_MEMBER)
+	public String postUpdateMember(@Validated @ModelAttribute UpdateUserForm updateUserForm,
+			BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return ScreenName.UPDATE_MEMBER;
+		}
+
+		if (!updateUserForm.getPassword().equals(updateUserForm.getRePassword())) {
+			model.addAttribute("msg", Message.PASSWORD_IS_NOT_MATCH);
+			return ScreenName.UPDATE_MEMBER;
+		}
+
+		User existedUser = userService.findByLoginId(updateUserForm.getLoginId());
+		if (existedUser != null && existedUser.getUserId() != updateUserForm.getUserId()) {
+			model.addAttribute("msg", Message.LOGIN_ID_IS_EXISTED);
+			return ScreenName.UPDATE_MEMBER;
+		}
+
+		User user = userService.findByUserId(updateUserForm.getUserId());
+		user.setLoginId(updateUserForm.getLoginId());
+		user.setUserName(updateUserForm.getUserName());
+		user.setPassword(updateUserForm.getPassword());
+		user.setGender(updateUserForm.getGender());
+		user.setBirthYear(updateUserForm.getBirthYear());
+		user.setIntroduction(updateUserForm.getIntroduction());
+		user.setMySpace(updateUserForm.getMySpace());
+
+		userService.update(user);
+
+		User updatedUser = userService.findByUserId(user.getUserId());
+
+		session.setAttribute(SessionName.CURRENT_USER, updatedUser);
+
+		return ScreenName.MY_PAGE;
+	}
+
+	@GetMapping(DELETE_MEMBER)
+	public String getDeleteMember() {
+		return ScreenName.DELETE_MEMBER;
+	}
+
+	@PostMapping(DELETE_MEMBER)
+	public String postDeleteMember(Model model) {
+		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
+
+		if (userService.deleteByLoginId(currentUser.getLoginId()) > 0) {
+			session.removeAttribute(SessionName.CURRENT_USER);
+		}
+
+		model.addAttribute("msg", Message.MEMBER_DELETE_SUCCESS);
+		return ScreenName.NOTIFICATION;
 	}
 }

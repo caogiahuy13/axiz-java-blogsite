@@ -8,8 +8,32 @@
 	<jsp:param name="title" value="screen.myPage.title" />
 </jsp:include>
 
-<%@ include file="common/checkLogin.jsp" %>
+<%@ include file="common/checkLogin.jsp"%>
 
-<div>ABC</div>
+<fieldset class="label-120">
+	<div>
+		<label><fmt:message key="form.lbl.loginId" /></label>${sessionScope.currentUser.loginId}
+	</div>
+	<div>
+		<label><fmt:message key="form.lbl.userName" /></label>${sessionScope.currentUser.userName}
+	</div>
+	<div>
+		<label><fmt:message key="form.lbl.gender" /></label>${sessionScope.currentUser.gender}
+	</div>
+	<div>
+		<label><fmt:message key="form.lbl.birthYear" /></label>${sessionScope.currentUser.birthYear}
+	</div>
+	<div>
+		<label><fmt:message key="form.lbl.introduction" /></label>${sessionScope.currentUser.introduction}
+	</div>
+</fieldset>
+
+<form action="updateMember">
+	<button><fmt:message key="btn.updateMember" /></button>
+</form>
+
+<form action="deleteMember">
+	<button><fmt:message key="btn.deleteMember" /></button>
+</form>
 
 <jsp:include page="common/footTag.jsp" />

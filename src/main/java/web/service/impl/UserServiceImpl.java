@@ -36,7 +36,19 @@ public class UserServiceImpl implements UserService {
 		return userDao.update(user);
 	}
 
+	@Override
 	public List<User> findUsersReactAnArticle(Integer articleId) {
 		return userDao.findUsersReactAnArticle(articleId);
 	}
+
+	@Override
+	public User findByLoginId(String loginId) {
+		return userDao.findByLoginId(loginId);
+	}
+
+	@Override
+	public User findByUserId(Integer userId) {
+		return userDao.findByUserId(userId);
+	}
+
 }

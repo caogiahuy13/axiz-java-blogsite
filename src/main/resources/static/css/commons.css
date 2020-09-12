@@ -1,67 +1,75 @@
 @charset "UTF-8";
 
 fieldset {
-  border: none;
+	border: none;
 }
 
 fieldset label {
-  display: inline-block;
-  width: 43px;
+	display: inline-block;
+	width: 43px;
 }
 
 fieldset.label-60 label {
-  width: 60px;
+	width: 60px;
 }
 
 fieldset.label-130 label {
-  width: 130px;
+	width: 130px;
+}
+
+fieldset.label-120 label {
+	width: 120px;
+}
+
+fieldset.label-140 label {
+	width: 140px;
 }
 
 fieldset div {
-  margin: 5px;
+	margin: 5px;
 }
 
 form ~ div, table ~ div {
-  margin-top: 10px;
+	margin-top: 10px;
 }
 
 table, table th, table td {
-  border: solid 1px;
+	border: solid 1px;
 }
 
 input[readonly] {
-  background: #CCCCCC;
-  color: black;
+	background: #CCCCCC;
+	color: black;
 }
 
 .center {
-  text-align: center;
+	text-align: center;
 }
 
 .required::before {
-  content: "※";
-  color: red;
+	content: "※";
+	color: red;
 }
 
 .error {
-  color: red;
+	color: red;
 }
 
 a.btn {
-  color: white;
-  text-align: center;
-  font-size: 21px;
-  font-weight: bold;
-  background-color: #87cefa;
-  border-radius: 10px;
-  cursor: pointer;
-  border: 0px;
-  padding: 5px 20px 5px 20px;
-  text-decoration:none
+	color: white;
+	text-align: center;
+	font-size: 21px;
+	font-weight: bold;
+	background-color: #87cefa;
+	border-radius: 10px;
+	cursor: pointer;
+	border: 0px;
+	padding: 5px 20px 5px 20px;
+	text-decoration: none
 }
 
 .unstyled-button {
-  border: none;
-  padding: 0;
-  background: none;
+	border: none;
+	padding: 0;
+	background: none;
 }

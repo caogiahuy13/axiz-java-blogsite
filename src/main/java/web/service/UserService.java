@@ -14,4 +14,9 @@ public interface UserService {
 	public int update(User user);
 
 	public List<User> findUsersReactAnArticle(Integer articleId);
+
+	public User findByLoginId(String loginId);
+
+	public User findByUserId(Integer userId);
+
 }

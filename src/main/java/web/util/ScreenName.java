@@ -5,7 +5,7 @@ public final class ScreenName {
 	public static final String LOGIN = "login";
 	public static final String REGISTER = "register";
 	public static final String MY_PAGE = "myPage";
-	public static final String MEMBER_INFO = "memberInfo";
+	public static final String UPDATE_MEMBER = "updateMember";
 	public static final String DELETE_MEMBER = "deleteMember";
 	public static final String ARTICLE = "article";
 	public static final String CREATE_ARTICLE = "createArticle";

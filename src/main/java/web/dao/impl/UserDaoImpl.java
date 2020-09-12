@@ -59,12 +59,18 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public int update(User user) {
-		String sql = "UPDATE users SET user_name = :userName, login_id = :loginId, password = :password WHERE user_id = :userId";
+		String sql = "UPDATE users SET "
+				+ " user_name = :userName, login_id = :loginId, password = :password, "
+				+ " birth_year = :birthYear, introduction = :introduction, my_space = :mySpace "
+				+ " WHERE user_id = :userId";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("loginId", user.getLoginId());
 		paramMap.addValue("userName", user.getUserName());
 		paramMap.addValue("password", user.getPassword());
+		paramMap.addValue("birthYear", user.getBirthYear());
+		paramMap.addValue("introduction", user.getIntroduction());
+		paramMap.addValue("mySpace", user.getMySpace());
 		paramMap.addValue("userId", user.getUserId());
 
 		return jdbcTemplate.update(sql, paramMap);
@@ -79,6 +85,30 @@ public class UserDaoImpl implements UserDao {
 		paramMap.addValue("articleId", articleId);
 
 		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<User>(User.class));
+	}
+
+	@Override
+	public User findByLoginId(String loginId) {
+		String sql = SELECT_BASE + "WHERE login_id = :loginId";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("loginId", loginId);
+
+		List<User> users = jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<User>(User.class));
+
+		return users.isEmpty() ? null : users.get(0);
+	}
+
+	@Override
+	public User findByUserId(Integer userId) {
+		String sql = SELECT_BASE + "WHERE user_id = :userId";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("userId", userId);
+
+		List<User> users = jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<User>(User.class));
+
+		return users.isEmpty() ? null : users.get(0);
 	}
 
 }
