@@ -19,4 +19,6 @@ public interface ArticleDao {
 	public List<ArticleWithReactionCount> findByKeywordWithMostReaction(String keyword);
 
 	public List<Article> findByKeywordReactedByUser(Integer userId, String keyword);
+
+	public List<Article> findByUserId(Integer userId);
 }

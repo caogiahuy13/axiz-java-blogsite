@@ -53,4 +53,9 @@ public class ArticleServiceImpl implements ArticleService {
 			return articleDao.findByKeyword(keyword);
 		}
 	}
+
+	@Override
+	public List<Article> findByUserId(Integer userId) {
+		return articleDao.findByUserId(userId);
+	}
 }

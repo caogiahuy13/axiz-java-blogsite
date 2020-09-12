@@ -1,5 +1,7 @@
 package web.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import web.entity.Article;
 import web.entity.User;
 import web.form.RegisterForm;
+import web.service.ArticleService;
 import web.service.UserService;
 import web.util.Message;
 import web.util.ScreenName;
@@ -22,9 +26,13 @@ import web.util.SessionName;
 public class UserController {
 	private static final String REGISTER = "register";
 	private static final String MY_PAGE = "myPage";
+	private static final String MY_ARTICLES = "myArticles";
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	ArticleService articleService;
 
 	@Autowired
 	HttpSession session;
@@ -66,5 +74,15 @@ public class UserController {
 	@GetMapping(MY_PAGE)
 	public String getMyPage() {
 		return ScreenName.MY_PAGE;
+	}
+
+	@GetMapping(MY_ARTICLES)
+	public String getMyArticles(Model model) {
+		User user = (User) session.getAttribute(SessionName.CURRENT_USER);
+
+		List<Article> articles = articleService.findByUserId(user.getUserId());
+
+		model.addAttribute("articles", articles);
+		return ScreenName.MY_ARTICLES;
 	}
 }

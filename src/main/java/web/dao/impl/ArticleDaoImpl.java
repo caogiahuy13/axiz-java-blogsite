@@ -103,4 +103,14 @@ public class ArticleDaoImpl implements ArticleDao {
 
 		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
 	}
+
+	@Override
+	public List<Article> findByUserId(Integer userId) {
+		String sql = SELECT_BASE + " WHERE user_id = :userId";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("userId", userId);
+
+		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
+	}
 }

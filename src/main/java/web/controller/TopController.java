@@ -22,14 +22,14 @@ import web.util.SessionName;
 @Controller
 public class TopController {
 	private static final String TOP = "top";
-
+	private static final String INDEX = "/";
 	@Autowired
 	ArticleService articleService;
 
 	@Autowired
 	HttpSession session;
 
-	@GetMapping(TOP)
+	@GetMapping({ TOP, INDEX })
 	public String getTop(@ModelAttribute SearchForm searchForm) {
 		return ScreenName.TOP;
 	}
