@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import web.entity.User;
 import web.form.LoginForm;
+import web.service.ReactionService;
 import web.service.UserService;
 import web.util.Message;
 import web.util.ScreenName;
@@ -25,6 +26,9 @@ public class AuthController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	ReactionService reactionService;
 
 	@Autowired
 	HttpSession session;
@@ -47,14 +51,17 @@ public class AuthController {
 			return ScreenName.LOGIN;
 		}
 
+		int reactionCount = reactionService.countByUserId(user.getUserId());
+
 		session.setAttribute(SessionName.CURRENT_USER, user);
+		session.setAttribute(SessionName.TOTAL_REACTIONS, reactionCount);
 
 		return "redirect:/" + ScreenName.MY_PAGE;
 	}
 
 	@GetMapping(LOGOUT)
 	public String logout(@ModelAttribute LoginForm loginForm) {
-		session.removeAttribute(SessionName.CURRENT_USER);
+		SessionName.removeAllSession(session);
 		return ScreenName.LOGIN;
 	}
 

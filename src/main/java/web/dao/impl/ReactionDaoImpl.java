@@ -62,4 +62,14 @@ public class ReactionDaoImpl implements ReactionDao {
 
 		return jdbcTemplate.queryForObject(sql, paramMap, Integer.class);
 	}
+
+	@Override
+	public int countByUserId(Integer userId) {
+		String sql = "SELECT COUNT(*) FROM reactions r JOIN articles a ON r.article_id = a.article_id WHERE a.user_id = :userId;";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("userId", userId);
+
+		return jdbcTemplate.queryForObject(sql, paramMap, Integer.class);
+	}
 }

@@ -18,4 +18,5 @@ public interface UserDao {
 	public User findByLoginId(String loginId);
 
 	public User findByUserId(Integer userId);
+
 }

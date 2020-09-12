@@ -33,4 +33,9 @@ public class ReactionServiceImpl implements ReactionService {
 	public int countByArticleId(Integer articleId) {
 		return reactionDao.countByArticleId(articleId);
 	}
+
+	@Override
+	public int countByUserId(Integer userId) {
+		return reactionDao.countByUserId(userId);
+	}
 }

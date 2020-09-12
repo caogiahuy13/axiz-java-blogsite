@@ -10,4 +10,6 @@ public interface ReactionDao {
 	public Reaction findByUserIdAndArticleId(Integer userId, Integer articleId);
 
 	public int countByArticleId(Integer articleId);
+
+	public int countByUserId(Integer userId);
 }
