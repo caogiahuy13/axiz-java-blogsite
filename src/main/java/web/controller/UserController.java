@@ -21,6 +21,7 @@ import web.util.SessionName;
 @Controller
 public class UserController {
 	private static final String REGISTER = "register";
+	private static final String MY_PAGE = "myPage";
 
 	@Autowired
 	UserService userService;
@@ -59,6 +60,11 @@ public class UserController {
 		user = userService.authenticate(user.getLoginId(), user.getPassword());
 		session.setAttribute(SessionName.CURRENT_USER, user);
 
-		return "redirect:/" + ScreenName.LOGIN;
+		return "redirect:/" + ScreenName.MY_PAGE;
+	}
+
+	@GetMapping(MY_PAGE)
+	public String getMyPage() {
+		return ScreenName.MY_PAGE;
 	}
 }

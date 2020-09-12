@@ -20,13 +20,12 @@ public class ArticleDaoImpl implements ArticleDao {
 
 	@Override
 	public int create(Article article) {
-		String sql = "INSERT INTO articles (title, content, user_id, article_type_id) VALUES (:title, :content, :userId, :articleTypeId)";
+		String sql = "INSERT INTO articles (title, content, user_id) VALUES (:title, :content, :userId)";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("title", article.getTitle());
 		paramMap.addValue("content", article.getContent());
 		paramMap.addValue("userId", article.getUserId());
-		paramMap.addValue("articleTypeId", article.getArticleTypeId());
 
 		return jdbcTemplate.update(sql, paramMap);
 	}

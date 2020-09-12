@@ -9,7 +9,7 @@
 </jsp:include>
 
 <c:if test="${not empty sessionScope.currentUser}">
-	<c:redirect url="search" />
+	<c:redirect url="top" />
 </c:if>
 
 <c:if test="${not empty msg}">

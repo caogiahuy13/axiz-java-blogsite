@@ -17,7 +17,7 @@
 
 	<h2>${fn:escapeXml(article.title)}</h2>
 
-	<p>${fn:escapeXml(article.content)}</p>
+	<p style="white-space: pre-line">${article.content}</p>
 
 	<c:if test="${sessionScope.currentUser.userId != article.userId}">
 		<div class="popup" onclick="togglePopup()">

@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import web.entity.Article;
-import web.entity.ArticleWithReactionCount;
 import web.entity.CommentWithUserInfo;
 import web.entity.User;
 import web.form.CreateArticleForm;
 import web.form.EditArticleForm;
-import web.form.SearchForm;
 import web.service.ArticleService;
 import web.service.CommentService;
 import web.service.ReactionService;
@@ -30,12 +28,9 @@ import web.util.SessionName;
 
 @Controller
 public class ArticleController {
-	private static final String SEARCH = "search";
 	private static final String CREATE_ARTICLE = "createArticle";
 	private static final String ARTICLE = "article";
 	private static final String EDIT_ARTICLE = "editArticle";
-	private static final String FAVORITES = "favorites";
-	private static final String RANKING = "ranking";
 
 	@Autowired
 	ArticleService articleService;
@@ -52,25 +47,6 @@ public class ArticleController {
 	@Autowired
 	HttpSession session;
 
-	@GetMapping(SEARCH)
-	public String getSearch(@ModelAttribute SearchForm searchForm) {
-		return ScreenName.SEARCH;
-	}
-
-	@PostMapping(SEARCH)
-	public String postSearch(@Validated @ModelAttribute SearchForm searchForm, BindingResult bindingResult,
-			Model model) {
-		if (bindingResult.hasErrors()) {
-			return ScreenName.SEARCH;
-		}
-
-		List<Article> articles = articleService.findArticleByContent(searchForm.getKeyword());
-
-		model.addAttribute("articles", articles);
-
-		return ScreenName.SEARCH;
-	}
-
 	@GetMapping(CREATE_ARTICLE)
 	public String getCreateArticle(@ModelAttribute CreateArticleForm createArticleForm) {
 		return ScreenName.CREATE_ARTICLE;
@@ -86,7 +62,6 @@ public class ArticleController {
 		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
 
 		Article article = new Article();
-		article.setArticleTypeId(1);
 		article.setTitle(createArticleForm.getTitle());
 		article.setContent(createArticleForm.getContent());
 		article.setUserId(currentUser.getUserId());
@@ -157,26 +132,6 @@ public class ArticleController {
 		}
 
 		return "redirect:/" + ScreenName.ARTICLE + "?id=" + article.getArticleId();
-	}
-
-	@GetMapping(FAVORITES)
-	public String getFavorites(Model model) {
-		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
-
-		List<Article> articles = articleService.findArticleReactedByUser(currentUser.getUserId());
-
-		model.addAttribute("articles", articles);
-
-		return ScreenName.FAVORITES;
-	}
-
-	@GetMapping(RANKING)
-	public String getRanking(Model model) {
-		List<ArticleWithReactionCount> articles = articleService.findArticleWithMostReaction();
-
-		model.addAttribute("articles", articles);
-
-		return ScreenName.RANKING;
 	}
 
 }

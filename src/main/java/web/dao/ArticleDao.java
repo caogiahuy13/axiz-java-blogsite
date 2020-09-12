@@ -19,4 +19,5 @@ public interface ArticleDao {
 	public List<Article> findArticleReactedByUser(Integer userId);
 
 	public Article findById(Integer articleId);
+
 }
