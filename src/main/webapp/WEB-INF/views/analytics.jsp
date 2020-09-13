@@ -133,13 +133,16 @@
 <script type="text/javascript"
 	src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-<div id="genderAnalytics" style="height: 300px; width: 100%;"></div>
-<br>
-<div id="ageAnalytics" style="height: 300px; width: 100%;"></div>
-<br>
-<div id="accessAnalytics" style="height: 300px; width: 100%;"></div>
-<br>
-<div id="reactionAnalytics" style="height: 300px; width: 100%;"></div>
-<br>
+<div style="margin: 40px" align="center">
+	<div id="genderAnalytics"
+		style="height: 300px; width: 30%; display: inline-block"></div>
+	<div id="ageAnalytics"
+		style="height: 300px; width: 30%; display: inline-block"></div>
+	<div id="accessAnalytics"
+		style="height: 300px; width: 30%; display: inline-block"></div>
+	<div style="height: 50px"></div>
+	<div id="reactionAnalytics" style="height: 300px; width: 50%;"></div>
+	<br> <br>
+</div>
 
 <jsp:include page="common/footTag.jsp" />
