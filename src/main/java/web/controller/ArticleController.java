@@ -19,12 +19,14 @@ import web.entity.Article;
 import web.entity.CommentWithUserInfo;
 import web.entity.Reaction;
 import web.entity.User;
+import web.entity.View;
 import web.form.CreateArticleForm;
 import web.form.EditArticleForm;
 import web.service.ArticleService;
 import web.service.CommentService;
 import web.service.ReactionService;
 import web.service.UserService;
+import web.service.ViewService;
 import web.util.ScreenName;
 import web.util.SessionUtil;
 
@@ -46,6 +48,9 @@ public class ArticleController {
 
 	@Autowired
 	UserService userService;
+
+	@Autowired
+	ViewService viewService;
 
 	@Autowired
 	HttpSession session;
@@ -84,6 +89,10 @@ public class ArticleController {
 		int articleId = Integer.parseInt(id);
 
 		Article article = articleService.findById(articleId);
+		if (article == null) {
+			return "redirect:/" + ScreenName.TOP;
+		}
+
 		int reactionCount = reactionService.countByArticleId(articleId);
 		List<CommentWithUserInfo> comments = commentService.findByArticleId(articleId);
 		List<User> reactedUsers = userService.findUsersReactAnArticle(articleId);
@@ -93,13 +102,13 @@ public class ArticleController {
 			Reaction reaction = reactionService.findByUserIdAndArticleId(currentUser.getUserId(), articleId);
 			if (reaction != null) {
 				model.addAttribute("isReacted", reaction.getStampId());
-				System.out.println(reaction.getStampId());
 			}
 		}
 
-		if (article == null) {
-			return "redirect:/" + ScreenName.TOP;
-		}
+		View view = new View();
+		view.setArticleId(articleId);
+		view.setUserId(currentUser == null ? null : currentUser.getUserId());
+		viewService.insert(view);
 
 		model.addAttribute("article", article);
 		model.addAttribute("reactionCount", reactionCount);
