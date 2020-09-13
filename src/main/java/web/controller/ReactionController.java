@@ -41,6 +41,14 @@ public class ReactionController {
 
 		if (reaction != null) {
 			reactionService.delete(articleId, userId);
+			if (reaction.getStampId() != stampId) {
+				Reaction newReaction = new Reaction();
+				newReaction.setArticleId(articleId);
+				newReaction.setStampId(stampId);
+				newReaction.setUserId(userId);
+
+				reactionService.insert(newReaction);
+			}
 		} else {
 			Reaction newReaction = new Reaction();
 			newReaction.setArticleId(articleId);

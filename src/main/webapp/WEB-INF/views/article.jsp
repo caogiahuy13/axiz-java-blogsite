@@ -47,8 +47,6 @@
 			<br>
 		</c:forEach>
 	</span>
-
-
 </div>
 
 <c:if test="${sessionScope.currentUser.userId != article.userId}">
