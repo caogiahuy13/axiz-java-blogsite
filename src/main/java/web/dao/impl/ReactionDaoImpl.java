@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import web.dao.ReactionDao;
 import web.entity.Reaction;
+import web.entity.ReactionsByArticle;
 
 @Repository
 public class ReactionDaoImpl implements ReactionDao {
@@ -78,12 +79,9 @@ public class ReactionDaoImpl implements ReactionDao {
 	@Override
 	public HashMap<Integer, Integer> countMultipleByArticleId(Integer articleId) {
 		String sql = "SELECT stamp_id, COUNT(*) count FROM reactions WHERE article_id = :articleId GROUP BY stamp_id";
+
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("articleId", articleId);
-		//		List<Map<String, Object>> mapList = jdbcTemplate.queryForList(sql, paramMap);
-		//
-		//		return (List<Map<String, Integer>>) mapList.stream()
-		//				.collect(Collectors.toMap(k -> (Integer) k.get("stamp_id"), k -> (Integer) k.get("count")));
 
 		return jdbcTemplate.query(sql, paramMap, (ResultSet rs) -> {
 			HashMap<Integer, Integer> results = new HashMap<>();
@@ -92,5 +90,72 @@ public class ReactionDaoImpl implements ReactionDao {
 			}
 			return results;
 		});
+	}
+
+	@Override
+	public HashMap<String, Integer> countByGenderByUserIdOfArticle(Integer userId) {
+		String sql = "SELECT u.gender, COUNT(*) count "
+				+ " FROM reactions r"
+				+ " JOIN users u ON r.user_id = u.user_id"
+				+ " JOIN articles a ON r.article_id = a.article_id"
+				+ " WHERE a.user_id = :userId"
+				+ " GROUP BY u.gender, a.user_id";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("userId", userId);
+
+		return jdbcTemplate.query(sql, paramMap, (ResultSet rs) -> {
+			HashMap<String, Integer> results = new HashMap<>();
+			while (rs.next()) {
+				results.put(rs.getString("gender"), rs.getInt("count"));
+			}
+			return results;
+		});
+	}
+
+	@Override
+	public HashMap<String, Integer> countByAgeRangeByUserIdOfArticle(Integer userId) {
+		String sql = "SELECT"
+				+ " CASE"
+				+ " 	WHEN (date_part('year', now()) - birth_year) <18 THEN 'Under 18'"
+				+ " 	WHEN (date_part('year', now()) - birth_year) BETWEEN 18 AND 24 THEN '18-24'"
+				+ " 	WHEN (date_part('year', now()) - birth_year) BETWEEN 25 AND 34 THEN '25-34'"
+				+ " END AS age_range, COUNT(*) AS count"
+				+ " FROM ("
+				+ " 	SELECT r.*, u.birth_year, a.user_id"
+				+ " 	FROM reactions r"
+				+ " 	JOIN users u ON r.user_id = u.user_id"
+				+ " 	JOIN articles a ON r.article_id = a.article_id"
+				+ " 	WHERE a.user_id = :userId"
+				+ " ) AS reaction"
+				+ " GROUP BY age_range"
+				+ " ORDER BY age_range";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("userId", userId);
+
+		return jdbcTemplate.query(sql, paramMap, (ResultSet rs) -> {
+			HashMap<String, Integer> results = new HashMap<>();
+			while (rs.next()) {
+				results.put(rs.getString("age_range"), rs.getInt("count"));
+			}
+			return results;
+		});
+	}
+
+	@Override
+	public List<ReactionsByArticle> countMultipleByUserIdOfArticle(Integer userId) {
+		String sql = " SELECT s.stamp_id, a.title, COUNT(CASE WHEN reaction_id IS NOT NULL THEN 1 ELSE NULL END)"
+				+ " FROM stamps s"
+				+ " JOIN (SELECT a.article_id, a.title FROM articles a JOIN users u ON u.user_id = a.user_id WHERE u.user_id = :userId) a ON TRUE"
+				+ " LEFT JOIN reactions r ON s.stamp_id = r.stamp_id AND a.article_id = r.article_id"
+				+ " GROUP BY s.stamp_id, a.article_id, a.title"
+				+ " ORDER BY s.stamp_id";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("userId", userId);
+
+		return jdbcTemplate.query(sql, paramMap,
+				new BeanPropertyRowMapper<ReactionsByArticle>(ReactionsByArticle.class));
 	}
 }

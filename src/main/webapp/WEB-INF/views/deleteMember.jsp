@@ -6,6 +6,8 @@
 	<jsp:param name="title" value="screen.deleteMember.title" />
 </jsp:include>
 
+<%@ include file="common/checkLogin.jsp"%>
+
 <fmt:message key="member.delete.confirm"/>
 
 <form action = "/deleteMember" method = "post">

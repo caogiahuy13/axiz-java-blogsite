@@ -29,11 +29,25 @@
 </fieldset>
 
 <form action="updateMember">
-	<button><fmt:message key="btn.updateMember" /></button>
+	<button>
+		<fmt:message key="btn.updateMember" />
+	</button>
 </form>
+<br>
+
+<c:if test="${sessionScope.totalReactions >=5 }">
+	<form action="analytics">
+		<button>
+			<fmt:message key="btn.analytics" />
+		</button>
+	</form>
+</c:if>
 
 <form action="deleteMember">
-	<button><fmt:message key="btn.deleteMember" /></button>
+	<button>
+		<fmt:message key="btn.deleteMember" />
+	</button>
 </form>
+<br>
 
 <jsp:include page="common/footTag.jsp" />

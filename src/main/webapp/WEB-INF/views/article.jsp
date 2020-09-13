@@ -114,7 +114,7 @@
 				<fmt:message key="btn.update" />
 			</button>
 			<button onClick="deleteComment('${comment.commentId}')">
-				<fmt:message key="btn.update" />
+				<fmt:message key="btn.delete" />
 			</button>
 		</c:if>
 	</div>

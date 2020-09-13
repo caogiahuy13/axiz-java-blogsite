@@ -1,5 +1,7 @@
 package web.dao.impl;
 
+import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +39,30 @@ public class ViewDaoImpl implements ViewDao {
 
 		return jdbcTemplate.query(sql, paramMap,
 				new BeanPropertyRowMapper<View>(View.class));
+	}
+
+	@Override
+	public HashMap<String, Integer> countByAccessByUserIdOfArticle(Integer userId) {
+		String sql = "SELECT "
+				+ "	CASE"
+				+ "		WHEN v.user_id IS NOT NULL THEN 'login'"
+				+ "		WHEN v.user_id IS NULL THEN 'anonymous'"
+				+ "	END AS access, COUNT(*) count"
+				+ "	FROM views v"
+				+ "	JOIN articles a ON v.article_id = a.article_id"
+				+ "	JOIN users u ON a.user_id = u.user_id"
+				+ "	WHERE a.user_id = 3"
+				+ "	GROUP BY access";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("userId", userId);
+
+		return jdbcTemplate.query(sql, paramMap, (ResultSet rs) -> {
+			HashMap<String, Integer> results = new HashMap<>();
+			while (rs.next()) {
+				results.put(rs.getString("access"), rs.getInt("count"));
+			}
+			return results;
+		});
 	}
 }

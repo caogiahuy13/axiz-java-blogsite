@@ -7,6 +7,8 @@
 	<jsp:param name="title" value="screen.deleteArticle.title" />
 </jsp:include>
 
+<%@ include file="common/checkLogin.jsp"%>
+
 <h2>${fn:escapeXml(article.title)}</h2>
 
 <p style="white-space: pre-line">${fn:escapeXml(article.content)}</p>

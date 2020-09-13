@@ -1,6 +1,7 @@
 package web.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import web.dao.ReactionDao;
 import web.entity.Reaction;
+import web.entity.ReactionsByArticle;
 import web.service.ReactionService;
 
 @Service
@@ -44,5 +46,20 @@ public class ReactionServiceImpl implements ReactionService {
 	@Override
 	public HashMap<Integer, Integer> countMultipleByArticleId(Integer articleId) {
 		return reactionDao.countMultipleByArticleId(articleId);
+	}
+
+	@Override
+	public HashMap<String, Integer> countByGenderByUserIdOfArticle(Integer userId) {
+		return reactionDao.countByGenderByUserIdOfArticle(userId);
+	}
+
+	@Override
+	public HashMap<String, Integer> countByAgeRangeByUserIdOfArticle(Integer userId) {
+		return reactionDao.countByAgeRangeByUserIdOfArticle(userId);
+	}
+
+	@Override
+	public List<ReactionsByArticle> countMultipleByUserIdOfArticle(Integer userId) {
+		return reactionDao.countMultipleByUserIdOfArticle(userId);
 	}
 }

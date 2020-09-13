@@ -1,5 +1,6 @@
 package web.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,22 +15,24 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import web.entity.Article;
+import web.entity.ReactionsByArticle;
 import web.entity.User;
-import web.form.RegisterForm;
 import web.form.UpdateUserForm;
 import web.service.ArticleService;
+import web.service.ReactionService;
 import web.service.UserService;
+import web.service.ViewService;
 import web.util.Message;
 import web.util.ScreenName;
 import web.util.SessionUtil;
 
 @Controller
 public class UserController {
-	private static final String REGISTER = "register";
 	private static final String MY_PAGE = "myPage";
 	private static final String MY_ARTICLES = "myArticles";
 	private static final String UPDATE_MEMBER = "updateMember";
 	private static final String DELETE_MEMBER = "deleteMember";
+	private static final String ANALYTICS = "analytics";
 
 	@Autowired
 	UserService userService;
@@ -38,41 +41,13 @@ public class UserController {
 	ArticleService articleService;
 
 	@Autowired
+	ReactionService reactionService;
+
+	@Autowired
+	ViewService viewService;
+
+	@Autowired
 	HttpSession session;
-
-	@GetMapping(REGISTER)
-	public String getRegister(@ModelAttribute RegisterForm registerForm, Model model) {
-		return ScreenName.REGISTER;
-	}
-
-	@PostMapping(REGISTER)
-	public String postRegister(@Validated @ModelAttribute RegisterForm registerForm, BindingResult bindingResult,
-			Model model) {
-		if (bindingResult.hasErrors()) {
-			return ScreenName.REGISTER;
-		}
-
-		if (!registerForm.getPassword().equals(registerForm.getRePassword())) {
-			model.addAttribute("msg", Message.PASSWORD_IS_NOT_MATCH);
-			return ScreenName.REGISTER;
-		}
-
-		User user = new User();
-		user.setLoginId(registerForm.getLoginId());
-		user.setUserName(registerForm.getUserName());
-		user.setPassword(registerForm.getPassword());
-		user.setGender(registerForm.getGender());
-		user.setBirthYear(registerForm.getBirthYear());
-
-		if (userService.register(user) <= 0) {
-			return ScreenName.REGISTER;
-		}
-
-		user = userService.authenticate(user.getLoginId(), user.getPassword());
-		session.setAttribute(SessionUtil.CURRENT_USER, user);
-
-		return "redirect:/" + ScreenName.MY_PAGE;
-	}
 
 	@GetMapping(MY_PAGE)
 	public String getMyPage() {
@@ -162,4 +137,29 @@ public class UserController {
 		model.addAttribute("msg", Message.MEMBER_DELETE_SUCCESS);
 		return ScreenName.NOTIFICATION;
 	}
+
+	@GetMapping(ANALYTICS)
+	public String getAnalytics(Model model) {
+		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
+		if (currentUser == null) {
+			return "redirect:/" + ScreenName.TOP;
+		}
+
+		HashMap<String, Integer> genderAnalytics = reactionService
+				.countByGenderByUserIdOfArticle(currentUser.getUserId());
+		HashMap<String, Integer> ageAnalytics = reactionService
+				.countByAgeRangeByUserIdOfArticle(currentUser.getUserId());
+		HashMap<String, Integer> accessAnalytics = viewService
+				.countByAccessByUserIdOfArticle(currentUser.getUserId());
+		List<ReactionsByArticle> reactionAnalytics = reactionService
+				.countMultipleByUserIdOfArticle(currentUser.getUserId());
+
+		model.addAttribute("genderAnalytics", genderAnalytics);
+		model.addAttribute("ageAnalytics", ageAnalytics);
+		model.addAttribute("accessAnalytics", accessAnalytics);
+		model.addAttribute("reactionAnalytics", reactionAnalytics);
+
+		return ScreenName.ANALYTICS;
+	}
+
 }

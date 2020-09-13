@@ -1,8 +1,10 @@
 package web.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import web.entity.Reaction;
+import web.entity.ReactionsByArticle;
 
 public interface ReactionService {
 	public int insert(Reaction reaction);
@@ -17,4 +19,9 @@ public interface ReactionService {
 
 	public HashMap<Integer, Integer> countMultipleByArticleId(Integer articleId);
 
+	public HashMap<String, Integer> countByGenderByUserIdOfArticle(Integer userId);
+
+	public HashMap<String, Integer> countByAgeRangeByUserIdOfArticle(Integer userId);
+
+	public List<ReactionsByArticle> countMultipleByUserIdOfArticle(Integer userId);
 }
