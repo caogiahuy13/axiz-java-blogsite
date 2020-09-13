@@ -8,7 +8,12 @@
 	<jsp:param name="title" value="screen.article.title" />
 </jsp:include>
 
-<h2>${fn:escapeXml(article.title)}</h2>
+<h2>
+	<span>${fn:escapeXml(article.title)}</span>
+	<c:if test="${reactionCount >= 3 }">
+		<i class="fas fa-trophy" style="color: orange"></i>
+	</c:if>
+</h2>
 
 <p style="white-space: pre-line">${fn:escapeXml(article.content)}</p>
 

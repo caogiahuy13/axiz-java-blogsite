@@ -84,6 +84,7 @@ public class ArticleController {
 		int articleId = Integer.parseInt(id);
 
 		Article article = articleService.findById(articleId);
+		int reactionCount = reactionService.countByArticleId(articleId);
 		List<CommentWithUserInfo> comments = commentService.findByArticleId(articleId);
 		List<User> reactedUsers = userService.findUsersReactAnArticle(articleId);
 		HashMap<Integer, Integer> reactions = reactionService.countMultipleByArticleId(articleId);
@@ -101,6 +102,7 @@ public class ArticleController {
 		}
 
 		model.addAttribute("article", article);
+		model.addAttribute("reactionCount", reactionCount);
 		model.addAttribute("comments", comments);
 		model.addAttribute("reactedUsers", reactedUsers);
 		model.addAttribute("reactions", reactions);
