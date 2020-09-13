@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<form action="reaction" method="post">
+<form action="reaction" method="post" style="display: inline">
 	<input type="hidden" name="articleIdStr" value="${article.articleId}" />
 	<input type="hidden" name="stampIdStr" value="${param.stampId}" />
 	<button class="unstyled-button">

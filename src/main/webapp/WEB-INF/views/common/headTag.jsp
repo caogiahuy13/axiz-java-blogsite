@@ -12,6 +12,8 @@
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 </head>
-<body>
+<body style="margin: 0px">
 
 	<jsp:include page="navbar.jsp" />
+
+	<div style="margin: 20px 40px">

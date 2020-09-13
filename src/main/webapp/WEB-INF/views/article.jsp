@@ -48,6 +48,7 @@
 		</c:forEach>
 	</span>
 </div>
+<div style="height: 10px"></div>
 
 <c:if test="${sessionScope.currentUser.userId != article.userId}">
 	<c:if test="${sessionScope.totalReactions >= 1}">
@@ -68,21 +69,24 @@
 		<jsp:param name="stampId" value="1" />
 		<jsp:param name="stampName" value="fa-thumbs-up" />
 	</jsp:include>
+	<br><br>
 </c:if>
 
+
 <c:if test="${sessionScope.currentUser.userId == article.userId}">
-	<form action="editArticle">
+	<form action="editArticle" style="display: inline">
 		<input type="hidden" name="id" value="${article.articleId}" />
 		<button>
 			<fmt:message key="btn.update" />
 		</button>
 	</form>
-	<form action="deleteArticle">
+	<form action="deleteArticle" style="display: inline">
 		<input type="hidden" name="id" value="${article.articleId}" />
 		<button>
 			<fmt:message key="btn.delete" />
 		</button>
 	</form>
+	<br><br>
 </c:if>
 
 <form action="comment" method="post">
