@@ -17,7 +17,7 @@ import web.service.ReactionService;
 import web.service.UserService;
 import web.util.Message;
 import web.util.ScreenName;
-import web.util.SessionName;
+import web.util.SessionUtil;
 
 @Controller
 public class AuthController {
@@ -53,15 +53,15 @@ public class AuthController {
 
 		int reactionCount = reactionService.countByUserId(user.getUserId());
 
-		session.setAttribute(SessionName.CURRENT_USER, user);
-		session.setAttribute(SessionName.TOTAL_REACTIONS, reactionCount);
+		session.setAttribute(SessionUtil.CURRENT_USER, user);
+		session.setAttribute(SessionUtil.TOTAL_REACTIONS, reactionCount);
 
 		return "redirect:/" + ScreenName.MY_PAGE;
 	}
 
 	@GetMapping(LOGOUT)
 	public String logout(@ModelAttribute LoginForm loginForm) {
-		SessionName.removeAllSession(session);
+		SessionUtil.removeAllSession(session);
 		return ScreenName.LOGIN;
 	}
 

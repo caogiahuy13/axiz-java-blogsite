@@ -1,5 +1,6 @@
 package web.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import web.entity.Article;
 import web.entity.CommentWithUserInfo;
+import web.entity.Reaction;
 import web.entity.User;
 import web.form.CreateArticleForm;
 import web.form.EditArticleForm;
@@ -24,7 +26,7 @@ import web.service.CommentService;
 import web.service.ReactionService;
 import web.service.UserService;
 import web.util.ScreenName;
-import web.util.SessionName;
+import web.util.SessionUtil;
 
 @Controller
 public class ArticleController {
@@ -60,7 +62,7 @@ public class ArticleController {
 			return ScreenName.CREATE_ARTICLE;
 		}
 
-		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
+		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
 
 		Article article = new Article();
 		article.setTitle(createArticleForm.getTitle());
@@ -78,20 +80,30 @@ public class ArticleController {
 
 	@GetMapping(ARTICLE)
 	public String getArticle(@RequestParam String id, Model model) {
+		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
+		int articleId = Integer.parseInt(id);
 
-		Article article = articleService.findById(Integer.parseInt(id));
-		int reactions = reactionService.countByArticleId(Integer.parseInt(id));
-		List<CommentWithUserInfo> comments = commentService.findByArticleId(Integer.parseInt(id));
-		List<User> reactedUsers = userService.findUsersReactAnArticle(Integer.parseInt(id));
+		Article article = articleService.findById(articleId);
+		List<CommentWithUserInfo> comments = commentService.findByArticleId(articleId);
+		List<User> reactedUsers = userService.findUsersReactAnArticle(articleId);
+		HashMap<Integer, Integer> reactions = reactionService.countMultipleByArticleId(articleId);
+
+		if (currentUser != null) {
+			Reaction reaction = reactionService.findByUserIdAndArticleId(currentUser.getUserId(), articleId);
+			if (reaction != null) {
+				model.addAttribute("isReacted", reaction.getStampId());
+				System.out.println(reaction.getStampId());
+			}
+		}
 
 		if (article == null) {
 			return "redirect:/" + ScreenName.TOP;
 		}
 
 		model.addAttribute("article", article);
-		model.addAttribute("reactions", reactions);
 		model.addAttribute("comments", comments);
 		model.addAttribute("reactedUsers", reactedUsers);
+		model.addAttribute("reactions", reactions);
 
 		return ScreenName.ARTICLE;
 	}
@@ -99,7 +111,7 @@ public class ArticleController {
 	@GetMapping(EDIT_ARTICLE)
 	public String getEditArticle(@RequestParam String id, @ModelAttribute EditArticleForm editArticleForm) {
 		Article article = articleService.findById(Integer.parseInt(id));
-		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
+		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
 
 		if (article == null || article.getUserId() != currentUser.getUserId()) {
 			return ScreenName.TOP;

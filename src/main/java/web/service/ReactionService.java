@@ -1,5 +1,7 @@
 package web.service;
 
+import java.util.HashMap;
+
 import web.entity.Reaction;
 
 public interface ReactionService {
@@ -12,5 +14,7 @@ public interface ReactionService {
 	public int countByArticleId(Integer articleId);
 
 	public int countByUserId(Integer userId);
+
+	public HashMap<Integer, Integer> countMultipleByArticleId(Integer articleId);
 
 }

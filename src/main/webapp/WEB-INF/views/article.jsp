@@ -13,24 +13,54 @@
 <p style="white-space: pre-line">${fn:escapeXml(article.content)}</p>
 
 <div class="popup" onclick="togglePopup()">
-	<span style="color: blue">${reactions}<i
-		class="fa fa-thumbs-o-up"></i></span><span class="popuptext" id="myPopup">
-		<c:forEach var="user" items="${reactedUsers}">
+	<c:forEach var="entry" items="${reactions}">
+		<c:if test="${entry.value > 0}">
+			<span style="color: blue"> ${entry.value} <c:choose>
+					<c:when test="${entry.key == 4}">
+						<i class="far fa-laugh-squint"></i>
+					</c:when>
+					<c:when test="${entry.key == 3}">
+						<i class="far fa-sad-cry"></i>
+					</c:when>
+					<c:when test="${entry.key == 2}">
+						<i class="far fa-angry"></i>
+					</c:when>
+					<c:otherwise>
+						<i class="far fa-thumbs-up"></i>
+					</c:otherwise>
+				</c:choose>
+			</span>
+		</c:if>
+	</c:forEach>
+	<span class="popuptext" id="myPopup"> <c:forEach var="user"
+			items="${reactedUsers}">
 			<span>${user.userName}</span>
 			<br>
 		</c:forEach>
 	</span>
+
+
 </div>
 
-
 <c:if test="${sessionScope.currentUser.userId != article.userId}">
-	<form action="reaction" method="post">
-		<input type="hidden" name="articleIdStr" value="${article.articleId}" />
-		<input type="hidden" name="stampIdStr" value="1" />
-		<button class="unstyled-button">
-			<i class="fa fa-thumbs-o-up" style="font-size: 24px;"></i>
-		</button>
-	</form>
+	<c:if test="${sessionScope.totalReactions >= 1}">
+		<jsp:include page="common/reaction.jsp">
+			<jsp:param name="stampId" value="4" />
+			<jsp:param name="stampName" value="fa-laugh-squint" />
+		</jsp:include>
+		<jsp:include page="common/reaction.jsp">
+			<jsp:param name="stampId" value="3" />
+			<jsp:param name="stampName" value="fa-sad-cry" />
+		</jsp:include>
+		<jsp:include page="common/reaction.jsp">
+			<jsp:param name="stampId" value="2" />
+			<jsp:param name="stampName" value="fa-angry" />
+		</jsp:include>
+	</c:if>
+	<jsp:include page="common/reaction.jsp">
+		<jsp:param name="stampId" value="1" />
+		<jsp:param name="stampName" value="fa-thumbs-up" />
+	</jsp:include>
 </c:if>
 
 <c:if test="${sessionScope.currentUser.userId == article.userId}">

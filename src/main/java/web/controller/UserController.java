@@ -21,7 +21,7 @@ import web.service.ArticleService;
 import web.service.UserService;
 import web.util.Message;
 import web.util.ScreenName;
-import web.util.SessionName;
+import web.util.SessionUtil;
 
 @Controller
 public class UserController {
@@ -69,7 +69,7 @@ public class UserController {
 		}
 
 		user = userService.authenticate(user.getLoginId(), user.getPassword());
-		session.setAttribute(SessionName.CURRENT_USER, user);
+		session.setAttribute(SessionUtil.CURRENT_USER, user);
 
 		return "redirect:/" + ScreenName.MY_PAGE;
 	}
@@ -81,7 +81,7 @@ public class UserController {
 
 	@GetMapping(MY_ARTICLES)
 	public String getMyArticles(Model model) {
-		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
+		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
 
 		List<Article> articles = articleService.findByUserId(currentUser.getUserId());
 
@@ -96,7 +96,7 @@ public class UserController {
 
 	@GetMapping(UPDATE_MEMBER)
 	public String getUpdateMember(@ModelAttribute UpdateUserForm updateUserForm) {
-		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
+		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
 
 		updateUserForm.setUserId(currentUser.getUserId());
 		updateUserForm.setLoginId(currentUser.getLoginId());
@@ -141,7 +141,7 @@ public class UserController {
 
 		User updatedUser = userService.findByUserId(user.getUserId());
 
-		session.setAttribute(SessionName.CURRENT_USER, updatedUser);
+		session.setAttribute(SessionUtil.CURRENT_USER, updatedUser);
 
 		return ScreenName.MY_PAGE;
 	}
@@ -153,10 +153,10 @@ public class UserController {
 
 	@PostMapping(DELETE_MEMBER)
 	public String postDeleteMember(Model model) {
-		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
+		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
 
 		if (userService.deleteByLoginId(currentUser.getLoginId()) > 0) {
-			session.removeAttribute(SessionName.CURRENT_USER);
+			SessionUtil.removeAllSession(session);
 		}
 
 		model.addAttribute("msg", Message.MEMBER_DELETE_SUCCESS);

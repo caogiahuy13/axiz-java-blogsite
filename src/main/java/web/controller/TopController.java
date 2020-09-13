@@ -17,7 +17,7 @@ import web.form.SearchForm;
 import web.service.ArticleService;
 import web.util.Message;
 import web.util.ScreenName;
-import web.util.SessionName;
+import web.util.SessionUtil;
 
 @Controller
 public class TopController {
@@ -36,7 +36,7 @@ public class TopController {
 
 	@PostMapping(TOP)
 	public String search(@ModelAttribute SearchForm searchForm, Model model) {
-		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
+		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
 
 		Integer userId = (currentUser == null) ? null : currentUser.getUserId();
 		String keyword = searchForm.getKeyword();

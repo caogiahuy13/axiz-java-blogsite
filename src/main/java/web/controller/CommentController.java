@@ -12,7 +12,7 @@ import web.entity.Comment;
 import web.entity.User;
 import web.service.CommentService;
 import web.util.ScreenName;
-import web.util.SessionName;
+import web.util.SessionUtil;
 
 @Controller
 public class CommentController {
@@ -29,7 +29,7 @@ public class CommentController {
 	@PostMapping(COMMENT)
 	public String postComment(@RequestParam String articleIdStr, @RequestParam String contentStr,
 			HttpServletRequest request) {
-		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
+		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
 
 		if (currentUser == null) {
 			return "redirect:/" + ScreenName.LOGIN;

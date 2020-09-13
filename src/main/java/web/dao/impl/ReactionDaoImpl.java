@@ -1,5 +1,7 @@
 package web.dao.impl;
 
+import java.sql.ResultSet;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +73,24 @@ public class ReactionDaoImpl implements ReactionDao {
 		paramMap.addValue("userId", userId);
 
 		return jdbcTemplate.queryForObject(sql, paramMap, Integer.class);
+	}
+
+	@Override
+	public HashMap<Integer, Integer> countMultipleByArticleId(Integer articleId) {
+		String sql = "SELECT stamp_id, COUNT(*) count FROM reactions WHERE article_id = :articleId GROUP BY stamp_id";
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("articleId", articleId);
+		//		List<Map<String, Object>> mapList = jdbcTemplate.queryForList(sql, paramMap);
+		//
+		//		return (List<Map<String, Integer>>) mapList.stream()
+		//				.collect(Collectors.toMap(k -> (Integer) k.get("stamp_id"), k -> (Integer) k.get("count")));
+
+		return jdbcTemplate.query(sql, paramMap, (ResultSet rs) -> {
+			HashMap<Integer, Integer> results = new HashMap<>();
+			while (rs.next()) {
+				results.put(rs.getInt("stamp_id"), rs.getInt("count"));
+			}
+			return results;
+		});
 	}
 }

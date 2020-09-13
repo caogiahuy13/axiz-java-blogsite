@@ -12,7 +12,7 @@ import web.entity.Reaction;
 import web.entity.User;
 import web.service.ReactionService;
 import web.util.ScreenName;
-import web.util.SessionName;
+import web.util.SessionUtil;
 
 @Controller
 public class ReactionController {
@@ -27,7 +27,7 @@ public class ReactionController {
 	@PostMapping(REACTION)
 	public String postReaction(@RequestParam String stampIdStr, @RequestParam String articleIdStr,
 			HttpServletRequest request) {
-		User currentUser = (User) session.getAttribute(SessionName.CURRENT_USER);
+		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
 
 		if (currentUser == null) {
 			return "redirect:/" + ScreenName.LOGIN;
