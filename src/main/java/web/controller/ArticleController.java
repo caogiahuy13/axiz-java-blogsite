@@ -97,6 +97,11 @@ public class ArticleController {
 		List<CommentWithUserInfo> comments = commentService.findByArticleId(articleId);
 		List<User> reactedUsers = userService.findUsersReactAnArticle(articleId);
 		HashMap<Integer, Integer> reactions = reactionService.countMultipleByArticleId(articleId);
+		int articleUserReactionCount = reactionService.countByUserId(article.getUserId());
+		String articleUserMySpace = "";
+		if (articleUserReactionCount >= 15) {
+			articleUserMySpace = userService.findByUserId(article.getUserId()).getMySpace();
+		}
 
 		if (currentUser != null) {
 			Reaction reaction = reactionService.findByUserIdAndArticleId(currentUser.getUserId(), articleId);
@@ -115,6 +120,8 @@ public class ArticleController {
 		model.addAttribute("comments", comments);
 		model.addAttribute("reactedUsers", reactedUsers);
 		model.addAttribute("reactions", reactions);
+		model.addAttribute("articleUserReactionCount", articleUserReactionCount);
+		model.addAttribute("articleUserMySpace", articleUserMySpace);
 
 		return ScreenName.ARTICLE;
 	}

@@ -26,6 +26,12 @@
 	<div>
 		<label><fmt:message key="form.lbl.introduction" /></label>${sessionScope.currentUser.introduction}
 	</div>
+	<c:if test="${sessionScope.totalReactions >=15 }">
+		<div>
+			<label><b style="color: red"><fmt:message
+						key="form.lbl.mySpace" /></b></label><b>${sessionScope.currentUser.mySpace}</b>
+		</div>
+	</c:if>
 </fieldset>
 
 <form action="updateMember">
@@ -41,6 +47,7 @@
 			<fmt:message key="btn.analytics" />
 		</button>
 	</form>
+	<br>
 </c:if>
 
 <form action="deleteMember">

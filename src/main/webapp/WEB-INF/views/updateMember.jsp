@@ -71,8 +71,14 @@
 			<label style="vertical-align: top"><fmt:message
 					key="form.lbl.introduction" /></label>
 			<form:textarea path="introduction" rows="6" cols="30" />
-			<form:errors path="introduction" cssStyle="color: red" />
 		</div>
+		<c:if test="${sessionScope.totalReactions >=15 }">
+			<div>
+				<label style="vertical-align: top"><fmt:message
+						key="form.lbl.mySpace" /></label>
+				<form:textarea path="mySpace" rows="6" cols="30" />
+			</div>
+		</c:if>
 	</fieldset>
 
 	<form:button>

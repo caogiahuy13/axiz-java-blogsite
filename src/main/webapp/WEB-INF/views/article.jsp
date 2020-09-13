@@ -8,6 +8,10 @@
 	<jsp:param name="title" value="screen.article.title" />
 </jsp:include>
 
+<c:if test="${articleUserReactionCount >= 15 && reactionCount >= 3}">
+	<p>MySpace: <b>${articleUserMySpace}</b></p>
+</c:if>
+
 <h2>
 	<span>${fn:escapeXml(article.title)}</span>
 	<c:if test="${reactionCount >= 3 }">
