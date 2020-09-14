@@ -11,6 +11,19 @@
 	request.setAttribute("stampIcon", stampIcon);
 %>
 
+<%
+	final int ratio = 50;
+	final int trophyMilestone = 200 / ratio;
+	final int bronzeMilestone = 300 / ratio;
+	final int silverMilestone = 500 / ratio;
+	final int goldMilestone = 1500 / ratio;
+
+	request.setAttribute("trophyMilestone", trophyMilestone);
+	request.setAttribute("bronzeMilestone", bronzeMilestone);
+	request.setAttribute("silverMilestone", silverMilestone);
+	request.setAttribute("goldMilestone", goldMilestone);
+%>
+
 <!DOCTYPE html>
 <html>
 <head>

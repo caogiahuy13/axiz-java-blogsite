@@ -8,7 +8,8 @@
 	<jsp:param name="title" value="screen.article.title" />
 </jsp:include>
 
-<c:if test="${articleUserReactionCount >= 15 && reactionCount >= 3}">
+<c:if
+	test="${articleUserReactionCount >= goldMilestone && reactionCount >= trophyMilestone}">
 	<p>
 		MySpace: <b>${articleUserMySpace}</b>
 	</p>
@@ -16,11 +17,10 @@
 
 <h2>
 	<span>${fn:escapeXml(article.title)}</span>
-	<c:if test="${reactionCount >= 3 }">
+	<c:if test="${reactionCount >= trophyMilestone}">
 		<i class="fas fa-trophy" style="color: orange"></i>
 	</c:if>
 </h2>
-
 <p style="white-space: pre-line">${fn:escapeXml(article.content)}</p>
 
 <div class="popup" onclick="togglePopup()">
@@ -38,11 +38,11 @@
 		</c:forEach>
 	</span>
 </div>
-<br>
+<div style="height: 10px"></div>
 
 <c:if test="${sessionScope.currentUser.userId != article.userId}">
 	<c:choose>
-		<c:when test="${sessionScope.totalReactions >= 1}">
+		<c:when test="${articleUserReactionCount >= bronzeMilestone}">
 			<c:forEach var="entry" items="${stampIcon}">
 				<jsp:include page="common/reaction.jsp">
 					<jsp:param name="stampId" value="${entry.key}" />
@@ -51,12 +51,11 @@
 			</c:forEach>
 		</c:when>
 		<c:otherwise>
-			<c:if test="${sessionScope.totalReactions < 1}">
-				<jsp:include page="common/reaction.jsp">
-					<jsp:param name="stampId" value="1" />
-					<jsp:param name="stampName" value="fa-thumbs-up" />
-				</jsp:include>
-			</c:if>
+
+			<jsp:include page="common/reaction.jsp">
+				<jsp:param name="stampId" value="1" />
+				<jsp:param name="stampName" value="fa-thumbs-up" />
+			</jsp:include>
 		</c:otherwise>
 	</c:choose>
 	<br>

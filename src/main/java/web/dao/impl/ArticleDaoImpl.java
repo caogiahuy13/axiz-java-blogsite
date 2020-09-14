@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import web.dao.ArticleDao;
 import web.entity.Article;
-import web.entity.ArticleWithReactionCount;
+import web.entity.ArticleWithExtraInfo;
 
 @Repository
 public class ArticleDaoImpl implements ArticleDao {
@@ -75,7 +75,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	@Override
-	public List<ArticleWithReactionCount> findByKeywordWithMostReaction(String keyword) {
+	public List<ArticleWithExtraInfo> findByKeywordWithMostReaction(String keyword) {
 		String sql = "SELECT a.article_id, a.title, a.content, a.user_id, a.created_at, a.updated_at, COUNT(r.reaction_id) count"
 				+ " FROM articles a"
 				+ " JOIN reactions r ON a.article_id = r.article_id"
@@ -87,7 +87,7 @@ public class ArticleDaoImpl implements ArticleDao {
 		paramMap.addValue("keyword", "%" + keyword + "%");
 
 		return jdbcTemplate.query(sql, paramMap,
-				new BeanPropertyRowMapper<ArticleWithReactionCount>(ArticleWithReactionCount.class));
+				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));
 	}
 
 	@Override
