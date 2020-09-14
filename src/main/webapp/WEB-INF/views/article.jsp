@@ -26,8 +26,7 @@
 <div class="popup" onclick="togglePopup()">
 	<c:forEach var="entry" items="${reactions}">
 		<c:if test="${entry.value > 0}">
-			<span style="color: blue"> ${entry.value} <i
-				class="far ${stampIcon[entry.key]}"></i>
+			<span style="color: blue"> ${entry.value} ${stampIcon[entry.key]}
 			</span>
 		</c:if>
 	</c:forEach>
@@ -51,10 +50,9 @@
 			</c:forEach>
 		</c:when>
 		<c:otherwise>
-
 			<jsp:include page="common/reaction.jsp">
 				<jsp:param name="stampId" value="1" />
-				<jsp:param name="stampName" value="fa-thumbs-up" />
+				<jsp:param name="stampName" value="&#x1f44d" />
 			</jsp:include>
 		</c:otherwise>
 	</c:choose>

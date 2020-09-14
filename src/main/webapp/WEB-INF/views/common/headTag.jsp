@@ -4,10 +4,11 @@
 
 <%
 	HashMap<Integer, String> stampIcon = new HashMap<>();
-	stampIcon.put(1, "fa-thumbs-up");
-	stampIcon.put(2, "fa-angry");
-	stampIcon.put(3, "fa-sad-cry");
-	stampIcon.put(4, "fa-laugh-squint");
+	stampIcon.put(1, "&#x1f44d"); // 👍
+	stampIcon.put(2, "&#x1f602"); // 😂
+	stampIcon.put(3, "&#x1f625"); // 😥
+	stampIcon.put(4, "&#x1f632"); // 😲
+	stampIcon.put(5, "&#x1f917"); // 🤗
 	request.setAttribute("stampIcon", stampIcon);
 %>
 
