@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <jsp:include page="common/headTag.jsp">
 	<jsp:param name="title" value="screen.analytics.title" />
@@ -12,7 +11,7 @@
 	var genderData = [];
 	<c:forEach items="${genderAnalytics}" var="item">
 	genderData.push({
-		y : '${item.value}',
+		y : ${item.value},
 		indexLabel : '${item.key}'
 	});
 	</c:forEach>
@@ -20,7 +19,7 @@
 	var ageData = [];
 	<c:forEach items="${ageAnalytics}" var="item">
 	ageData.push({
-		y : '${item.value}',
+		y : ${item.value},
 		indexLabel : '${item.key}'
 	});
 	</c:forEach>
@@ -28,7 +27,7 @@
 	var accessData = [];
 	<c:forEach items="${accessAnalytics}" var="item">
 	accessData.push({
-		y : '${item.value}',
+		y : ${item.value},
 		indexLabel : '${item.key}'
 	});
 	</c:forEach>
@@ -63,52 +62,27 @@
 		dataPoints : eachReactionData
 	});
 
+	function getPieChart(chartName, chartLabel, data){
+		return new CanvasJS.Chart(chartName, {
+			theme : "light2",
+			title : {
+				text : chartLabel
+			},
+			data : [ {
+				type : "pie",
+				showInLegend : true,
+				toolTipContent : "{y} - #percent %",
+				yValueFormatString : "#人",
+				legendText : "{indexLabel}",
+				dataPoints : data
+			} ]
+		});
+	}
+
 	window.onload = function() {
-		var genderChart = new CanvasJS.Chart("genderAnalytics", {
-			theme : "light2",
-			title : {
-				text : "性別分析"
-			},
-			data : [ {
-				type : "pie",
-				showInLegend : true,
-				toolTipContent : "{y} - #percent %",
-				yValueFormatString : "#人",
-				legendText : "{indexLabel}",
-				dataPoints : genderData
-			} ]
-		});
-
-		var ageChart = new CanvasJS.Chart("ageAnalytics", {
-			theme : "light2",
-			title : {
-				text : "年代分析"
-			},
-			data : [ {
-				type : "pie",
-				showInLegend : true,
-				toolTipContent : "{y} - #percent %",
-				yValueFormatString : "#人",
-				legendText : "{indexLabel}",
-				dataPoints : ageData
-			} ]
-		});
-
-		var accessChart = new CanvasJS.Chart("accessAnalytics", {
-			theme : "light2",
-			title : {
-				text : "アクセス分析"
-			},
-			data : [ {
-				type : "pie",
-				showInLegend : true,
-				toolTipContent : "{y} - #percent %",
-				yValueFormatString : "#人",
-				legendText : "{indexLabel}",
-				dataPoints : accessData
-			} ]
-		});
-
+		var genderChart = getPieChart("genderAnalytics", "性別分析",genderData);
+		var ageChart = getPieChart("ageAnalytics", "年代分析",ageData);
+		var accessChart =getPieChart("accessAnalytics", "アクセス分析",accessData);
 		var reactionChart = new CanvasJS.Chart("reactionAnalytics",
 				{
 					title:{
@@ -121,13 +95,10 @@
 					data: reactionData
 				});
 
-
-		reactionChart.render();
-
 		genderChart.render();
 		ageChart.render();
 		accessChart.render();
-
+		reactionChart.render();
 	}
 </script>
 <script type="text/javascript"
