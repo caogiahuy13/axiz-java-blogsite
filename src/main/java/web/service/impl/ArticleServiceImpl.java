@@ -58,4 +58,9 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<Article> findByUserId(Integer userId) {
 		return articleDao.findByUserId(userId);
 	}
+
+	@Override
+	public Article findLatestByUserId(Integer userId) {
+		return articleDao.findLatestByUserId(userId);
+	}
 }

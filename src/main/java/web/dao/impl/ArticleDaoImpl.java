@@ -113,4 +113,16 @@ public class ArticleDaoImpl implements ArticleDao {
 
 		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
 	}
+
+	@Override
+	public Article findLatestByUserId(Integer userId) {
+		String sql = SELECT_BASE + " WHERE user_id = :userId ORDER BY created_at DESC";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("userId", userId);
+
+		List<Article> articles = jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
+
+		return articles.isEmpty() ? null : articles.get(0);
+	}
 }

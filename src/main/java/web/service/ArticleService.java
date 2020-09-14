@@ -17,4 +17,6 @@ public interface ArticleService {
 
 	public List<Article> findByUserId(Integer userId);
 
+	public Article findLatestByUserId(Integer userId);
+
 }

@@ -78,9 +78,9 @@ public class ArticleController {
 			return ScreenName.CREATE_ARTICLE;
 		}
 
-		model.addAttribute("article", article);
+		article = articleService.findLatestByUserId(currentUser.getUserId());
 
-		return ScreenName.ARTICLE;
+		return "redirect:/" + ScreenName.ARTICLE + "?id=" + article.getArticleId();
 	}
 
 	@GetMapping(ARTICLE)
@@ -97,6 +97,7 @@ public class ArticleController {
 		List<CommentWithUserInfo> comments = commentService.findByArticleId(articleId);
 		List<User> reactedUsers = userService.findUsersReactAnArticle(articleId);
 		HashMap<Integer, Integer> reactions = reactionService.countMultipleByArticleId(articleId);
+
 		int articleUserReactionCount = reactionService.countByUserId(article.getUserId());
 		String articleUserMySpace = "";
 		if (articleUserReactionCount >= 15) {

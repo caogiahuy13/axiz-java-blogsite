@@ -38,6 +38,9 @@
 				<b>${fn:escapeXml(article.title)}</b>
 			</h4>
 			<p>${fn:escapeXml(article.getReviewContent())}</p>
+			<div>
+				<fmt:formatDate type="both" value="${article.createdAt}" />
+			</div>
 		</div>
 	</div>
 </c:forEach>
