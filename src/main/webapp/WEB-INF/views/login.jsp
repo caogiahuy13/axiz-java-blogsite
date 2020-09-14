@@ -20,7 +20,7 @@
 	<fieldset>
 		<div>
 			<label><fmt:message key="form.lbl.loginId" /></label>
-			<form:input path="loginId" />
+			<form:input path="loginId"/>
 			<form:errors path="loginId" cssStyle="color: red" />
 		</div>
 		<div>

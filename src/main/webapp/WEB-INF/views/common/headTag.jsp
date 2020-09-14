@@ -1,5 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+<%@ page import="java.util.HashMap"%>
+
+<%
+	HashMap<Integer, String> stampIcon = new HashMap<>();
+	stampIcon.put(1, "fa-thumbs-up");
+	stampIcon.put(2, "fa-angry");
+	stampIcon.put(3, "fa-sad-cry");
+	stampIcon.put(4, "fa-laugh-squint");
+	request.setAttribute("stampIcon", stampIcon);
+%>
+
 <!DOCTYPE html>
 <html>
 <head>

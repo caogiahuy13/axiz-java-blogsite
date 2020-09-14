@@ -9,7 +9,9 @@
 </jsp:include>
 
 <c:if test="${articleUserReactionCount >= 15 && reactionCount >= 3}">
-	<p>MySpace: <b>${articleUserMySpace}</b></p>
+	<p>
+		MySpace: <b>${articleUserMySpace}</b>
+	</p>
 </c:if>
 
 <h2>
@@ -24,20 +26,8 @@
 <div class="popup" onclick="togglePopup()">
 	<c:forEach var="entry" items="${reactions}">
 		<c:if test="${entry.value > 0}">
-			<span style="color: blue"> ${entry.value} <c:choose>
-					<c:when test="${entry.key == 4}">
-						<i class="far fa-laugh-squint"></i>
-					</c:when>
-					<c:when test="${entry.key == 3}">
-						<i class="far fa-sad-cry"></i>
-					</c:when>
-					<c:when test="${entry.key == 2}">
-						<i class="far fa-angry"></i>
-					</c:when>
-					<c:otherwise>
-						<i class="far fa-thumbs-up"></i>
-					</c:otherwise>
-				</c:choose>
+			<span style="color: blue"> ${entry.value} <i
+				class="far ${stampIcon[entry.key]}"></i>
 			</span>
 		</c:if>
 	</c:forEach>
@@ -48,28 +38,29 @@
 		</c:forEach>
 	</span>
 </div>
-<div style="height: 10px"></div>
+<br>
 
 <c:if test="${sessionScope.currentUser.userId != article.userId}">
-	<c:if test="${sessionScope.totalReactions >= 1}">
-		<jsp:include page="common/reaction.jsp">
-			<jsp:param name="stampId" value="4" />
-			<jsp:param name="stampName" value="fa-laugh-squint" />
-		</jsp:include>
-		<jsp:include page="common/reaction.jsp">
-			<jsp:param name="stampId" value="3" />
-			<jsp:param name="stampName" value="fa-sad-cry" />
-		</jsp:include>
-		<jsp:include page="common/reaction.jsp">
-			<jsp:param name="stampId" value="2" />
-			<jsp:param name="stampName" value="fa-angry" />
-		</jsp:include>
-	</c:if>
-	<jsp:include page="common/reaction.jsp">
-		<jsp:param name="stampId" value="1" />
-		<jsp:param name="stampName" value="fa-thumbs-up" />
-	</jsp:include>
-	<br><br>
+	<c:choose>
+		<c:when test="${sessionScope.totalReactions >= 1}">
+			<c:forEach var="entry" items="${stampIcon}">
+				<jsp:include page="common/reaction.jsp">
+					<jsp:param name="stampId" value="${entry.key}" />
+					<jsp:param name="stampName" value="${entry.value}" />
+				</jsp:include>
+			</c:forEach>
+		</c:when>
+		<c:otherwise>
+			<c:if test="${sessionScope.totalReactions < 1}">
+				<jsp:include page="common/reaction.jsp">
+					<jsp:param name="stampId" value="1" />
+					<jsp:param name="stampName" value="fa-thumbs-up" />
+				</jsp:include>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
+	<br>
+	<br>
 </c:if>
 
 
@@ -86,7 +77,8 @@
 			<fmt:message key="btn.delete" />
 		</button>
 	</form>
-	<br><br>
+	<br>
+	<br>
 </c:if>
 
 <form action="comment" method="post">

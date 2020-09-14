@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <jsp:include page="common/headTag.jsp">
@@ -31,18 +30,8 @@
 </c:if>
 
 <c:forEach var="article" items="${articles}">
-	<div class="card"
-		onclick="window.location='/article?id=${article.articleId}';">
-		<div class="container">
-			<h4>
-				<b>${fn:escapeXml(article.title)}</b>
-			</h4>
-			<p>${fn:escapeXml(article.getReviewContent())}</p>
-			<div>
-				<fmt:formatDate type="both" value="${article.createdAt}" />
-			</div>
-		</div>
-	</div>
+	<c:set var="article" value="${article}" scope="request" />
+	<jsp:include page="common/articleCard.jsp" />
 </c:forEach>
 
 <jsp:include page="common/footTag.jsp" />
