@@ -15,7 +15,7 @@ public interface ArticleService {
 
 	public List<? extends Article> find(Integer userId, String keyword, String type);
 
-	public List<Article> findByUserId(Integer userId);
+	public List<? extends Article> findByUserId(Integer userId);
 
 	public Article findLatestByUserId(Integer userId);
 

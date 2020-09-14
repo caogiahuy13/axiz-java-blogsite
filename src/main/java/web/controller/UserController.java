@@ -58,7 +58,7 @@ public class UserController {
 	public String getMyArticles(Model model) {
 		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
 
-		List<Article> articles = articleService.findByUserId(currentUser.getUserId());
+		List<? extends Article> articles = articleService.findByUserId(currentUser.getUserId());
 
 		if (articles.isEmpty()) {
 			model.addAttribute("msg", Message.MY_ARTICLES_NO_RESULT);

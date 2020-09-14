@@ -15,6 +15,11 @@ import web.entity.ArticleWithExtraInfo;
 @Repository
 public class ArticleDaoImpl implements ArticleDao {
 	private static final String SELECT_BASE = "SELECT * FROM articles ";
+	private static final String SELECT_BASE_JOIN_USERS_AND_REACTIONS = "SELECT"
+			+ " a.article_id, a.title, a.content, a.user_id, a.created_at, a.updated_at, COUNT(r.reaction_id) count, u.user_name, u.login_id "
+			+ " FROM articles a "
+			+ " JOIN reactions r ON a.article_id = r.article_id "
+			+ " JOIN users u ON a.user_id = u.user_id ";
 	@Autowired
 	NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -65,22 +70,23 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	@Override
-	public List<Article> findByKeyword(String keyword) {
-		String sql = SELECT_BASE + " WHERE content LIKE :keyword OR title LIKE :keyword";
+	public List<ArticleWithExtraInfo> findByKeyword(String keyword) {
+		String sql = SELECT_BASE_JOIN_USERS_AND_REACTIONS
+				+ " WHERE a.content LIKE :keyword OR a.title LIKE :keyword"
+				+ " GROUP BY a.article_id, u.user_id, u.login_id ";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("keyword", "%" + keyword + "%");
 
-		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
+		return jdbcTemplate.query(sql, paramMap,
+				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));
 	}
 
 	@Override
 	public List<ArticleWithExtraInfo> findByKeywordWithMostReaction(String keyword) {
-		String sql = "SELECT a.article_id, a.title, a.content, a.user_id, a.created_at, a.updated_at, COUNT(r.reaction_id) count"
-				+ " FROM articles a"
-				+ " JOIN reactions r ON a.article_id = r.article_id"
+		String sql = SELECT_BASE_JOIN_USERS_AND_REACTIONS
 				+ " WHERE a.content LIKE :keyword OR a.title LIKE :keyword"
-				+ " GROUP BY a.article_id"
+				+ " GROUP BY a.article_id, u.user_id, u.login_id "
 				+ " ORDER BY count DESC";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
@@ -91,27 +97,31 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	@Override
-	public List<Article> findByKeywordReactedByUser(Integer userId, String keyword) {
-		String sql = SELECT_BASE
-				+ " JOIN reactions ON articles.article_id = reactions.article_id"
-				+ " WHERE reactions.user_id = :userId AND (content LIKE :keyword OR title LIKE :keyword)"
-				+ " ORDER BY articles.article_id";
+	public List<ArticleWithExtraInfo> findByKeywordReactedByUser(Integer userId, String keyword) {
+		String sql = SELECT_BASE_JOIN_USERS_AND_REACTIONS
+				+ " WHERE r.user_id = :userId AND (a.content LIKE :keyword OR a.title LIKE :keyword)"
+				+ " GROUP BY a.article_id, u.user_id, u.login_id "
+				+ " ORDER BY a.article_id";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("userId", userId);
 		paramMap.addValue("keyword", "%" + keyword + "%");
 
-		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
+		return jdbcTemplate.query(sql, paramMap,
+				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));
 	}
 
 	@Override
-	public List<Article> findByUserId(Integer userId) {
-		String sql = SELECT_BASE + " WHERE user_id = :userId";
+	public List<ArticleWithExtraInfo> findByUserId(Integer userId) {
+		String sql = SELECT_BASE_JOIN_USERS_AND_REACTIONS
+				+ " WHERE u.user_id = :userId"
+				+ " GROUP BY a.article_id, u.user_id, u.login_id ";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("userId", userId);
 
-		return jdbcTemplate.query(sql, paramMap, new BeanPropertyRowMapper<Article>(Article.class));
+		return jdbcTemplate.query(sql, paramMap,
+				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));
 	}
 
 	@Override

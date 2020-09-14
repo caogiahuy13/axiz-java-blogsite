@@ -7,12 +7,14 @@
 <div class="card"
 	onclick="window.location='/article?id=${article.articleId}';">
 	<div class="container">
-		<h4>
-			<b>${fn:escapeXml(article.title)}</b>
-		</h4>
+		<p>
+			<b>${fn:escapeXml(article.title)}</b><br> <i
+				style="font-size: 14px;">@${article.loginId } <fmt:formatDate
+					type="date" value="${article.createdAt}" /></i>
+		</p>
+
 		<p>${fn:escapeXml(article.getReviewContent())}</p>
-		<div>
-			<fmt:formatDate type="both" value="${article.createdAt}" />
-		</div>
+		<div style="text-align: right;"><b>${article.count }</b> スタンプ</div>
+
 	</div>
 </div>

@@ -14,13 +14,13 @@ public interface ArticleDao {
 
 	public Article findById(Integer articleId);
 
-	public List<Article> findByKeyword(String keyword);
+	public List<ArticleWithExtraInfo> findByKeyword(String keyword);
 
 	public List<ArticleWithExtraInfo> findByKeywordWithMostReaction(String keyword);
 
-	public List<Article> findByKeywordReactedByUser(Integer userId, String keyword);
+	public List<ArticleWithExtraInfo> findByKeywordReactedByUser(Integer userId, String keyword);
 
-	public List<Article> findByUserId(Integer userId);
+	public List<ArticleWithExtraInfo> findByUserId(Integer userId);
 
 	public Article findLatestByUserId(Integer userId);
 }
