@@ -41,14 +41,14 @@
 </form>
 <br>
 
-<c:if test="${sessionScope.totalReactions >=5 }">
-	<form action="analytics">
-		<button>
-			<fmt:message key="btn.analytics" />
-		</button>
-	</form>
-	<br>
-</c:if>
+
+<form action="myArticles">
+	<button>
+		<fmt:message key="btn.myArticles" />
+	</button>
+</form>
+<br>
+
 
 <form action="deleteMember">
 	<button>

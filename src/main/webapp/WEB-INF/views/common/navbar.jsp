@@ -14,9 +14,11 @@
 			</button>
 			<div class="dropdown-content">
 				<a href="/myPage"><fmt:message key="btn.myPage" /></a> <a
-					href="/createArticle"><fmt:message key="btn.createArticle" /></a><a
-					href="/myArticles"><fmt:message key="btn.myArticles" /></a><a
-					href="/logout"><fmt:message key="btn.logout" /></a>
+					href="/createArticle"><fmt:message key="btn.createArticle" /></a>
+				<c:if test="${sessionScope.totalReactions > silverMilestone }">
+					<a href="/analytics"><fmt:message key="btn.analytics" /></a>
+				</c:if>
+				<a href="/logout"><fmt:message key="btn.logout" /></a>
 			</div>
 		</c:if>
 	</div>
