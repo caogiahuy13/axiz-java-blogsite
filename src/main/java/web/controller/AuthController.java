@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import web.entity.User;
 import web.form.LoginForm;
+import web.form.RePassForm;
 import web.form.RegisterForm;
 import web.service.ReactionService;
 import web.service.UserService;
@@ -25,7 +26,7 @@ public class AuthController {
 	private static final String LOGIN = "login";
 	private static final String LOGOUT = "logout";
 	private static final String REGISTER = "register";
-
+	private static final String REGISTER_CONFIRM = "registerConfirm";
 	@Autowired
 	UserService userService;
 
@@ -68,36 +69,59 @@ public class AuthController {
 	}
 
 	@GetMapping(REGISTER)
-	public String getRegister(@ModelAttribute RegisterForm registerForm, Model model) {
+	public String getRegister(@ModelAttribute RegisterForm registerForm) {
 		return ScreenName.REGISTER;
 	}
 
 	@PostMapping(REGISTER)
-	public String postRegister(@Validated @ModelAttribute RegisterForm registerForm, BindingResult bindingResult,
-			Model model) {
+	public String postRegister(@Validated @ModelAttribute RePassForm rePassForm, BindingResult bindingResult,
+			Model model, @ModelAttribute RegisterForm registerForm) {
+		if (bindingResult.hasErrors()) {
+			return ScreenName.REGISTER_CONFIRM;
+		}
+
+		User registerUser = (User) session.getAttribute(SessionUtil.REGISTER_USER);
+
+		if (!rePassForm.getRePass().equals(registerUser.getPassword())) {
+			model.addAttribute("msg", Message.PASSWORD_IS_NOT_MATCH);
+			return ScreenName.REGISTER_CONFIRM;
+		}
+
+		if (userService.register(registerUser) <= 0) {
+			return ScreenName.REGISTER;
+		}
+
+		User currentUser = userService.authenticate(registerUser.getLoginId(), registerUser.getPassword());
+
+		session.setAttribute(SessionUtil.CURRENT_USER, currentUser);
+		session.removeAttribute(SessionUtil.REGISTER_USER);
+
+		return "redirect:/" + ScreenName.TOP;
+	}
+
+	@PostMapping(REGISTER_CONFIRM)
+	public String postRegisterConfirm(@Validated @ModelAttribute RegisterForm registerForm, BindingResult bindingResult,
+			Model model, @ModelAttribute RePassForm rePassForm) {
+
 		if (bindingResult.hasErrors()) {
 			return ScreenName.REGISTER;
 		}
 
-		if (!registerForm.getPassword().equals(registerForm.getRePassword())) {
-			model.addAttribute("msg", Message.PASSWORD_IS_NOT_MATCH);
+		if (userService.findByLoginId(registerForm.getLoginId()) != null) {
+			model.addAttribute("msg", Message.LOGIN_ID_IS_EXISTED);
 			return ScreenName.REGISTER;
 		}
 
 		User user = new User();
 		user.setLoginId(registerForm.getLoginId());
 		user.setUserName(registerForm.getUserName());
-		user.setPassword(registerForm.getPassword());
+		user.setNickname(registerForm.getNickname());
 		user.setGender(registerForm.getGender());
 		user.setBirthdate(registerForm.getBirthdate());
+		user.setPassword(registerForm.getPassword());
 
-		if (userService.register(user) <= 0) {
-			return ScreenName.REGISTER;
-		}
+		session.setAttribute(SessionUtil.REGISTER_USER, user);
 
-		user = userService.authenticate(user.getLoginId(), user.getPassword());
-		session.setAttribute(SessionUtil.CURRENT_USER, user);
-
-		return "redirect:/" + ScreenName.MY_PAGE;
+		return ScreenName.REGISTER_CONFIRM;
 	}
 }

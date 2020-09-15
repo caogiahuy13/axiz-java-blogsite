@@ -1,21 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page
-	import="java.util.Calendar, java.util.Map, java.util.LinkedHashMap"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
-<%
-	final int minYear = 1900;
-	final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-
-	Map<String, Integer> years = new LinkedHashMap<String, Integer>();
-
-	for (int i = currentYear; i >= minYear; i--) {
-		years.put(String.valueOf(i), i);
-	}
-%>
 
 <jsp:include page="common/headTag.jsp">
 	<jsp:param name="title" value="screen.register.title" />
@@ -25,11 +12,13 @@
 	<c:redirect url="top" />
 </c:if>
 
+<p>※情報を入力してください</p>
+
 <c:if test="${not empty msg}">
 	<p class="error">${msg}</p>
 </c:if>
 
-<form:form action="register" modelAttribute="registerForm">
+<form:form action="registerConfirm" modelAttribute="registerForm">
 	<fieldset class="label-130">
 		<div>
 			<label><fmt:message key="form.lbl.loginId" /></label>
@@ -42,14 +31,9 @@
 			<form:errors path="userName" cssStyle="color: red" />
 		</div>
 		<div>
-			<label><fmt:message key="form.lbl.password" /></label>
-			<form:input path="password" type="password" />
-			<form:errors path="password" cssStyle="color: red" />
-		</div>
-		<div>
-			<label><fmt:message key="form.lbl.rePassword" /></label>
-			<form:input path="rePassword" type="password" />
-			<form:errors path="rePassword" cssStyle="color: red" />
+			<label><fmt:message key="form.lbl.nickname" /></label>
+			<form:input path="nickname" />
+			<form:errors path="nickname" cssStyle="color: red" />
 		</div>
 		<div>
 			<label><fmt:message key="form.lbl.gender" /></label>
@@ -61,13 +45,14 @@
 					key="form.lbl.female" /></label>
 		</div>
 		<div>
-			<label><fmt:message key="form.lbl.birthYear" /></label>
-			<form:select path="birthYear">
-				<form:options items="<%=years%>" />
-			</form:select>
+			<label><fmt:message key="form.lbl.birthdate" /></label>
+			<form:input type="date" path="birthdate" value="2000-01-01" />
+			<form:errors path="birthdate" cssStyle="color: red" />
 		</div>
 		<div>
-			<form:input type="date" path=""/>
+			<label><fmt:message key="form.lbl.password" /></label>
+			<form:input path="password" type="password" />
+			<form:errors path="password" cssStyle="color: red" />
 		</div>
 	</fieldset>
 	<form:button>
@@ -75,8 +60,6 @@
 	</form:button>
 </form:form>
 
-<br>
-
-<a href="/login"><fmt:message key="btn.returnToLogin" /></a>
+<a href="/login"><fmt:message key="btn.return" /></a>
 
 <jsp:include page="common/footTag.jsp" />

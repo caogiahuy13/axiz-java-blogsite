@@ -17,7 +17,7 @@
 </c:if>
 
 <form:form action="login" modelAttribute="loginForm">
-	<fieldset>
+	<fieldset class="label-130">
 		<div>
 			<label><fmt:message key="form.lbl.loginId" /></label>
 			<form:input path="loginId"/>
