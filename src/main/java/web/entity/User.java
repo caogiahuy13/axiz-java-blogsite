@@ -1,14 +1,16 @@
 package web.entity;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class User {
 	private Integer userId;
 	private String loginId;
 	private String userName;
+	private String nickname;
 	private String password;
 	private String gender;
-	private Integer birthYear;
+	private Date birthdate;
 	private String introduction;
 	private String mySpace;
 	private Timestamp createdAt;
@@ -18,14 +20,15 @@ public class User {
 
 	}
 
-	public User(Integer userId, String loginId, String userName, String password, String gender, Integer birthYear,
-			String introduction, String mySpace, Timestamp createdAt, Timestamp updatedAt) {
+	public User(Integer userId, String loginId, String userName, String nickname, String password, String gender,
+			Date birthdate, String introduction, String mySpace, Timestamp createdAt, Timestamp updatedAt) {
 		this.userId = userId;
 		this.loginId = loginId;
 		this.userName = userName;
+		this.nickname = nickname;
 		this.password = password;
 		this.gender = gender;
-		this.birthYear = birthYear;
+		this.birthdate = birthdate;
 		this.introduction = introduction;
 		this.mySpace = mySpace;
 		this.createdAt = createdAt;
@@ -56,12 +59,52 @@ public class User {
 		this.userName = userName;
 	}
 
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 	public String getPassword() {
 		return password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public Date getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public String getIntroduction() {
+		return introduction;
+	}
+
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
+	}
+
+	public String getMySpace() {
+		return mySpace;
+	}
+
+	public void setMySpace(String mySpace) {
+		this.mySpace = mySpace;
 	}
 
 	public Timestamp getCreatedAt() {
@@ -80,35 +123,4 @@ public class User {
 		this.updatedAt = updatedAt;
 	}
 
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public Integer getBirthYear() {
-		return birthYear;
-	}
-
-	public void setBirthYear(Integer birthYear) {
-		this.birthYear = birthYear;
-	}
-
-	public String getIntroduction() {
-		return introduction;
-	}
-
-	public void setIntroduction(String introduction) {
-		this.introduction = introduction;
-	}
-
-	public String getMySpace() {
-		return mySpace;
-	}
-
-	public void setMySpace(String mySpace) {
-		this.mySpace = mySpace;
-	}
 }

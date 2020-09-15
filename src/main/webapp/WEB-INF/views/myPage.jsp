@@ -21,7 +21,7 @@
 		<label><fmt:message key="form.lbl.gender" /></label>${sessionScope.currentUser.gender}
 	</div>
 	<div>
-		<label><fmt:message key="form.lbl.birthYear" /></label>${sessionScope.currentUser.birthYear}
+		<label><fmt:message key="form.lbl.birthYear" /></label>${sessionScope.currentUser.birthdate}
 	</div>
 	<div>
 		<label><fmt:message key="form.lbl.introduction" /></label>${sessionScope.currentUser.introduction}

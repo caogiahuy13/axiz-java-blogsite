@@ -1,5 +1,7 @@
 package web.form;
 
+import java.sql.Date;
+
 import javax.validation.constraints.NotBlank;
 
 public class RegisterForm {
@@ -17,7 +19,7 @@ public class RegisterForm {
 
 	private String gender;
 
-	private Integer birthYear;
+	private Date birthdate;
 
 	public String getLoginId() {
 		return loginId;
@@ -59,12 +61,12 @@ public class RegisterForm {
 		this.gender = gender;
 	}
 
-	public Integer getBirthYear() {
-		return birthYear;
+	public Date getBirthdate() {
+		return birthdate;
 	}
 
-	public void setBirthYear(Integer birthYear) {
-		this.birthYear = birthYear;
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
 	}
 
 }

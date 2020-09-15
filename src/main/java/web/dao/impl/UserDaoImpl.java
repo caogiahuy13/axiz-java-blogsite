@@ -14,14 +14,14 @@ import web.entity.User;
 @Repository
 public class UserDaoImpl implements UserDao {
 
-	private static final String SELECT_BASE = "SELECT user_id, login_id, user_name, password, gender, birth_year, introduction, my_space, created_at, updated_at FROM users ";
+	private static final String SELECT_BASE = "SELECT u.* FROM users u ";
 
 	@Autowired
 	NamedParameterJdbcTemplate jdbcTemplate;
 
 	@Override
 	public User authenticate(String loginId, String password) {
-		String sql = SELECT_BASE + "WHERE login_id = :loginId AND password = :password";
+		String sql = SELECT_BASE + " WHERE u.login_id = :loginId AND u.password = :password";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("loginId", loginId);
@@ -34,15 +34,15 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public int register(User user) {
-		String sql = "INSERT INTO users (login_id, user_name, password, gender, birth_year)"
-				+ " VALUES (:loginId, :userName, :password, :gender, :birthYear)";
+		String sql = "INSERT INTO users (login_id, user_name, password, gender, birthdate)"
+				+ " VALUES (:loginId, :userName, :password, :gender, :birthdate)";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("loginId", user.getLoginId());
 		paramMap.addValue("userName", user.getUserName());
 		paramMap.addValue("password", user.getPassword());
 		paramMap.addValue("gender", user.getGender());
-		paramMap.addValue("birthYear", user.getBirthYear());
+		paramMap.addValue("birthdate", user.getBirthdate());
 
 		return jdbcTemplate.update(sql, paramMap);
 	}
@@ -61,14 +61,14 @@ public class UserDaoImpl implements UserDao {
 	public int update(User user) {
 		String sql = "UPDATE users SET "
 				+ " user_name = :userName, login_id = :loginId, password = :password, "
-				+ " birth_year = :birthYear, introduction = :introduction, my_space = :mySpace "
+				+ " birthdate = :birthdate, introduction = :introduction, my_space = :mySpace "
 				+ " WHERE user_id = :userId";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("loginId", user.getLoginId());
 		paramMap.addValue("userName", user.getUserName());
 		paramMap.addValue("password", user.getPassword());
-		paramMap.addValue("birthYear", user.getBirthYear());
+		paramMap.addValue("birthdate", user.getBirthdate());
 		paramMap.addValue("introduction", user.getIntroduction());
 		paramMap.addValue("mySpace", user.getMySpace());
 		paramMap.addValue("userId", user.getUserId());
@@ -89,7 +89,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User findByLoginId(String loginId) {
-		String sql = SELECT_BASE + "WHERE login_id = :loginId";
+		String sql = SELECT_BASE + "WHERE u.login_id = :loginId";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("loginId", loginId);
@@ -101,7 +101,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User findByUserId(Integer userId) {
-		String sql = SELECT_BASE + "WHERE user_id = :userId";
+		String sql = SELECT_BASE + "WHERE u.user_id = :userId";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("userId", userId);

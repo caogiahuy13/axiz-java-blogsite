@@ -89,7 +89,7 @@ public class AuthController {
 		user.setUserName(registerForm.getUserName());
 		user.setPassword(registerForm.getPassword());
 		user.setGender(registerForm.getGender());
-		user.setBirthYear(registerForm.getBirthYear());
+		user.setBirthdate(registerForm.getBirthdate());
 
 		if (userService.register(user) <= 0) {
 			return ScreenName.REGISTER;

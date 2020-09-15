@@ -91,7 +91,7 @@ public class UserController {
 		updateUserForm.setUserName(currentUser.getUserName());
 		updateUserForm.setPassword(currentUser.getPassword());
 		updateUserForm.setGender(currentUser.getGender());
-		updateUserForm.setBirthYear(currentUser.getBirthYear());
+		updateUserForm.setBirthdate(currentUser.getBirthdate());
 		updateUserForm.setIntroduction(currentUser.getIntroduction());
 		updateUserForm.setMySpace(currentUser.getMySpace());
 
@@ -121,7 +121,7 @@ public class UserController {
 		user.setUserName(updateUserForm.getUserName());
 		user.setPassword(updateUserForm.getPassword());
 		user.setGender(updateUserForm.getGender());
-		user.setBirthYear(updateUserForm.getBirthYear());
+		user.setBirthdate(updateUserForm.getBirthdate());
 		user.setIntroduction(updateUserForm.getIntroduction());
 		user.setMySpace(updateUserForm.getMySpace());
 
