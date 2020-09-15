@@ -22,5 +22,9 @@ public interface ArticleDao {
 
 	public List<ArticleWithExtraInfo> findByUserId(Integer userId);
 
+	public List<ArticleWithExtraInfo> findByUserIdPagination(Integer userId, Integer pageNumber, Integer itemPerPage);
+
+	public Integer countByUserId(Integer userId);
+
 	public Article findLatestByUserId(Integer userId);
 }

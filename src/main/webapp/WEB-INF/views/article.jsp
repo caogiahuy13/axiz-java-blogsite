@@ -26,8 +26,8 @@
 <div class="popup" onclick="togglePopup()">
 	<c:forEach var="entry" items="${reactions}">
 		<c:if test="${entry.value > 0}">
-			<span style="color: blue"> ${entry.value} ${stampIcon[entry.key]}
-			</span>
+			<span style="color: blue"> ${entry.value}
+				${stampIcon[entry.key]} </span>
 		</c:if>
 	</c:forEach>
 	<span class="popuptext" id="myPopup"> <c:forEach var="user"
@@ -43,10 +43,12 @@
 	<c:choose>
 		<c:when test="${articleUserReactionCount >= bronzeMilestone}">
 			<c:forEach var="entry" items="${stampIcon}">
-				<jsp:include page="common/reaction.jsp">
-					<jsp:param name="stampId" value="${entry.key}" />
-					<jsp:param name="stampName" value="${entry.value}" />
-				</jsp:include>
+				<c:if test="${entry.key != 1 }">
+					<jsp:include page="common/reaction.jsp">
+						<jsp:param name="stampId" value="${entry.key}" />
+						<jsp:param name="stampName" value="${entry.value}" />
+					</jsp:include>
+				</c:if>
 			</c:forEach>
 		</c:when>
 		<c:otherwise>

@@ -13,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import web.entity.Article;
 import web.entity.ReactionsByArticle;
@@ -50,7 +51,19 @@ public class UserController {
 	HttpSession session;
 
 	@GetMapping(MY_PAGE)
-	public String getMyPage() {
+	public String getMyPage(Model model, @RequestParam(defaultValue = "1") String pageNumber) {
+		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
+
+		final Integer LIMIT = 2;
+
+		List<? extends Article> articles = articleService.findByUserIdPagination(currentUser.getUserId(),
+				Integer.parseInt(pageNumber), LIMIT);
+		int articleMaxPage = articleService.countByUserId(currentUser.getUserId()) / 2 + 1;
+
+		model.addAttribute("articles", articles);
+		model.addAttribute("articleMaxPage", articleMaxPage);
+		model.addAttribute("articleCurPage", Integer.parseInt(pageNumber));
+
 		return ScreenName.MY_PAGE;
 	}
 

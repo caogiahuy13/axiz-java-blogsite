@@ -9,6 +9,7 @@
 	stampIcon.put(3, "&#x1f625"); // 😥
 	stampIcon.put(4, "&#x1f632"); // 😲
 	stampIcon.put(5, "&#x1f917"); // 🤗
+
 	request.setAttribute("stampIcon", stampIcon);
 %>
 
@@ -34,6 +35,7 @@
 <link href="css/navbar.css" rel="stylesheet">
 <link href="css/popup.css" rel="stylesheet">
 <link href="css/card.css" rel="stylesheet">
+<link href="css/pagination.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 </head>

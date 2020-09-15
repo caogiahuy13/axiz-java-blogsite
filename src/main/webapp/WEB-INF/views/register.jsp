@@ -66,6 +66,9 @@
 				<form:options items="<%=years%>" />
 			</form:select>
 		</div>
+		<div>
+			<form:input type="date" path=""/>
+		</div>
 	</fieldset>
 	<form:button>
 		<fmt:message key="btn.register" />

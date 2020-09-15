@@ -17,6 +17,10 @@ public interface ArticleService {
 
 	public List<? extends Article> findByUserId(Integer userId);
 
+	public List<? extends Article> findByUserIdPagination(Integer userId, Integer pageNumber, Integer itemPerPage);
+
+	public Integer countByUserId(Integer userId);
+
 	public Article findLatestByUserId(Integer userId);
 
 }

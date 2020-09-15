@@ -60,6 +60,16 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
+	public List<? extends Article> findByUserIdPagination(Integer userId, Integer pageNumber, Integer itemPerPage) {
+		return articleDao.findByUserIdPagination(userId, pageNumber, itemPerPage);
+	}
+
+	@Override
+	public Integer countByUserId(Integer userId) {
+		return articleDao.countByUserId(userId);
+	}
+
+	@Override
 	public Article findLatestByUserId(Integer userId) {
 		return articleDao.findLatestByUserId(userId);
 	}

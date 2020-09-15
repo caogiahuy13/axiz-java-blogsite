@@ -135,4 +135,31 @@ public class ArticleDaoImpl implements ArticleDao {
 
 		return articles.isEmpty() ? null : articles.get(0);
 	}
+
+	@Override
+	public Integer countByUserId(Integer userId) {
+		String sql = " SELECT COUNT(*) FROM articles WHERE user_id = :userId";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("userId", userId);
+
+		return jdbcTemplate.queryForObject(sql, paramMap, Integer.class);
+	}
+
+	@Override
+	public List<ArticleWithExtraInfo> findByUserIdPagination(Integer userId, Integer pageNumber, Integer itemPerPage) {
+		String sql = SELECT_BASE_JOIN_USERS_AND_REACTIONS
+				+ " WHERE u.user_id = :userId"
+				+ " GROUP BY a.article_id, u.user_id, u.login_id "
+				+ " ORDER BY a.created_at DESC"
+				+ " OFFSET :offset LIMIT :limit";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("userId", userId);
+		paramMap.addValue("offset", (pageNumber - 1) * itemPerPage);
+		paramMap.addValue("limit", itemPerPage);
+
+		return jdbcTemplate.query(sql, paramMap,
+				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));
+	}
 }

@@ -41,14 +41,35 @@
 </form>
 <br>
 
-
-<form action="myArticles">
-	<button>
-		<fmt:message key="btn.myArticles" />
-	</button>
-</form>
+<c:if test="${not empty articles }">
+	<c:forEach var="article" items="${articles}">
+		<c:set var="article" value="${article}" scope="request" />
+		<jsp:include page="common/articleCard.jsp" />
+	</c:forEach>
+	<div class="pagination" style="text-align: center; width: 50%;">
+		<c:if test="${articleCurPage > 1}">
+			<a href="/myPage?pageNumber=${articleCurPage - 1}">&laquo;</a>
+		</c:if>
+		<c:if test="${articleCurPage == 1}">
+			<a href="/myPage?pageNumber=${articleCurPage}">&laquo;</a>
+		</c:if>
+		<c:forEach begin="1" end="${articleMaxPage }" varStatus="loop">
+			<c:if test="${articleCurPage == loop.index}">
+				<a href="/myPage?pageNumber=${loop.index}" class="active">${loop.index}</a>
+			</c:if>
+			<c:if test="${articleCurPage != loop.index}">
+				<a href="/myPage?pageNumber=${loop.index}">${loop.index}</a>
+			</c:if>
+		</c:forEach>
+		<c:if test="${articleCurPage < articleMaxPage}">
+			<a href="/myPage?pageNumber=${articleCurPage + 1}">&raquo;</a>
+		</c:if>
+		<c:if test="${articleCurPage == articleMaxPage}">
+			<a href="/myPage?pageNumber=${articleCurPage}">&raquo;</a>
+		</c:if>
+	</div>
+</c:if>
 <br>
-
 
 <form action="deleteMember">
 	<button>

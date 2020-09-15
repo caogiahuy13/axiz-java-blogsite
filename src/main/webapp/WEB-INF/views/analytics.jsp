@@ -32,6 +32,14 @@
 	});
 	</c:forEach>
 
+	var stampIconName = {
+			1: "👍",
+			2: "😂",
+			3: "😥",
+			4: "😲",
+			5: "🤗"
+	};
+
 	var reactionData = [];
 	var eachReactionData = [];
 	var curStampId = 1;
@@ -40,7 +48,7 @@
 	if ("${item.stampId}" > curStampId) {
 		reactionData.push({
 			type : "stackedColumn",
-			legendText : ""+curStampId,
+			legendText : stampIconName[curStampId],
 			showInLegend : "true",
 			dataPoints : eachReactionData
 		});
@@ -54,7 +62,7 @@
 	</c:forEach>
 	reactionData.push({
 		type : "stackedColumn",
-		legendText : ""+curStampId,
+		legendText : stampIconName[curStampId],
 		showInLegend : "true",
 		indexLabel : "#total",
 		yValueFormatString : "#",
