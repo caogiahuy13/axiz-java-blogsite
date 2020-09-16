@@ -51,18 +51,20 @@ public class UserController {
 	HttpSession session;
 
 	@GetMapping(MY_PAGE)
-	public String getMyPage(Model model, @RequestParam(defaultValue = "1") String pageNumber) {
-		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
+	public String getMyPage(Model model, @RequestParam(defaultValue = "1") Integer pageNumber,
+			@RequestParam(name = "id") Integer userId) {
+		User user = userService.findByUserId(userId);
 
-		final Integer LIMIT = 2;
+		final Integer LIMIT = 3;
 
-		List<? extends Article> articles = articleService.findByUserIdPagination(currentUser.getUserId(),
-				Integer.parseInt(pageNumber), LIMIT);
-		int articleMaxPage = articleService.countByUserId(currentUser.getUserId()) / 2 + 1;
+		List<? extends Article> articles = articleService.findByUserIdPagination(user.getUserId(),
+				pageNumber, LIMIT);
+		int articleMaxPage = articleService.countByUserId(userId) / LIMIT + 1;
 
+		model.addAttribute("user", user);
 		model.addAttribute("articles", articles);
 		model.addAttribute("articleMaxPage", articleMaxPage);
-		model.addAttribute("articleCurPage", Integer.parseInt(pageNumber));
+		model.addAttribute("articleCurPage", pageNumber);
 
 		return ScreenName.MY_PAGE;
 	}
@@ -88,10 +90,8 @@ public class UserController {
 
 		updateUserForm.setUserId(currentUser.getUserId());
 		updateUserForm.setLoginId(currentUser.getLoginId());
-		updateUserForm.setUserName(currentUser.getUserName());
+		updateUserForm.setNickname(currentUser.getNickname());
 		updateUserForm.setPassword(currentUser.getPassword());
-		updateUserForm.setGender(currentUser.getGender());
-		updateUserForm.setBirthdate(currentUser.getBirthdate());
 		updateUserForm.setIntroduction(currentUser.getIntroduction());
 		updateUserForm.setMySpace(currentUser.getMySpace());
 
@@ -118,10 +118,8 @@ public class UserController {
 
 		User user = userService.findByUserId(updateUserForm.getUserId());
 		user.setLoginId(updateUserForm.getLoginId());
-		user.setUserName(updateUserForm.getUserName());
+		user.setNickname(updateUserForm.getNickname());
 		user.setPassword(updateUserForm.getPassword());
-		user.setGender(updateUserForm.getGender());
-		user.setBirthdate(updateUserForm.getBirthdate());
 		user.setIntroduction(updateUserForm.getIntroduction());
 		user.setMySpace(updateUserForm.getMySpace());
 

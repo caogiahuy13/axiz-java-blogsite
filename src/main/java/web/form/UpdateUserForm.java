@@ -1,7 +1,5 @@
 package web.form;
 
-import java.sql.Date;
-
 import javax.validation.constraints.NotBlank;
 
 public class UpdateUserForm {
@@ -11,7 +9,7 @@ public class UpdateUserForm {
 	private String loginId;
 
 	@NotBlank
-	private String userName;
+	private String nickname;
 
 	@NotBlank
 	private String password;
@@ -19,9 +17,8 @@ public class UpdateUserForm {
 	@NotBlank
 	private String rePassword;
 
-	private String gender;
-	private Date birthdate;
 	private String introduction;
+
 	private String mySpace;
 
 	public Integer getUserId() {
@@ -40,14 +37,6 @@ public class UpdateUserForm {
 		this.loginId = loginId;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -64,22 +53,6 @@ public class UpdateUserForm {
 		this.rePassword = rePassword;
 	}
 
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public Date getBirthdate() {
-		return birthdate;
-	}
-
-	public void setBirthdate(Date birthdate) {
-		this.birthdate = birthdate;
-	}
-
 	public String getIntroduction() {
 		return introduction;
 	}
@@ -94,6 +67,14 @@ public class UpdateUserForm {
 
 	public void setMySpace(String mySpace) {
 		this.mySpace = mySpace;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 }

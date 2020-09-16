@@ -6,16 +6,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<%
-	final int minYear = 1900;
-	final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-
-	Map<String, Integer> years = new LinkedHashMap<String, Integer>();
-
-	for (int i = currentYear; i >= minYear; i--) {
-		years.put(String.valueOf(i), i);
-	}
-%>
 
 <jsp:include page="common/headTag.jsp">
 	<jsp:param name="title" value="screen.updateMember.title" />
@@ -38,9 +28,9 @@
 			<form:errors path="loginId" cssStyle="color: red" />
 		</div>
 		<div>
-			<label><fmt:message key="form.lbl.userName" /></label>
-			<form:input path="userName" />
-			<form:errors path="userName" cssStyle="color: red" />
+			<label><fmt:message key="form.lbl.nickname" /></label>
+			<form:input path="nickname" />
+			<form:errors path="nickname" cssStyle="color: red" />
 		</div>
 		<div>
 			<label><fmt:message key="form.lbl.password" /></label>
@@ -51,21 +41,6 @@
 			<label><fmt:message key="form.lbl.rePassword" /></label>
 			<form:input path="rePassword" type="password" />
 			<form:errors path="rePassword" cssStyle="color: red" />
-		</div>
-		<div>
-			<label><fmt:message key="form.lbl.gender" /></label>
-			<form:radiobutton path="gender" id="male" value="男" />
-			<label for="male" style="width: auto"><fmt:message
-					key="form.lbl.male" /></label>
-			<form:radiobutton path="gender" id="female" value="女" />
-			<label for="female" style="width: auto"><fmt:message
-					key="form.lbl.female" /></label>
-		</div>
-		<div>
-			<label><fmt:message key="form.lbl.birthYear" /></label>
-			<form:select path="birthYear">
-				<form:options items="<%=years%>" />
-			</form:select>
 		</div>
 		<div>
 			<label style="vertical-align: top"><fmt:message
@@ -84,7 +59,7 @@
 	<form:button>
 		<fmt:message key="btn.update" />
 	</form:button>
-	<a href="/myPage"><fmt:message key="btn.return" /></a>
+	<a href="javascript:history.back()"><fmt:message key="btn.return" /></a>
 </form:form>
 
 <jsp:include page="common/footTag.jsp" />

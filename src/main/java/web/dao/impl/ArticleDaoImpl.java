@@ -18,7 +18,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	private static final String SELECT_BASE_JOIN_USERS_AND_REACTIONS = "SELECT"
 			+ " a.article_id, a.title, a.content, a.user_id, a.created_at, a.updated_at, COUNT(r.reaction_id) count, u.user_name, u.login_id "
 			+ " FROM articles a "
-			+ " JOIN reactions r ON a.article_id = r.article_id "
+			+ " LEFT JOIN reactions r ON a.article_id = r.article_id "
 			+ " JOIN users u ON a.user_id = u.user_id ";
 	@Autowired
 	NamedParameterJdbcTemplate jdbcTemplate;

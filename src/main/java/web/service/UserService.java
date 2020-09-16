@@ -18,5 +18,4 @@ public interface UserService {
 	public User findByLoginId(String loginId);
 
 	public User findByUserId(Integer userId);
-
 }

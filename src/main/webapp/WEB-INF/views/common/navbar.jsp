@@ -13,7 +13,7 @@
 				${sessionScope.currentUser.userName} <i class="fa fa-caret-down"></i>
 			</button>
 			<div class="dropdown-content">
-				<a href="/myPage"><fmt:message key="btn.myPage" /></a> <a
+				<a href="/myPage?id=${sessionScope.currentUser.userId }"><fmt:message key="btn.myPage" /></a> <a
 					href="/createArticle"><fmt:message key="btn.createArticle" /></a>
 				<c:if test="${sessionScope.totalReactions > silverMilestone }">
 					<a href="/analytics"><fmt:message key="btn.analytics" /></a>

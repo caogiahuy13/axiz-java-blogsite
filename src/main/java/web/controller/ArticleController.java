@@ -181,17 +181,17 @@ public class ArticleController {
 	}
 
 	@PostMapping(DELETE_ARTICLE)
-	public String postDeleteArticle(@RequestParam String articleId, Model model) {
-
-		Article article = articleService.findById(Integer.parseInt(articleId));
+	public String postDeleteArticle(@RequestParam Integer articleId, Model model) {
+		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
+		Article article = articleService.findById(articleId);
 
 		if (article == null) {
 			return ScreenName.TOP;
 		}
 
-		articleService.delete(Integer.parseInt(articleId));
+		articleService.delete(articleId);
 
-		return "redirect:/" + ScreenName.MY_PAGE;
+		return "redirect:/" + ScreenName.MY_PAGE + "?id=" + currentUser.getUserId();
 	}
 
 }

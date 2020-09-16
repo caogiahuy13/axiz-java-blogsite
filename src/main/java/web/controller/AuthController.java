@@ -59,7 +59,7 @@ public class AuthController {
 		session.setAttribute(SessionUtil.CURRENT_USER, user);
 		session.setAttribute(SessionUtil.TOTAL_REACTIONS, reactionCount);
 
-		return "redirect:/" + ScreenName.MY_PAGE;
+		return "redirect:/" + ScreenName.MY_PAGE + "?id=" + user.getUserId();
 	}
 
 	@GetMapping(LOGOUT)
@@ -96,7 +96,7 @@ public class AuthController {
 		session.setAttribute(SessionUtil.CURRENT_USER, currentUser);
 		session.removeAttribute(SessionUtil.REGISTER_USER);
 
-		return "redirect:/" + ScreenName.TOP;
+		return "redirect:/" + ScreenName.MY_PAGE + "?id=" + currentUser.getUserId();
 	}
 
 	@PostMapping(REGISTER_CONFIRM)
