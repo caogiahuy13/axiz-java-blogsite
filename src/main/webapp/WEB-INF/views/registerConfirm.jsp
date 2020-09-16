@@ -8,7 +8,7 @@
 	<jsp:param name="title" value="screen.register.title" />
 </jsp:include>
 
-<c:if test="${not empty sessionScope.currentUser}">
+<c:if test="${not empty sessionScope.currentMember}">
 	<c:redirect url="top" />
 </c:if>
 
@@ -22,23 +22,23 @@
 	<fieldset class="label-130">
 		<div>
 			<label><fmt:message key="form.lbl.loginId" /></label> <input
-				value="${sessionScope.registerUser.loginId }" readonly />
+				value="${sessionScope.registerMember.loginId }" readonly />
 		</div>
 		<div>
-			<label><fmt:message key="form.lbl.userName" /></label> <input
-				value="${sessionScope.registerUser.userName }" readonly />
+			<label><fmt:message key="form.lbl.name" /></label> <input
+				value="${sessionScope.registerMember.name }" readonly />
 		</div>
 		<div>
 			<label><fmt:message key="form.lbl.nickname" /></label> <input
-				value="${sessionScope.registerUser.nickname }" readonly />
+				value="${sessionScope.registerMember.nickname }" readonly />
 		</div>
 		<div>
 			<label><fmt:message key="form.lbl.gender" /></label> <input
-				value="${sessionScope.registerUser.gender }" readonly />
+				value="${sessionScope.registerMember.gender }" readonly />
 		</div>
 		<div>
 			<label><fmt:message key="form.lbl.birthdate" /></label> <input
-				value="${sessionScope.registerUser.birthdate }" readonly />
+				value="${sessionScope.registerMember.birthdate }" readonly />
 		</div>
 		<div>
 			<label><fmt:message key="form.lbl.rePassword" /></label>

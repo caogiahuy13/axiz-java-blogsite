@@ -13,14 +13,14 @@ public interface ArticleService {
 
 	public Article findById(Integer articleId);
 
-	public List<? extends Article> find(Integer userId, String keyword, String type);
+	public List<? extends Article> find(Integer memberId, String keyword, String type);
 
-	public List<? extends Article> findByUserId(Integer userId);
+	public List<? extends Article> findByMemberId(Integer memberId);
 
-	public List<? extends Article> findByUserIdPagination(Integer userId, Integer pageNumber, Integer itemPerPage);
+	public List<? extends Article> findByMemberIdPagination(Integer memberId, Integer pageNumber, Integer itemPerPage);
 
-	public Integer countByUserId(Integer userId);
+	public Integer countByMemberId(Integer memberId);
 
-	public Article findLatestByUserId(Integer userId);
+	public Article findLatestByMemberId(Integer memberId);
 
 }

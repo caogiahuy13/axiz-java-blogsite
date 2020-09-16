@@ -4,7 +4,7 @@ public class ArticleWithExtraInfo extends Article {
 
 	private Integer count;
 
-	private String userName;
+	private String name;
 
 	private String loginId;
 
@@ -16,12 +16,12 @@ public class ArticleWithExtraInfo extends Article {
 		this.count = count;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getName() {
+		return name;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getLoginId() {

@@ -21,34 +21,34 @@ public class ReactionDaoImpl implements ReactionDao {
 
 	@Override
 	public int insert(Reaction reaction) {
-		String sql = "INSERT INTO reactions (article_id, user_id, stamp_id) VALUES (:articleId, :userId, :stampId)";
+		String sql = "INSERT INTO reactions (article_id, member_id, stamp_id) VALUES (:articleId, :memberId, :stampId)";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("articleId", reaction.getArticleId());
-		paramMap.addValue("userId", reaction.getUserId());
+		paramMap.addValue("memberId", reaction.getMemberId());
 		paramMap.addValue("stampId", reaction.getStampId());
 
 		return jdbcTemplate.update(sql, paramMap);
 	}
 
 	@Override
-	public int delete(Integer articleId, Integer userId) {
-		String sql = "DELETE FROM reactions WHERE article_id = :articleId AND user_id = :userId";
+	public int delete(Integer articleId, Integer memberId) {
+		String sql = "DELETE FROM reactions WHERE article_id = :articleId AND member_id = :memberId";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("articleId", articleId);
-		paramMap.addValue("userId", userId);
+		paramMap.addValue("memberId", memberId);
 
 		return jdbcTemplate.update(sql, paramMap);
 	}
 
 	@Override
-	public Reaction findByUserIdAndArticleId(Integer userId, Integer articleId) {
-		String sql = "SELECT * FROM reactions WHERE user_id = :userId AND article_id = :articleId";
+	public Reaction findByMemberIdAndArticleId(Integer memberId, Integer articleId) {
+		String sql = "SELECT * FROM reactions WHERE member_id = :memberId AND article_id = :articleId";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("articleId", articleId);
-		paramMap.addValue("userId", userId);
+		paramMap.addValue("memberId", memberId);
 
 		List<Reaction> reactions = jdbcTemplate.query(sql, paramMap,
 				new BeanPropertyRowMapper<Reaction>(Reaction.class));
@@ -67,11 +67,11 @@ public class ReactionDaoImpl implements ReactionDao {
 	}
 
 	@Override
-	public int countByUserId(Integer userId) {
-		String sql = "SELECT COUNT(*) FROM reactions r JOIN articles a ON r.article_id = a.article_id WHERE a.user_id = :userId;";
+	public int countByMemberId(Integer memberId) {
+		String sql = "SELECT COUNT(*) FROM reactions r JOIN articles a ON r.article_id = a.article_id WHERE a.member_id = :memberId;";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("userId", userId);
+		paramMap.addValue("memberId", memberId);
 
 		return jdbcTemplate.queryForObject(sql, paramMap, Integer.class);
 	}
@@ -93,16 +93,16 @@ public class ReactionDaoImpl implements ReactionDao {
 	}
 
 	@Override
-	public HashMap<String, Integer> countByGenderByUserIdOfArticle(Integer userId) {
-		String sql = "SELECT u.gender, COUNT(*) count "
+	public HashMap<String, Integer> countByGenderByMemberIdOfArticle(Integer memberId) {
+		String sql = "SELECT m.gender, COUNT(*) count "
 				+ " FROM reactions r"
-				+ " JOIN users u ON r.user_id = u.user_id"
+				+ " JOIN members m ON r.member_id = m.member_id"
 				+ " JOIN articles a ON r.article_id = a.article_id"
-				+ " WHERE a.user_id = :userId"
-				+ " GROUP BY u.gender, a.user_id";
+				+ " WHERE a.member_id = :memberId"
+				+ " GROUP BY m.gender, a.member_id";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("userId", userId);
+		paramMap.addValue("memberId", memberId);
 
 		return jdbcTemplate.query(sql, paramMap, (ResultSet rs) -> {
 			HashMap<String, Integer> results = new HashMap<>();
@@ -114,7 +114,7 @@ public class ReactionDaoImpl implements ReactionDao {
 	}
 
 	@Override
-	public HashMap<String, Integer> countByAgeRangeByUserIdOfArticle(Integer userId) {
+	public HashMap<String, Integer> countByAgeRangeByMemberIdOfArticle(Integer memberId) {
 		String sql = "SELECT"
 				+ " CASE"
 				+ " 	WHEN (date_part('year', now()) - birth_year) <18 THEN 'Under 18'"
@@ -122,17 +122,17 @@ public class ReactionDaoImpl implements ReactionDao {
 				+ " 	WHEN (date_part('year', now()) - birth_year) BETWEEN 25 AND 34 THEN '25-34'"
 				+ " END AS age_range, COUNT(*) AS count"
 				+ " FROM ("
-				+ " 	SELECT r.*, u.birth_year, a.user_id"
+				+ " 	SELECT r.*, m.birth_year, a.member_id"
 				+ " 	FROM reactions r"
-				+ " 	JOIN users u ON r.user_id = u.user_id"
+				+ " 	JOIN members m ON r.member_id = m.member_id"
 				+ " 	JOIN articles a ON r.article_id = a.article_id"
-				+ " 	WHERE a.user_id = :userId"
+				+ " 	WHERE a.member_id = :memberId"
 				+ " ) AS reaction"
 				+ " GROUP BY age_range"
 				+ " ORDER BY age_range";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("userId", userId);
+		paramMap.addValue("memberId", memberId);
 
 		return jdbcTemplate.query(sql, paramMap, (ResultSet rs) -> {
 			HashMap<String, Integer> results = new HashMap<>();
@@ -144,18 +144,19 @@ public class ReactionDaoImpl implements ReactionDao {
 	}
 
 	@Override
-	public List<ReactionsByArticle> countMultipleByUserIdOfArticle(Integer userId) {
+	public List<ReactionsByArticle> countMultipleByMemberIdOfArticle(Integer memberId) {
 		String sql = " SELECT s.stamp_id, a.title, COUNT(CASE WHEN reaction_id IS NOT NULL THEN 1 ELSE NULL END)"
 				+ " FROM stamps s"
-				+ " JOIN (SELECT a.article_id, a.title FROM articles a JOIN users u ON u.user_id = a.user_id WHERE u.user_id = :userId) a ON TRUE"
+				+ " JOIN (SELECT a.article_id, a.title FROM articles a JOIN members m ON m.member_id = a.member_id WHERE m.member_id = :memberId) a ON TRUE"
 				+ " LEFT JOIN reactions r ON s.stamp_id = r.stamp_id AND a.article_id = r.article_id"
 				+ " GROUP BY s.stamp_id, a.article_id, a.title"
 				+ " ORDER BY s.stamp_id";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("userId", userId);
+		paramMap.addValue("memberId", memberId);
 
 		return jdbcTemplate.query(sql, paramMap,
 				new BeanPropertyRowMapper<ReactionsByArticle>(ReactionsByArticle.class));
 	}
+
 }

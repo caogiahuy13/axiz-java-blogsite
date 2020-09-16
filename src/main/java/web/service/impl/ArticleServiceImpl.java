@@ -37,7 +37,7 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<? extends Article> find(Integer userId, String keyword, String type) {
+	public List<? extends Article> find(Integer memberId, String keyword, String type) {
 		final String ALL = "all";
 		final String FAVORITES = "favorites";
 		final String RANKING = "ranking";
@@ -46,7 +46,7 @@ public class ArticleServiceImpl implements ArticleService {
 		case ALL:
 			return articleDao.findByKeyword(keyword);
 		case FAVORITES:
-			return articleDao.findByKeywordReactedByUser(userId, keyword);
+			return articleDao.findByKeywordReactedByMember(memberId, keyword);
 		case RANKING:
 			return articleDao.findByKeywordWithMostReaction(keyword);
 		default:
@@ -55,22 +55,22 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<? extends Article> findByUserId(Integer userId) {
-		return articleDao.findByUserId(userId);
+	public List<? extends Article> findByMemberId(Integer memberId) {
+		return articleDao.findByMemberId(memberId);
 	}
 
 	@Override
-	public List<? extends Article> findByUserIdPagination(Integer userId, Integer pageNumber, Integer itemPerPage) {
-		return articleDao.findByUserIdPagination(userId, pageNumber, itemPerPage);
+	public List<? extends Article> findByMemberIdPagination(Integer memberId, Integer pageNumber, Integer itemPerPage) {
+		return articleDao.findByMemberIdPagination(memberId, pageNumber, itemPerPage);
 	}
 
 	@Override
-	public Integer countByUserId(Integer userId) {
-		return articleDao.countByUserId(userId);
+	public Integer countByMemberId(Integer memberId) {
+		return articleDao.countByMemberId(memberId);
 	}
 
 	@Override
-	public Article findLatestByUserId(Integer userId) {
-		return articleDao.findLatestByUserId(userId);
+	public Article findLatestByMemberId(Integer memberId) {
+		return articleDao.findLatestByMemberId(memberId);
 	}
 }

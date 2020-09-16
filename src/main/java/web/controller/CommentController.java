@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import web.entity.Comment;
-import web.entity.User;
+import web.entity.Member;
 import web.service.CommentService;
 import web.util.ScreenName;
 import web.util.SessionUtil;
@@ -29,9 +29,9 @@ public class CommentController {
 	@PostMapping(COMMENT)
 	public String postComment(@RequestParam String articleIdStr, @RequestParam String contentStr,
 			HttpServletRequest request) {
-		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
+		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
 
-		if (currentUser == null) {
+		if (currentMember == null) {
 			return "redirect:/" + ScreenName.LOGIN;
 		}
 		int articleId = Integer.parseInt(articleIdStr);
@@ -39,7 +39,7 @@ public class CommentController {
 		Comment comment = new Comment();
 		comment.setArticleId(articleId);
 		comment.setContent(contentStr);
-		comment.setUserId(currentUser.getUserId());
+		comment.setMemberId(currentMember.getMemberId());
 
 		commentService.create(comment);
 

@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import web.entity.Article;
+import web.entity.Member;
 import web.entity.ReactionsByArticle;
-import web.entity.User;
-import web.form.UpdateUserForm;
+import web.form.UpdateMemberForm;
 import web.service.ArticleService;
+import web.service.MemberService;
 import web.service.ReactionService;
-import web.service.UserService;
 import web.service.ViewService;
 import web.util.Message;
 import web.util.ScreenName;
 import web.util.SessionUtil;
 
 @Controller
-public class UserController {
+public class MemberController {
 	private static final String MY_PAGE = "myPage";
 	private static final String MY_ARTICLES = "myArticles";
 	private static final String UPDATE_MEMBER = "updateMember";
@@ -36,7 +36,7 @@ public class UserController {
 	private static final String ANALYTICS = "analytics";
 
 	@Autowired
-	UserService userService;
+	MemberService memberService;
 
 	@Autowired
 	ArticleService articleService;
@@ -52,16 +52,20 @@ public class UserController {
 
 	@GetMapping(MY_PAGE)
 	public String getMyPage(Model model, @RequestParam(defaultValue = "1") Integer pageNumber,
-			@RequestParam(name = "id") Integer userId) {
-		User user = userService.findByUserId(userId);
+			@RequestParam(name = "id") Integer memberId) {
+		Member member = memberService.findByMemberId(memberId);
 
 		final Integer LIMIT = 3;
 
-		List<? extends Article> articles = articleService.findByUserIdPagination(user.getUserId(),
+		List<? extends Article> articles = articleService.findByMemberIdPagination(member.getMemberId(),
 				pageNumber, LIMIT);
-		int articleMaxPage = articleService.countByUserId(userId) / LIMIT + 1;
+		int articleMaxPage = articleService.countByMemberId(memberId) / LIMIT + 1;
+		int memberRank = memberService.getRank(memberId);
+		int memberTotalReactions = reactionService.countByMemberId(memberId);
 
-		model.addAttribute("user", user);
+		model.addAttribute("member", member);
+		model.addAttribute("memberRank", memberRank);
+		model.addAttribute("memberTotalReactions", memberTotalReactions);
 		model.addAttribute("articles", articles);
 		model.addAttribute("articleMaxPage", articleMaxPage);
 		model.addAttribute("articleCurPage", pageNumber);
@@ -71,9 +75,9 @@ public class UserController {
 
 	@GetMapping(MY_ARTICLES)
 	public String getMyArticles(Model model) {
-		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
+		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
 
-		List<? extends Article> articles = articleService.findByUserId(currentUser.getUserId());
+		List<? extends Article> articles = articleService.findByMemberId(currentMember.getMemberId());
 
 		if (articles.isEmpty()) {
 			model.addAttribute("msg", Message.MY_ARTICLES_NO_RESULT);
@@ -85,49 +89,49 @@ public class UserController {
 	}
 
 	@GetMapping(UPDATE_MEMBER)
-	public String getUpdateMember(@ModelAttribute UpdateUserForm updateUserForm) {
-		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
+	public String getUpdateMember(@ModelAttribute UpdateMemberForm updateMemberForm) {
+		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
 
-		updateUserForm.setUserId(currentUser.getUserId());
-		updateUserForm.setLoginId(currentUser.getLoginId());
-		updateUserForm.setNickname(currentUser.getNickname());
-		updateUserForm.setPassword(currentUser.getPassword());
-		updateUserForm.setIntroduction(currentUser.getIntroduction());
-		updateUserForm.setMySpace(currentUser.getMySpace());
+		updateMemberForm.setMemberId(currentMember.getMemberId());
+		updateMemberForm.setLoginId(currentMember.getLoginId());
+		updateMemberForm.setNickname(currentMember.getNickname());
+		updateMemberForm.setPassword(currentMember.getPassword());
+		updateMemberForm.setIntroduction(currentMember.getIntroduction());
+		updateMemberForm.setMySpace(currentMember.getMySpace());
 
 		return ScreenName.UPDATE_MEMBER;
 	}
 
 	@PostMapping(UPDATE_MEMBER)
-	public String postUpdateMember(@Validated @ModelAttribute UpdateUserForm updateUserForm,
+	public String postUpdateMember(@Validated @ModelAttribute UpdateMemberForm updateMemberForm,
 			BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			return ScreenName.UPDATE_MEMBER;
 		}
 
-		if (!updateUserForm.getPassword().equals(updateUserForm.getRePassword())) {
+		if (!updateMemberForm.getPassword().equals(updateMemberForm.getRePassword())) {
 			model.addAttribute("msg", Message.PASSWORD_IS_NOT_MATCH);
 			return ScreenName.UPDATE_MEMBER;
 		}
 
-		User existedUser = userService.findByLoginId(updateUserForm.getLoginId());
-		if (existedUser != null && existedUser.getUserId() != updateUserForm.getUserId()) {
+		Member existedMember = memberService.findByLoginId(updateMemberForm.getLoginId());
+		if (existedMember != null && existedMember.getMemberId() != updateMemberForm.getMemberId()) {
 			model.addAttribute("msg", Message.LOGIN_ID_IS_EXISTED);
 			return ScreenName.UPDATE_MEMBER;
 		}
 
-		User user = userService.findByUserId(updateUserForm.getUserId());
-		user.setLoginId(updateUserForm.getLoginId());
-		user.setNickname(updateUserForm.getNickname());
-		user.setPassword(updateUserForm.getPassword());
-		user.setIntroduction(updateUserForm.getIntroduction());
-		user.setMySpace(updateUserForm.getMySpace());
+		Member member = memberService.findByMemberId(updateMemberForm.getMemberId());
+		member.setLoginId(updateMemberForm.getLoginId());
+		member.setNickname(updateMemberForm.getNickname());
+		member.setPassword(updateMemberForm.getPassword());
+		member.setIntroduction(updateMemberForm.getIntroduction());
+		member.setMySpace(updateMemberForm.getMySpace());
 
-		userService.update(user);
+		memberService.update(member);
 
-		User updatedUser = userService.findByUserId(user.getUserId());
+		Member updatedMember = memberService.findByMemberId(member.getMemberId());
 
-		session.setAttribute(SessionUtil.CURRENT_USER, updatedUser);
+		session.setAttribute(SessionUtil.CURRENT_MEMBER, updatedMember);
 
 		return ScreenName.MY_PAGE;
 	}
@@ -139,9 +143,9 @@ public class UserController {
 
 	@PostMapping(DELETE_MEMBER)
 	public String postDeleteMember(Model model) {
-		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
+		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
 
-		if (userService.deleteByLoginId(currentUser.getLoginId()) > 0) {
+		if (memberService.deleteByLoginId(currentMember.getLoginId()) > 0) {
 			SessionUtil.removeAllSession(session);
 		}
 
@@ -151,19 +155,19 @@ public class UserController {
 
 	@GetMapping(ANALYTICS)
 	public String getAnalytics(Model model) {
-		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
-		if (currentUser == null) {
+		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
+		if (currentMember == null) {
 			return "redirect:/" + ScreenName.TOP;
 		}
 
 		HashMap<String, Integer> genderAnalytics = reactionService
-				.countByGenderByUserIdOfArticle(currentUser.getUserId());
+				.countByGenderByMemberIdOfArticle(currentMember.getMemberId());
 		HashMap<String, Integer> ageAnalytics = reactionService
-				.countByAgeRangeByUserIdOfArticle(currentUser.getUserId());
+				.countByAgeRangeByMemberIdOfArticle(currentMember.getMemberId());
 		HashMap<String, Integer> accessAnalytics = viewService
-				.countByAccessByUserIdOfArticle(currentUser.getUserId());
+				.countByAccessByMemberIdOfArticle(currentMember.getMemberId());
 		List<ReactionsByArticle> reactionAnalytics = reactionService
-				.countMultipleByUserIdOfArticle(currentUser.getUserId());
+				.countMultipleByMemberIdOfArticle(currentMember.getMemberId());
 
 		model.addAttribute("genderAnalytics", genderAnalytics);
 		model.addAttribute("ageAnalytics", ageAnalytics);

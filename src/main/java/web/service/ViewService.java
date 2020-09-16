@@ -10,6 +10,6 @@ public interface ViewService {
 
 	public List<View> findByArticleId(Integer articleId);
 
-	public HashMap<String, Integer> countByAccessByUserIdOfArticle(Integer userId);
+	public HashMap<String, Integer> countByAccessByMemberIdOfArticle(Integer memberId);
 
 }

@@ -17,10 +17,10 @@
 	<p class="error">${msg}</p>
 </c:if>
 
-<form:form action="updateMember" modelAttribute="updateUserForm">
+<form:form action="updateMember" modelAttribute="updateMemberForm">
 	<fieldset class="label-140">
 		<div>
-			<form:input type="hidden" path="userId" />
+			<form:input type="hidden" path="memberId" />
 		</div>
 		<div>
 			<label><fmt:message key="form.lbl.loginId" /></label>

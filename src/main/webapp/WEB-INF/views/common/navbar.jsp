@@ -5,15 +5,15 @@
 	<a href="/top"><fmt:message key="btn.top" /></a>
 
 	<div class="dropdown">
-		<c:if test="${empty sessionScope.currentUser}">
+		<c:if test="${empty sessionScope.currentMember}">
 			<a href="/login"><fmt:message key="btn.login" /></a>
 		</c:if>
-		<c:if test="${not empty sessionScope.currentUser}">
+		<c:if test="${not empty sessionScope.currentMember}">
 			<button class="dropbtn">
-				${sessionScope.currentUser.userName} <i class="fa fa-caret-down"></i>
+				${sessionScope.currentMember.memberName} <i class="fa fa-caret-down"></i>
 			</button>
 			<div class="dropdown-content">
-				<a href="/myPage?id=${sessionScope.currentUser.userId }"><fmt:message key="btn.myPage" /></a> <a
+				<a href="/myPage?id=${sessionScope.currentMember.memberId }"><fmt:message key="btn.myPage" /></a> <a
 					href="/createArticle"><fmt:message key="btn.createArticle" /></a>
 				<c:if test="${sessionScope.totalReactions > silverMilestone }">
 					<a href="/analytics"><fmt:message key="btn.analytics" /></a>

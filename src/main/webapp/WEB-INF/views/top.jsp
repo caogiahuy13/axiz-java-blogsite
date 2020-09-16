@@ -13,7 +13,7 @@
 	<form:radiobutton id="all" path="searchType" value="all"
 		checked="checked" />
 	<label for="all"><fmt:message key="form.lbl.all" /></label>
-	<c:if test="${not empty sessionScope.currentUser }">
+	<c:if test="${not empty sessionScope.currentMember }">
 		<form:radiobutton id="favorites" path="searchType" value="favorites" />
 		<label for="favorites"><fmt:message key="form.lbl.favorites" /></label>
 	</c:if>

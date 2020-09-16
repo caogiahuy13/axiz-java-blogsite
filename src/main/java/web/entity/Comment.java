@@ -6,7 +6,7 @@ public class Comment {
 	private Integer commentId;
 	private String content;
 	private Integer articleId;
-	private Integer userId;
+	private Integer memberId;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 
@@ -14,12 +14,12 @@ public class Comment {
 
 	}
 
-	public Comment(Integer commentId, String content, Integer articleId, Integer userId, Timestamp createdAt,
+	public Comment(Integer commentId, String content, Integer articleId, Integer memberId, Timestamp createdAt,
 			Timestamp updatedAt) {
 		this.commentId = commentId;
 		this.content = content;
 		this.articleId = articleId;
-		this.userId = userId;
+		this.memberId = memberId;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -48,12 +48,12 @@ public class Comment {
 		this.articleId = articleId;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public Integer getMemberId() {
+		return memberId;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 
 	public Timestamp getCreatedAt() {

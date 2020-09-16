@@ -3,7 +3,7 @@ package web.service;
 import java.util.List;
 
 import web.entity.Comment;
-import web.entity.CommentWithUserInfo;
+import web.entity.CommentWithMemberInfo;
 
 public interface CommentService {
 	public int create(Comment comment);
@@ -12,7 +12,7 @@ public interface CommentService {
 
 	public int delete(Integer commentId);
 
-	public List<CommentWithUserInfo> findByArticleId(Integer articleId);
+	public List<CommentWithMemberInfo> findByArticleId(Integer articleId);
 
 	public Comment findById(Integer commentId);
 }

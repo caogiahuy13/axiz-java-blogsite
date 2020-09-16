@@ -5,18 +5,18 @@ import java.sql.Timestamp;
 public class View {
 	public Integer viewId;
 	public Integer articleId;
-	public Integer userId;
+	public Integer memberId;
 	public Timestamp createdAt;
 
 	public View() {
 
 	}
 
-	public View(Integer viewId, Integer articleId, Integer userId, Timestamp createdAt) {
+	public View(Integer viewId, Integer articleId, Integer memberId, Timestamp createdAt) {
 		super();
 		this.viewId = viewId;
 		this.articleId = articleId;
-		this.userId = userId;
+		this.memberId = memberId;
 		this.createdAt = createdAt;
 	}
 
@@ -36,12 +36,12 @@ public class View {
 		this.articleId = articleId;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public Integer getMemberId() {
+		return memberId;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 
 	public Timestamp getCreatedAt() {

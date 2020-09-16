@@ -27,8 +27,8 @@ public class ViewServiceImpl implements ViewService {
 	}
 
 	@Override
-	public HashMap<String, Integer> countByAccessByUserIdOfArticle(Integer userId) {
-		return viewDao.countByAccessByUserIdOfArticle(userId);
+	public HashMap<String, Integer> countByAccessByMemberIdOfArticle(Integer memberId) {
+		return viewDao.countByAccessByMemberIdOfArticle(memberId);
 	}
 
 }

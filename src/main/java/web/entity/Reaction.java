@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class Reaction {
 	private Integer reactionId;
 	private Integer articleId;
-	private Integer userId;
+	private Integer memberId;
 	private Integer stampId;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
@@ -14,11 +14,11 @@ public class Reaction {
 
 	}
 
-	public Reaction(Integer reactionId, Integer articleId, Integer userId, Integer stampId, Timestamp createdAt,
+	public Reaction(Integer reactionId, Integer articleId, Integer memberId, Integer stampId, Timestamp createdAt,
 			Timestamp updatedAt) {
 		this.reactionId = reactionId;
 		this.articleId = articleId;
-		this.userId = userId;
+		this.memberId = memberId;
 		this.stampId = stampId;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
@@ -40,12 +40,12 @@ public class Reaction {
 		this.articleId = articleId;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public Integer getMemberId() {
+		return memberId;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 
 	public Integer getStampId() {

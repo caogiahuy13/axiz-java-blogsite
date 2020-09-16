@@ -11,7 +11,7 @@
 <fmt:message key="member.delete.confirm"/>
 
 <form action = "/deleteMember" method = "post">
-	<input type="hidden" name="userId" value="${sessionScope.userId}">
+	<input type="hidden" name="memberId" value="${sessionScope.memberId}">
 	<button><fmt:message key="btn.delete"/></button>
 	<a href="javascript:history.back()"><fmt:message key="btn.return"/></a>
 </form>

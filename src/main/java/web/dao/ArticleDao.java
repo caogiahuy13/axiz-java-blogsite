@@ -18,13 +18,14 @@ public interface ArticleDao {
 
 	public List<ArticleWithExtraInfo> findByKeywordWithMostReaction(String keyword);
 
-	public List<ArticleWithExtraInfo> findByKeywordReactedByUser(Integer userId, String keyword);
+	public List<ArticleWithExtraInfo> findByKeywordReactedByMember(Integer memberId, String keyword);
 
-	public List<ArticleWithExtraInfo> findByUserId(Integer userId);
+	public List<ArticleWithExtraInfo> findByMemberId(Integer memberId);
 
-	public List<ArticleWithExtraInfo> findByUserIdPagination(Integer userId, Integer pageNumber, Integer itemPerPage);
+	public List<ArticleWithExtraInfo> findByMemberIdPagination(Integer memberId, Integer pageNumber,
+			Integer itemPerPage);
 
-	public Integer countByUserId(Integer userId);
+	public Integer countByMemberId(Integer memberId);
 
-	public Article findLatestByUserId(Integer userId);
+	public Article findLatestByMemberId(Integer memberId);
 }

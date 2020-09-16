@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import web.entity.Article;
-import web.entity.User;
+import web.entity.Member;
 import web.form.SearchForm;
 import web.service.ArticleService;
 import web.util.Message;
@@ -36,13 +36,13 @@ public class TopController {
 
 	@PostMapping(TOP)
 	public String search(@ModelAttribute SearchForm searchForm, Model model) {
-		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
+		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
 
-		Integer userId = (currentUser == null) ? null : currentUser.getUserId();
+		Integer memberId = (currentMember == null) ? null : currentMember.getMemberId();
 		String keyword = searchForm.getKeyword();
 		String searchType = searchForm.getSearchType();
 
-		List<? extends Article> articles = articleService.find(userId, keyword, searchType);
+		List<? extends Article> articles = articleService.find(memberId, keyword, searchType);
 
 		if (articles.isEmpty()) {
 			model.addAttribute("msg", Message.SEARCH_NO_RESULT);

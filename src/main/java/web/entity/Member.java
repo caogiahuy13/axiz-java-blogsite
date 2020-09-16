@@ -3,10 +3,10 @@ package web.entity;
 import java.sql.Date;
 import java.sql.Timestamp;
 
-public class User {
-	private Integer userId;
+public class Member {
+	private Integer memberId;
 	private String loginId;
-	private String userName;
+	private String name;
 	private String nickname;
 	private String password;
 	private String gender;
@@ -16,15 +16,15 @@ public class User {
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 
-	public User() {
+	public Member() {
 
 	}
 
-	public User(Integer userId, String loginId, String userName, String nickname, String password, String gender,
+	public Member(Integer memberId, String loginId, String name, String nickname, String password, String gender,
 			Date birthdate, String introduction, String mySpace, Timestamp createdAt, Timestamp updatedAt) {
-		this.userId = userId;
+		this.memberId = memberId;
 		this.loginId = loginId;
-		this.userName = userName;
+		this.name = name;
 		this.nickname = nickname;
 		this.password = password;
 		this.gender = gender;
@@ -35,12 +35,12 @@ public class User {
 		this.updatedAt = updatedAt;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public Integer getMemberId() {
+		return memberId;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 
 	public String getLoginId() {
@@ -51,12 +51,12 @@ public class User {
 		this.loginId = loginId;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getName() {
+		return name;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getNickname() {

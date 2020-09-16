@@ -24,13 +24,13 @@ public class ReactionServiceImpl implements ReactionService {
 	}
 
 	@Override
-	public int delete(Integer articleId, Integer userId) {
-		return reactionDao.delete(articleId, userId);
+	public int delete(Integer articleId, Integer memberId) {
+		return reactionDao.delete(articleId, memberId);
 	}
 
 	@Override
-	public Reaction findByUserIdAndArticleId(Integer userId, Integer articleId) {
-		return reactionDao.findByUserIdAndArticleId(userId, articleId);
+	public Reaction findByMemberIdAndArticleId(Integer memberId, Integer articleId) {
+		return reactionDao.findByMemberIdAndArticleId(memberId, articleId);
 	}
 
 	@Override
@@ -39,8 +39,8 @@ public class ReactionServiceImpl implements ReactionService {
 	}
 
 	@Override
-	public int countByUserId(Integer userId) {
-		return reactionDao.countByUserId(userId);
+	public int countByMemberId(Integer memberId) {
+		return reactionDao.countByMemberId(memberId);
 	}
 
 	@Override
@@ -49,17 +49,17 @@ public class ReactionServiceImpl implements ReactionService {
 	}
 
 	@Override
-	public HashMap<String, Integer> countByGenderByUserIdOfArticle(Integer userId) {
-		return reactionDao.countByGenderByUserIdOfArticle(userId);
+	public HashMap<String, Integer> countByGenderByMemberIdOfArticle(Integer memberId) {
+		return reactionDao.countByGenderByMemberIdOfArticle(memberId);
 	}
 
 	@Override
-	public HashMap<String, Integer> countByAgeRangeByUserIdOfArticle(Integer userId) {
-		return reactionDao.countByAgeRangeByUserIdOfArticle(userId);
+	public HashMap<String, Integer> countByAgeRangeByMemberIdOfArticle(Integer memberId) {
+		return reactionDao.countByAgeRangeByMemberIdOfArticle(memberId);
 	}
 
 	@Override
-	public List<ReactionsByArticle> countMultipleByUserIdOfArticle(Integer userId) {
-		return reactionDao.countMultipleByUserIdOfArticle(userId);
+	public List<ReactionsByArticle> countMultipleByMemberIdOfArticle(Integer memberId) {
+		return reactionDao.countMultipleByMemberIdOfArticle(memberId);
 	}
 }

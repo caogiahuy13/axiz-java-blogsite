@@ -9,19 +9,20 @@ import web.entity.ReactionsByArticle;
 public interface ReactionDao {
 	public int insert(Reaction reaction);
 
-	public int delete(Integer articleId, Integer userId);
+	public int delete(Integer articleId, Integer memberId);
 
-	public Reaction findByUserIdAndArticleId(Integer userId, Integer articleId);
+	public Reaction findByMemberIdAndArticleId(Integer memberId, Integer articleId);
 
 	public int countByArticleId(Integer articleId);
 
-	public int countByUserId(Integer userId);
+	public int countByMemberId(Integer memberId);
 
 	public HashMap<Integer, Integer> countMultipleByArticleId(Integer articleId);
 
-	public HashMap<String, Integer> countByGenderByUserIdOfArticle(Integer userId);
+	public HashMap<String, Integer> countByGenderByMemberIdOfArticle(Integer memberId);
 
-	public HashMap<String, Integer> countByAgeRangeByUserIdOfArticle(Integer userId);
+	public HashMap<String, Integer> countByAgeRangeByMemberIdOfArticle(Integer memberId);
 
-	public List<ReactionsByArticle> countMultipleByUserIdOfArticle(Integer userId);
+	public List<ReactionsByArticle> countMultipleByMemberIdOfArticle(Integer memberId);
+
 }

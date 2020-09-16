@@ -21,11 +21,11 @@ public class ViewDaoImpl implements ViewDao {
 
 	@Override
 	public int insert(View view) {
-		String sql = "INSERT INTO views (article_id, user_id) VALUES (:articleId, :userId)";
+		String sql = "INSERT INTO views (article_id, member_id) VALUES (:articleId, :memberId)";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("articleId", view.getArticleId());
-		paramMap.addValue("userId", view.getUserId());
+		paramMap.addValue("memberId", view.getMemberId());
 
 		return jdbcTemplate.update(sql, paramMap);
 	}
@@ -42,20 +42,20 @@ public class ViewDaoImpl implements ViewDao {
 	}
 
 	@Override
-	public HashMap<String, Integer> countByAccessByUserIdOfArticle(Integer userId) {
+	public HashMap<String, Integer> countByAccessByMemberIdOfArticle(Integer memberId) {
 		String sql = "SELECT "
 				+ "	CASE"
-				+ "		WHEN v.user_id IS NOT NULL THEN 'login'"
-				+ "		WHEN v.user_id IS NULL THEN 'anonymous'"
+				+ "		WHEN v.member_id IS NOT NULL THEN 'login'"
+				+ "		WHEN v.member_id IS NULL THEN 'anonymous'"
 				+ "	END AS access, COUNT(*) count"
 				+ "	FROM views v"
 				+ "	JOIN articles a ON v.article_id = a.article_id"
-				+ "	JOIN users u ON a.user_id = u.user_id"
-				+ "	WHERE a.user_id = 3"
+				+ "	JOIN members m ON a.member_id = u.member_id"
+				+ "	WHERE a.member_id = 3"
 				+ "	GROUP BY access";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("userId", userId);
+		paramMap.addValue("memberId", memberId);
 
 		return jdbcTemplate.query(sql, paramMap, (ResultSet rs) -> {
 			HashMap<String, Integer> results = new HashMap<>();

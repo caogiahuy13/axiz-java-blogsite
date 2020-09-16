@@ -8,7 +8,7 @@
 	<jsp:param name="title" value="screen.register.title" />
 </jsp:include>
 
-<c:if test="${not empty sessionScope.currentUser}">
+<c:if test="${not empty sessionScope.currentMember}">
 	<c:redirect url="top" />
 </c:if>
 
@@ -26,9 +26,9 @@
 			<form:errors path="loginId" cssStyle="color: red" />
 		</div>
 		<div>
-			<label><fmt:message key="form.lbl.userName" /></label>
-			<form:input path="userName" />
-			<form:errors path="userName" cssStyle="color: red" />
+			<label><fmt:message key="form.lbl.name" /></label>
+			<form:input path="name" />
+			<form:errors path="name" cssStyle="color: red" />
 		</div>
 		<div>
 			<label><fmt:message key="form.lbl.nickname" /></label>

@@ -2,27 +2,27 @@ package web.entity;
 
 import java.sql.Timestamp;
 
-public class CommentWithUserInfo {
+public class CommentWithMemberInfo {
 	private Integer commentId;
 	private String content;
 	private Integer articleId;
-	private Integer userId;
+	private Integer memberId;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
-	private String userName;
+	private String name;
 
-	public CommentWithUserInfo() {
+	public CommentWithMemberInfo() {
 
 	}
 
-	public CommentWithUserInfo(Integer commentId, String content, Integer articleId, Integer userId,
+	public CommentWithMemberInfo(Integer commentId, String content, Integer articleId, Integer memberId,
 			Timestamp createdAt,
 			Timestamp updatedAt,
-			String userName) {
+			String name) {
 		this.commentId = commentId;
 		this.content = content;
 		this.articleId = articleId;
-		this.userId = userId;
+		this.memberId = memberId;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -51,12 +51,12 @@ public class CommentWithUserInfo {
 		this.articleId = articleId;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public Integer getMemberId() {
+		return memberId;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 
 	public Timestamp getCreatedAt() {
@@ -75,12 +75,12 @@ public class CommentWithUserInfo {
 		this.updatedAt = updatedAt;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getName() {
+		return name;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

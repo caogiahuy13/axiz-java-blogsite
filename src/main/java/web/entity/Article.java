@@ -6,7 +6,7 @@ public class Article {
 	private Integer articleId;
 	private String title;
 	private String content;
-	private Integer userId;
+	private Integer memberId;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 
@@ -14,13 +14,13 @@ public class Article {
 
 	}
 
-	public Article(Integer articleId, String title, String content, Integer userId,
+	public Article(Integer articleId, String title, String content, Integer memberId,
 			Timestamp createdAt,
 			Timestamp updatedAt) {
 		this.articleId = articleId;
 		this.title = title;
 		this.content = content;
-		this.userId = userId;
+		this.memberId = memberId;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -49,12 +49,12 @@ public class Article {
 		this.content = content;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public Integer getMemberId() {
+		return memberId;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 
 	public Timestamp getCreatedAt() {

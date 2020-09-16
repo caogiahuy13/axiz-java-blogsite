@@ -8,7 +8,7 @@
 	<jsp:param name="title" value="screen.login.title" />
 </jsp:include>
 
-<c:if test="${not empty sessionScope.currentUser}">
+<c:if test="${not empty sessionScope.currentMember}">
 	<c:redirect url="top" />
 </c:if>
 

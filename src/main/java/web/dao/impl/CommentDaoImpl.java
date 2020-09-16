@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import web.dao.CommentDao;
 import web.entity.Comment;
-import web.entity.CommentWithUserInfo;
+import web.entity.CommentWithMemberInfo;
 
 @Repository
 public class CommentDaoImpl implements CommentDao {
@@ -19,12 +19,12 @@ public class CommentDaoImpl implements CommentDao {
 
 	@Override
 	public int create(Comment comment) {
-		String sql = "INSERT INTO comments (content, article_id, user_id) VALUES (:content, :articleId, :userId)";
+		String sql = "INSERT INTO comments (content, article_id, member_id) VALUES (:content, :articleId, :memberId)";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("content", comment.getContent());
 		paramMap.addValue("articleId", comment.getArticleId());
-		paramMap.addValue("userId", comment.getUserId());
+		paramMap.addValue("memberId", comment.getMemberId());
 
 		return jdbcTemplate.update(sql, paramMap);
 	}
@@ -51,14 +51,14 @@ public class CommentDaoImpl implements CommentDao {
 	}
 
 	@Override
-	public List<CommentWithUserInfo> findByArticleId(Integer articleId) {
-		String sql = "SELECT comment_id, article_id, c.user_id, content, c.created_at, c.updated_at, u.user_name FROM comments c JOIN users u ON c.user_id = u.user_id WHERE article_id = :articleId";
+	public List<CommentWithMemberInfo> findByArticleId(Integer articleId) {
+		String sql = "SELECT comment_id, article_id, c.member_id, content, c.created_at, c.updated_at, m.name FROM comments c JOIN members m ON c.member_id = m.member_id WHERE article_id = :articleId";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("articleId", articleId);
 
 		return jdbcTemplate.query(sql, paramMap,
-				new BeanPropertyRowMapper<CommentWithUserInfo>(CommentWithUserInfo.class));
+				new BeanPropertyRowMapper<CommentWithMemberInfo>(CommentWithMemberInfo.class));
 	}
 
 	@Override

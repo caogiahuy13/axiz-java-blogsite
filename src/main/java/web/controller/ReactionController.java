@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import web.entity.Reaction;
-import web.entity.User;
+import web.entity.Member;
 import web.service.ReactionService;
 import web.util.ScreenName;
 import web.util.SessionUtil;
@@ -27,25 +27,25 @@ public class ReactionController {
 	@PostMapping(REACTION)
 	public String postReaction(@RequestParam String stampIdStr, @RequestParam String articleIdStr,
 			HttpServletRequest request) {
-		User currentUser = (User) session.getAttribute(SessionUtil.CURRENT_USER);
+		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
 
-		if (currentUser == null) {
+		if (currentMember == null) {
 			return "redirect:/" + ScreenName.LOGIN;
 		}
 
 		int stampId = Integer.parseInt(stampIdStr);
 		int articleId = Integer.parseInt(articleIdStr);
-		int userId = currentUser.getUserId();
+		int memberId = currentMember.getMemberId();
 
-		Reaction reaction = reactionService.findByUserIdAndArticleId(userId, articleId);
+		Reaction reaction = reactionService.findByMemberIdAndArticleId(memberId, articleId);
 
 		if (reaction != null) {
-			reactionService.delete(articleId, userId);
+			reactionService.delete(articleId, memberId);
 			if (reaction.getStampId() != stampId) {
 				Reaction newReaction = new Reaction();
 				newReaction.setArticleId(articleId);
 				newReaction.setStampId(stampId);
-				newReaction.setUserId(userId);
+				newReaction.setMemberId(memberId);
 
 				reactionService.insert(newReaction);
 			}
@@ -53,7 +53,7 @@ public class ReactionController {
 			Reaction newReaction = new Reaction();
 			newReaction.setArticleId(articleId);
 			newReaction.setStampId(stampId);
-			newReaction.setUserId(userId);
+			newReaction.setMemberId(memberId);
 
 			reactionService.insert(newReaction);
 		}

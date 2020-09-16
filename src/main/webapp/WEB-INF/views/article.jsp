@@ -9,9 +9,9 @@
 </jsp:include>
 
 <c:if
-	test="${articleUserReactionCount >= goldMilestone && reactionCount >= trophyMilestone}">
+	test="${articleMemberReactionCount >= goldMilestone && reactionCount >= trophyMilestone}">
 	<p>
-		MySpace: <b>${articleUserMySpace}</b>
+		MySpace: <b>${articleMemberMySpace}</b>
 	</p>
 </c:if>
 
@@ -30,18 +30,18 @@
 				${stampIcon[entry.key]} </span>
 		</c:if>
 	</c:forEach>
-	<span class="popuptext" id="myPopup"> <c:forEach var="user"
-			items="${reactedUsers}">
-			<span>${user.userName}</span>
+	<span class="popuptext" id="myPopup"> <c:forEach var="member"
+			items="${reactedMembers}">
+			<span>${member.name}</span>
 			<br>
 		</c:forEach>
 	</span>
 </div>
 <div style="height: 10px"></div>
 
-<c:if test="${sessionScope.currentUser.userId != article.userId}">
+<c:if test="${sessionScope.currentMember.memberId != article.memberId}">
 	<c:choose>
-		<c:when test="${articleUserReactionCount >= bronzeMilestone}">
+		<c:when test="${articleMemberReactionCount >= bronzeMilestone}">
 			<c:forEach var="entry" items="${stampIcon}">
 				<c:if test="${entry.key != 1 }">
 					<jsp:include page="common/reaction.jsp">
@@ -63,7 +63,7 @@
 </c:if>
 
 
-<c:if test="${sessionScope.currentUser.userId == article.userId}">
+<c:if test="${sessionScope.currentMember.memberId == article.memberId}">
 	<form action="editArticle" style="display: inline">
 		<input type="hidden" name="id" value="${article.articleId}" />
 		<button>
@@ -90,18 +90,18 @@
 
 <c:forEach var="comment" items="${comments}">
 	<div>
-		<c:if test="${sessionScope.currentUser.userId != comment.userId}">
+		<c:if test="${sessionScope.currentMember.memberId != comment.memberId}">
 			<div>
-				<b>${comment.userName}</b><br>
+				<b>${comment.name}</b><br>
 				<div>
 					<span>${comment.content}</span>
 				</div>
 			</div>
 		</c:if>
 
-		<c:if test="${sessionScope.currentUser.userId == comment.userId}">
+		<c:if test="${sessionScope.currentMember.memberId == comment.memberId}">
 			<div>
-				<b>${comment.userName}</b><br>
+				<b>${comment.name}</b><br>
 				<div contenteditable="true">
 					<span style="display: block" id="comment_${comment.commentId}">${comment.content}</span>
 				</div>

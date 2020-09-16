@@ -2,8 +2,8 @@ package web.form;
 
 import javax.validation.constraints.NotBlank;
 
-public class UpdateUserForm {
-	private Integer userId;
+public class UpdateMemberForm {
+	private Integer memberId;
 
 	@NotBlank
 	private String loginId;
@@ -21,12 +21,12 @@ public class UpdateUserForm {
 
 	private String mySpace;
 
-	public Integer getUserId() {
-		return userId;
+	public Integer getMemberId() {
+		return memberId;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
 	}
 
 	public String getLoginId() {
