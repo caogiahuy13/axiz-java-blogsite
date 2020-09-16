@@ -9,7 +9,8 @@ public class Member {
 	private String name;
 	private String nickname;
 	private String password;
-	private String gender;
+	private Integer genderId;
+	private String genderName;
 	private Date birthdate;
 	private String introduction;
 	private String mySpace;
@@ -18,21 +19,6 @@ public class Member {
 
 	public Member() {
 
-	}
-
-	public Member(Integer memberId, String loginId, String name, String nickname, String password, String gender,
-			Date birthdate, String introduction, String mySpace, Timestamp createdAt, Timestamp updatedAt) {
-		this.memberId = memberId;
-		this.loginId = loginId;
-		this.name = name;
-		this.nickname = nickname;
-		this.password = password;
-		this.gender = gender;
-		this.birthdate = birthdate;
-		this.introduction = introduction;
-		this.mySpace = mySpace;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
 	}
 
 	public Integer getMemberId() {
@@ -75,12 +61,20 @@ public class Member {
 		this.password = password;
 	}
 
-	public String getGender() {
-		return gender;
+	public Integer getGenderId() {
+		return genderId;
 	}
 
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setGenderId(Integer genderId) {
+		this.genderId = genderId;
+	}
+
+	public String getGenderName() {
+		return genderName;
+	}
+
+	public void setGenderName(String genderName) {
+		this.genderName = genderName;
 	}
 
 	public Date getBirthdate() {

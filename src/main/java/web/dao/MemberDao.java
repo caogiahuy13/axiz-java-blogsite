@@ -7,11 +7,11 @@ import web.entity.Member;
 public interface MemberDao {
 	public Member authenticate(String loginId, String password);
 
-	public int register(Member user);
+	public int register(Member member);
 
 	public int deleteByLoginId(String loginId);
 
-	public int update(Member user);
+	public int update(Member member);
 
 	public List<Member> findMembersReactAnArticle(Integer articleId);
 

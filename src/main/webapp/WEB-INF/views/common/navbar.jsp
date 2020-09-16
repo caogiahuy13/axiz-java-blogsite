@@ -10,7 +10,7 @@
 		</c:if>
 		<c:if test="${not empty sessionScope.currentMember}">
 			<button class="dropbtn">
-				${sessionScope.currentMember.memberName} <i class="fa fa-caret-down"></i>
+				${sessionScope.currentMember.name} <i class="fa fa-caret-down"></i>
 			</button>
 			<div class="dropdown-content">
 				<a href="/myPage?id=${sessionScope.currentMember.memberId }"><fmt:message key="btn.myPage" /></a> <a

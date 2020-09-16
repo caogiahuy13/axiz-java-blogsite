@@ -15,8 +15,8 @@ import web.entity.Member;
 import web.form.LoginForm;
 import web.form.RePassForm;
 import web.form.RegisterForm;
-import web.service.ReactionService;
 import web.service.MemberService;
+import web.service.ReactionService;
 import web.util.Message;
 import web.util.ScreenName;
 import web.util.SessionUtil;
@@ -116,7 +116,7 @@ public class AuthController {
 		member.setLoginId(registerForm.getLoginId());
 		member.setName(registerForm.getName());
 		member.setNickname(registerForm.getNickname());
-		member.setGender(registerForm.getGender());
+		member.setGenderName(registerForm.getGenderName());
 		member.setBirthdate(registerForm.getBirthdate());
 		member.setPassword(registerForm.getPassword());
 

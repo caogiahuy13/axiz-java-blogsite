@@ -36,6 +36,7 @@
 <link href="css/popup.css" rel="stylesheet">
 <link href="css/card.css" rel="stylesheet">
 <link href="css/pagination.css" rel="stylesheet">
+<link href="css/footer.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 </head>

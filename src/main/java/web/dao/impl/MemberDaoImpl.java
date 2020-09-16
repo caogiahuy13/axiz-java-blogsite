@@ -34,14 +34,14 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int register(Member member) {
-		String sql = "INSERT INTO members (login_id, name, password, gender, birthdate)"
-				+ " VALUES (:loginId, :name, :password, :gender, :birthdate)";
+		String sql = "INSERT INTO members (login_id, name, password, gender_id, birthdate)"
+				+ " VALUES (:loginId, :name, :password, :genderId, :birthdate)";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("loginId", member.getLoginId());
 		paramMap.addValue("name", member.getName());
 		paramMap.addValue("password", member.getPassword());
-		paramMap.addValue("gender", member.getGender());
+		paramMap.addValue("genderId", member.getGenderId());
 		paramMap.addValue("birthdate", member.getBirthdate());
 
 		return jdbcTemplate.update(sql, paramMap);

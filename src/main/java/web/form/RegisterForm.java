@@ -17,7 +17,7 @@ public class RegisterForm {
 	@NotBlank
 	private String password;
 
-	private String gender;
+	private String genderName;
 
 	private Date birthdate;
 
@@ -53,12 +53,12 @@ public class RegisterForm {
 		this.password = password;
 	}
 
-	public String getGender() {
-		return gender;
+	public String getGenderName() {
+		return genderName;
 	}
 
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setGenderName(String gender) {
+		this.genderName = gender;
 	}
 
 	public Date getBirthdate() {
