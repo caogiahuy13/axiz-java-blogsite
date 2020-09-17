@@ -3,15 +3,7 @@ package web.form;
 public class SearchForm {
 	private String keyword;
 	private String searchType;
-
-	public SearchForm() {
-
-	}
-
-	public SearchForm(String keyword, String searchType) {
-		this.keyword = keyword;
-		this.searchType = searchType;
-	}
+	private String sortType;
 
 	public String getKeyword() {
 		return keyword;
@@ -27,6 +19,14 @@ public class SearchForm {
 
 	public void setSearchType(String searchType) {
 		this.searchType = searchType;
+	}
+
+	public String getSortType() {
+		return sortType;
+	}
+
+	public void setSortType(String sortType) {
+		this.sortType = sortType;
 	}
 
 }

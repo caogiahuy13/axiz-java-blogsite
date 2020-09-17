@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 public final class Message {
 
-	private static final ResourceBundle bundle = ResourceBundle.getBundle("messages", Locale.getDefault());
+	private static final ResourceBundle bundle = ResourceBundle.getBundle("messages", Locale.ENGLISH);
 
 	public static final String LOGIN_FAIL = getMessage("login.fail");
 	public static final String PASSWORD_IS_NOT_MATCH = getMessage("password.isNotMatch");

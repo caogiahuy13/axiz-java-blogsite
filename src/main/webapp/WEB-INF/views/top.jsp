@@ -8,20 +8,25 @@
 	<jsp:param name="title" value="screen.top.title" />
 </jsp:include>
 
+<p><fmt:message key="form.lbl.search" />：</p>
 <form:form action="/top" modelAttribute="searchForm">
-	<form:input path="keyword" />
-	<form:radiobutton id="all" path="searchType" value="all"
-		checked="checked" />
-	<label for="all"><fmt:message key="form.lbl.all" /></label>
-	<c:if test="${not empty sessionScope.currentMember }">
-		<form:radiobutton id="favorites" path="searchType" value="favorites" />
-		<label for="favorites"><fmt:message key="form.lbl.favorites" /></label>
-	</c:if>
-	<form:radiobutton id="ranking" path="searchType" value="ranking" />
-	<label for="ranking"><fmt:message key="form.lbl.ranking" /></label>
+	<form:radiobutton id="newest" path="sortType" value="newest" />
+	<label for="newest"><fmt:message key="form.lbl.newestOrder" /></label>
+	<form:radiobutton id="ranking" path="sortType" value="ranking" />
+	<label for="ranking"><fmt:message key="form.lbl.rankingOrder" /></label>
 	<br>
-	<form:button>
-		<fmt:message key="btn.search" />
+	<c:if test="${not empty sessionScope.currentMember }">
+		<form:checkbox id="favorites" path="searchType" value="favorites" />
+		<label for="favorites"><fmt:message
+				key="form.lbl.sortType.favorites" /></label>
+		<br>
+	</c:if>
+	<form:input path="keyword" />
+	<form:button name="keywordSearch">
+		<fmt:message key="btn.keywordSearch" />
+	</form:button>
+	<form:button name="allSearch">
+		<fmt:message key="btn.allSearch" />
 	</form:button>
 </form:form>
 

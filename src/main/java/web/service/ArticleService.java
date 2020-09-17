@@ -13,7 +13,7 @@ public interface ArticleService {
 
 	public Article findById(Integer articleId);
 
-	public List<? extends Article> find(Integer memberId, String keyword, String type);
+	public List<? extends Article> find(Integer memberId, String keyword, String searchType, String sortType);
 
 	public List<? extends Article> findByMemberId(Integer memberId);
 

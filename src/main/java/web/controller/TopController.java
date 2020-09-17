@@ -23,6 +23,9 @@ import web.util.SessionUtil;
 public class TopController {
 	private static final String TOP = "top";
 	private static final String INDEX = "/";
+	private static final String PARAM_KEYWORD_SEARCH = "keywordSearch";
+	private static final String PARAM_ALL_SEARCH = "allSearch";
+
 	@Autowired
 	ArticleService articleService;
 
@@ -34,19 +37,40 @@ public class TopController {
 		return ScreenName.TOP;
 	}
 
-	@PostMapping(TOP)
-	public String search(@ModelAttribute SearchForm searchForm, Model model) {
+	@PostMapping(value = TOP, params = PARAM_KEYWORD_SEARCH)
+	public String keywordSearch(@ModelAttribute SearchForm searchForm, Model model) {
 		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
 
-		Integer memberId = (currentMember == null) ? null : currentMember.getMemberId();
 		String keyword = searchForm.getKeyword();
 		String searchType = searchForm.getSearchType();
+		Integer memberId = null;
+		String sortType = searchForm.getSortType();
 
-		List<? extends Article> articles = articleService.find(memberId, keyword, searchType);
+		if (currentMember != null && searchForm.getSearchType() != null && !searchForm.getSearchType().isBlank()) {
+			memberId = currentMember.getMemberId();
+		}
+
+		List<? extends Article> articles = articleService.find(memberId, keyword, searchType, sortType);
 
 		if (articles.isEmpty()) {
 			model.addAttribute("msg", Message.SEARCH_NO_RESULT);
 		}
+
+		model.addAttribute("articles", articles);
+
+		return ScreenName.TOP;
+	}
+
+	@PostMapping(value = TOP, params = PARAM_ALL_SEARCH)
+	public String allSearch(@ModelAttribute SearchForm searchForm, Model model) {
+		String sortType = searchForm.getSortType();
+
+		List<? extends Article> articles = articleService.find(null, "", null, sortType);
+
+		if (articles.isEmpty()) {
+			model.addAttribute("msg", Message.SEARCH_NO_RESULT);
+		}
+
 		model.addAttribute("articles", articles);
 
 		return ScreenName.TOP;

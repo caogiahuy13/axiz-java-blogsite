@@ -8,13 +8,18 @@
 	onclick="window.location='/article?id=${article.articleId}';">
 	<div class="container">
 		<p>
-			<b>${fn:escapeXml(article.title)}</b><br> <i
-				style="font-size: 14px;">@${article.loginId } <fmt:formatDate
-					type="date" value="${article.createdAt}" /></i>
+			<b>${fn:escapeXml(article.title)}</b><br>
+			<i style="font-size: 14px;">
+				@${article.name }&nbsp
+				${rankIcon[article.memberRank]}&nbsp
+				<fmt:formatDate type="date" value="${article.createdAt}" />
+			</i>
 		</p>
 
 		<p>${fn:escapeXml(article.getReviewContent())}</p>
-		<div style="text-align: right;"><b>${article.count }</b> スタンプ</div>
+		<div style="text-align: right;">
+			<b>${article.articleReactionCount }</b> スタンプ
+		</div>
 
 	</div>
 </div>

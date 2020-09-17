@@ -1,5 +1,6 @@
 package web.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,27 @@ import web.entity.ArticleWithExtraInfo;
 @Repository
 public class ArticleDaoImpl implements ArticleDao {
 	private static final String SELECT_BASE = "SELECT * FROM articles ";
-	private static final String SELECT_BASE_JOIN_MEMBERS_AND_REACTIONS = "SELECT"
-			+ " a.article_id, a.title, a.content, a.member_id, a.created_at, a.updated_at, COUNT(r.reaction_id) count, m.name, m.login_id "
-			+ " FROM articles a "
-			+ " LEFT JOIN reactions r ON a.article_id = r.article_id "
-			+ " JOIN members m ON a.member_id = m.member_id ";
+
+	private static final String ARTICLES_JOIN_MEMBERS_JOIN_REACTIONS_TABLE = " SELECT "
+			+ "	x.*, y.name, y.member_reaction_count "
+			+ " FROM ( "
+			+ "		SELECT a.*, COUNT(r.reaction_id) article_reaction_count "
+			+ "		FROM articles a "
+			+ "		JOIN reactions r ON a.article_id = r.article_id "
+			+ "		GROUP BY a.article_id "
+			+ " ) AS x "
+			+ " JOIN ( "
+			+ "		SELECT m.member_id, m.name, COUNT(r.reaction_id) member_reaction_count "
+			+ "		FROM members m  "
+			+ "		LEFT JOIN articles a ON a.member_id = m.member_id "
+			+ "		LEFT JOIN reactions r ON r.article_id = a.article_id "
+			+ "		GROUP BY m.member_id, m.name "
+			+ " ) AS y ON x.member_id = y.member_id ";
+
+	private static final String SELECT_BASE_EXTRA_INFO = "SELECT * FROM ( "
+			+ ARTICLES_JOIN_MEMBERS_JOIN_REACTIONS_TABLE
+			+ " ) AS a ";
+
 	@Autowired
 	NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -70,52 +87,9 @@ public class ArticleDaoImpl implements ArticleDao {
 	}
 
 	@Override
-	public List<ArticleWithExtraInfo> findByKeyword(String keyword) {
-		String sql = SELECT_BASE_JOIN_MEMBERS_AND_REACTIONS
-				+ " WHERE a.content LIKE :keyword OR a.title LIKE :keyword"
-				+ " GROUP BY a.article_id, m.member_id, m.login_id ";
-
-		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("keyword", "%" + keyword + "%");
-
-		return jdbcTemplate.query(sql, paramMap,
-				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));
-	}
-
-	@Override
-	public List<ArticleWithExtraInfo> findByKeywordWithMostReaction(String keyword) {
-		String sql = SELECT_BASE_JOIN_MEMBERS_AND_REACTIONS
-				+ " WHERE a.content LIKE :keyword OR a.title LIKE :keyword"
-				+ " GROUP BY a.article_id, m.member_id, m.login_id "
-				+ " ORDER BY count DESC";
-
-		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("keyword", "%" + keyword + "%");
-
-		return jdbcTemplate.query(sql, paramMap,
-				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));
-	}
-
-	@Override
-	public List<ArticleWithExtraInfo> findByKeywordReactedByMember(Integer memberId, String keyword) {
-		String sql = SELECT_BASE_JOIN_MEMBERS_AND_REACTIONS
-				+ " WHERE r.member_id = :memberId AND (a.content LIKE :keyword OR a.title LIKE :keyword)"
-				+ " GROUP BY a.article_id, m.member_id, m.login_id "
-				+ " ORDER BY a.article_id";
-
-		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("memberId", memberId);
-		paramMap.addValue("keyword", "%" + keyword + "%");
-
-		return jdbcTemplate.query(sql, paramMap,
-				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));
-	}
-
-	@Override
 	public List<ArticleWithExtraInfo> findByMemberId(Integer memberId) {
-		String sql = SELECT_BASE_JOIN_MEMBERS_AND_REACTIONS
-				+ " WHERE m.member_id = :memberId"
-				+ " GROUP BY a.article_id, m.member_id, m.login_id ";
+		String sql = SELECT_BASE_EXTRA_INFO
+				+ " WHERE m.member_id = :memberId";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("memberId", memberId);
@@ -149,9 +123,8 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public List<ArticleWithExtraInfo> findByMemberIdPagination(Integer memberId, Integer pageNumber,
 			Integer itemPerPage) {
-		String sql = SELECT_BASE_JOIN_MEMBERS_AND_REACTIONS
+		String sql = SELECT_BASE_EXTRA_INFO
 				+ " WHERE m.member_id = :memberId"
-				+ " GROUP BY a.article_id, m.member_id, m.login_id "
 				+ " ORDER BY a.created_at DESC"
 				+ " OFFSET :offset LIMIT :limit";
 
@@ -159,6 +132,40 @@ public class ArticleDaoImpl implements ArticleDao {
 		paramMap.addValue("memberId", memberId);
 		paramMap.addValue("offset", (pageNumber - 1) * itemPerPage);
 		paramMap.addValue("limit", itemPerPage);
+
+		return jdbcTemplate.query(sql, paramMap,
+				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));
+	}
+
+	@Override
+	public List<ArticleWithExtraInfo> find(String keyword, String sortBy, Integer memberId, Integer pageNumber,
+			Integer itemPerPage) {
+		String sql = SELECT_BASE_EXTRA_INFO;
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		List<String> whereStr = new ArrayList<>();
+
+		if (memberId != null) {
+			sql += " JOIN reactions r ON a.article_id = r.article_id ";
+			whereStr.add(" r.member_id = :memberId ");
+			paramMap.addValue("memberId", memberId);
+		}
+
+		sql += "WHERE a.content LIKE :keyword OR a.title LIKE :keyword ";
+		paramMap.addValue("keyword", "%" + keyword + "%");
+
+		for (int i = 0; i < whereStr.size(); i++) {
+			sql += " AND " + whereStr.get(i) + " ";
+		}
+
+		if (sortBy != null && !sortBy.isBlank()) {
+			sql += " ORDER BY a." + sortBy + " DESC ";
+		}
+
+		if (pageNumber != null && itemPerPage != null) {
+			sql += " OFFSET :offset LIMIT :limit ";
+			paramMap.addValue("offset", (pageNumber - 1) * itemPerPage);
+			paramMap.addValue("limit", itemPerPage);
+		}
 
 		return jdbcTemplate.query(sql, paramMap,
 				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));

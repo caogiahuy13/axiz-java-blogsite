@@ -14,12 +14,6 @@ public interface ArticleDao {
 
 	public Article findById(Integer articleId);
 
-	public List<ArticleWithExtraInfo> findByKeyword(String keyword);
-
-	public List<ArticleWithExtraInfo> findByKeywordWithMostReaction(String keyword);
-
-	public List<ArticleWithExtraInfo> findByKeywordReactedByMember(Integer memberId, String keyword);
-
 	public List<ArticleWithExtraInfo> findByMemberId(Integer memberId);
 
 	public List<ArticleWithExtraInfo> findByMemberIdPagination(Integer memberId, Integer pageNumber,
@@ -28,4 +22,7 @@ public interface ArticleDao {
 	public Integer countByMemberId(Integer memberId);
 
 	public Article findLatestByMemberId(Integer memberId);
+
+	public List<ArticleWithExtraInfo> find(String keyword, String sortBy, Integer memberId, Integer pageNumber,
+			Integer itemPerPage);
 }

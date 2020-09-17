@@ -27,6 +27,7 @@ public class AuthController {
 	private static final String LOGOUT = "logout";
 	private static final String REGISTER = "register";
 	private static final String REGISTER_CONFIRM = "registerConfirm";
+
 	@Autowired
 	MemberService memberService;
 
@@ -59,7 +60,8 @@ public class AuthController {
 		session.setAttribute(SessionUtil.CURRENT_MEMBER, member);
 		session.setAttribute(SessionUtil.TOTAL_REACTIONS, reactionCount);
 
-		return "redirect:/" + ScreenName.MY_PAGE + "?id=" + member.getMemberId();
+		//		return "redirect:/" + ScreenName.MY_PAGE + "?id=" + member.getMemberId();
+		return "redirect:/" + ScreenName.TOP;
 	}
 
 	@GetMapping(LOGOUT)
@@ -96,7 +98,8 @@ public class AuthController {
 		session.setAttribute(SessionUtil.CURRENT_MEMBER, currentMember);
 		session.removeAttribute(SessionUtil.REGISTER_MEMBER);
 
-		return "redirect:/" + ScreenName.MY_PAGE + "?id=" + currentMember.getMemberId();
+		//		return "redirect:/" + ScreenName.MY_PAGE + "?id=" + currentMember.getMemberId();
+		return "redirect:/" + ScreenName.TOP;
 	}
 
 	@PostMapping(REGISTER_CONFIRM)
@@ -116,7 +119,7 @@ public class AuthController {
 		member.setLoginId(registerForm.getLoginId());
 		member.setName(registerForm.getName());
 		member.setNickname(registerForm.getNickname());
-		member.setGenderName(registerForm.getGenderName());
+		member.setGender(registerForm.getGender());
 		member.setBirthdate(registerForm.getBirthdate());
 		member.setPassword(registerForm.getPassword());
 

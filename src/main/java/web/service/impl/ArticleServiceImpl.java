@@ -37,21 +37,20 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<? extends Article> find(Integer memberId, String keyword, String type) {
-		final String ALL = "all";
+	public List<? extends Article> find(Integer memberId, String keyword, String searchType, String sortType) {
 		final String FAVORITES = "favorites";
 		final String RANKING = "ranking";
+		final String NEWEST = "newest";
 
-		switch (type) {
-		case ALL:
-			return articleDao.findByKeyword(keyword);
-		case FAVORITES:
-			return articleDao.findByKeywordReactedByMember(memberId, keyword);
-		case RANKING:
-			return articleDao.findByKeywordWithMostReaction(keyword);
-		default:
-			return articleDao.findByKeyword(keyword);
+		String sortBy = null;
+
+		if (sortType != null && sortType.equals(RANKING)) {
+			sortBy = "article_reaction_count";
+		} else if (sortType != null && sortType.equals(NEWEST)) {
+			sortBy = "created_at";
 		}
+
+		return articleDao.find(keyword, sortBy, memberId, null, null);
 	}
 
 	@Override

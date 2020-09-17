@@ -9,8 +9,7 @@ public class Member {
 	private String name;
 	private String nickname;
 	private String password;
-	private Integer genderId;
-	private String genderName;
+	private Integer gender;
 	private Date birthdate;
 	private String introduction;
 	private String mySpace;
@@ -61,20 +60,12 @@ public class Member {
 		this.password = password;
 	}
 
-	public Integer getGenderId() {
-		return genderId;
+	public Integer getGender() {
+		return gender;
 	}
 
-	public void setGenderId(Integer genderId) {
-		this.genderId = genderId;
-	}
-
-	public String getGenderName() {
-		return genderName;
-	}
-
-	public void setGenderName(String genderName) {
-		this.genderName = genderName;
+	public void setGender(Integer gender) {
+		this.gender = gender;
 	}
 
 	public Date getBirthdate() {

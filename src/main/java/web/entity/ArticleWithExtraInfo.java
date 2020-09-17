@@ -1,19 +1,38 @@
 package web.entity;
 
+import web.util.Milestone;
+import web.util.RankName;
+
 public class ArticleWithExtraInfo extends Article {
 
-	private Integer count;
+	private Integer articleReactionCount;
 
 	private String name;
 
-	private String loginId;
+	private Integer memberReactionCount;
 
-	public Integer getCount() {
-		return count;
+	public String getMemberRank() {
+		if (memberReactionCount >= Milestone.GOLD_RANK) {
+			return RankName.GOLD;
+		} else if (memberReactionCount >= Milestone.SILVER_RANK) {
+			return RankName.SILVER;
+		} else if (memberReactionCount >= Milestone.BRONZE_RANK) {
+			return RankName.BRONZE;
+		} else {
+			return RankName.NORMAL;
+		}
 	}
 
-	public void setCount(Integer count) {
-		this.count = count;
+	public boolean hasTrophy() {
+		return articleReactionCount >= Milestone.TROPHY ? true : false;
+	}
+
+	public Integer getArticleReactionCount() {
+		return articleReactionCount;
+	}
+
+	public void setArticleReactionCount(Integer articleReactionCount) {
+		this.articleReactionCount = articleReactionCount;
 	}
 
 	public String getName() {
@@ -24,12 +43,12 @@ public class ArticleWithExtraInfo extends Article {
 		this.name = name;
 	}
 
-	public String getLoginId() {
-		return loginId;
+	public Integer getMemberReactionCount() {
+		return memberReactionCount;
 	}
 
-	public void setLoginId(String loginId) {
-		this.loginId = loginId;
+	public void setMemberReactionCount(Integer memberReactionCount) {
+		this.memberReactionCount = memberReactionCount;
 	}
 
 }
