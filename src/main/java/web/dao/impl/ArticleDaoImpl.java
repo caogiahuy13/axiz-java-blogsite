@@ -150,7 +150,7 @@ public class ArticleDaoImpl implements ArticleDao {
 			paramMap.addValue("memberId", memberId);
 		}
 
-		sql += "WHERE a.content LIKE :keyword OR a.title LIKE :keyword ";
+		sql += "WHERE (a.content LIKE :keyword OR a.title LIKE :keyword) ";
 		paramMap.addValue("keyword", "%" + keyword + "%");
 
 		for (int i = 0; i < whereStr.size(); i++) {
@@ -166,6 +166,8 @@ public class ArticleDaoImpl implements ArticleDao {
 			paramMap.addValue("offset", (pageNumber - 1) * itemPerPage);
 			paramMap.addValue("limit", itemPerPage);
 		}
+
+		System.out.println(sql);
 
 		return jdbcTemplate.query(sql, paramMap,
 				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));

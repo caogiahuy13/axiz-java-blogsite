@@ -49,8 +49,11 @@
 <link href="css/card.css" rel="stylesheet">
 <link href="css/pagination.css" rel="stylesheet">
 <link href="css/footer.css" rel="stylesheet">
+<link href="css/backToTop.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body style="margin: 0px">
 

@@ -2,10 +2,11 @@
 
 /* Navbar container */
 .navbar {
-	overflow: hidden;
 	background-color: #333;
 	font-family: Arial;
 	width: 100%; /* Full width */
+	min-height: 48px;
+	z-index: 1;
 }
 
 /* Links inside the navbar */
@@ -81,7 +82,7 @@
 
 /* The sticky class is added to the navbar with JS when it reaches its scroll position */
 .sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
+	position: fixed;
+	top: 0;
+	width: 100%;
 }

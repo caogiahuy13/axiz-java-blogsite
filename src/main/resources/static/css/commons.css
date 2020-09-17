@@ -73,3 +73,9 @@ a.btn {
 	padding: 0;
 	background: none;
 }
+
+.sticky {
+	position: fixed;
+	top: 0;
+	width: 100%;
+}

@@ -8,7 +8,10 @@
 	<jsp:param name="title" value="screen.top.title" />
 </jsp:include>
 
-<p><fmt:message key="form.lbl.search" />：</p>
+<p>
+	<fmt:message key="form.lbl.search" />
+	：
+</p>
 <form:form action="/top" modelAttribute="searchForm">
 	<form:radiobutton id="newest" path="sortType" value="newest" />
 	<label for="newest"><fmt:message key="form.lbl.newestOrder" /></label>
@@ -40,5 +43,7 @@
 </c:forEach>
 
 <jsp:include page="common/footTag.jsp" />
+
+
 
 

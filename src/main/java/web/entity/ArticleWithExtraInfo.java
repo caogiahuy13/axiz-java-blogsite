@@ -23,7 +23,7 @@ public class ArticleWithExtraInfo extends Article {
 		}
 	}
 
-	public boolean hasTrophy() {
+	public boolean getTrophy() {
 		return articleReactionCount >= Milestone.TROPHY ? true : false;
 	}
 
