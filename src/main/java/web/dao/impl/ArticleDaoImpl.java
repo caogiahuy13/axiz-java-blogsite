@@ -167,8 +167,6 @@ public class ArticleDaoImpl implements ArticleDao {
 			paramMap.addValue("limit", itemPerPage);
 		}
 
-		System.out.println(sql);
-
 		return jdbcTemplate.query(sql, paramMap,
 				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));
 	}

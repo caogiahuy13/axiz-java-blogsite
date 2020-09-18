@@ -37,10 +37,10 @@
 		</div>
 		<div>
 			<label><fmt:message key="form.lbl.gender" /></label>
-			<form:radiobutton path="gender" id="male" value="男" checked="checked" />
+			<form:radiobutton path="gender" id="male" value="1" checked="checked" />
 			<label for="male" style="width: auto"><fmt:message
 					key="form.lbl.male" /></label>
-			<form:radiobutton path="gender" id="female" value="女" />
+			<form:radiobutton path="gender" id="female" value="2" />
 			<label for="female" style="width: auto"><fmt:message
 					key="form.lbl.female" /></label>
 		</div>

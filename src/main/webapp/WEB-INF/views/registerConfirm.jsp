@@ -33,8 +33,13 @@
 				value="${sessionScope.registerMember.nickname }" readonly />
 		</div>
 		<div>
-			<label><fmt:message key="form.lbl.gender" /></label> <input
-				value="${sessionScope.registerMember.gender }" readonly />
+			<label><fmt:message key="form.lbl.gender" /></label>
+			<c:if test="${sessionScope.registerMember.gender == 1}">
+				<input value="男" readonly />
+			</c:if>
+			<c:if test="${sessionScope.registerMember.gender == 2}">
+				<input value="女" readonly />
+			</c:if>
 		</div>
 		<div>
 			<label><fmt:message key="form.lbl.birthdate" /></label> <input
