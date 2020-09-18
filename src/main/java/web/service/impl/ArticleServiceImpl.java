@@ -59,8 +59,8 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<? extends Article> findByMemberIdPagination(Integer memberId, Integer pageNumber, Integer itemPerPage) {
-		return articleDao.findByMemberIdPagination(memberId, pageNumber, itemPerPage);
+	public List<? extends Article> findByMemberId(Integer memberId, Integer pageNumber, Integer itemPerPage) {
+		return articleDao.findByMemberId(memberId, pageNumber, itemPerPage);
 	}
 
 	@Override

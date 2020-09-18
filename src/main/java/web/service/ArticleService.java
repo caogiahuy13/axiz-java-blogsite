@@ -17,7 +17,7 @@ public interface ArticleService {
 
 	public List<? extends Article> findByMemberId(Integer memberId);
 
-	public List<? extends Article> findByMemberIdPagination(Integer memberId, Integer pageNumber, Integer itemPerPage);
+	public List<? extends Article> findByMemberId(Integer memberId, Integer pageNumber, Integer itemPerPage);
 
 	public Integer countByMemberId(Integer memberId);
 

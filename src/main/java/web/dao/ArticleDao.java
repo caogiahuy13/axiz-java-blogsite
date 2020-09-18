@@ -16,7 +16,7 @@ public interface ArticleDao {
 
 	public List<ArticleWithExtraInfo> findByMemberId(Integer memberId);
 
-	public List<ArticleWithExtraInfo> findByMemberIdPagination(Integer memberId, Integer pageNumber,
+	public List<ArticleWithExtraInfo> findByMemberId(Integer memberId, Integer pageNumber,
 			Integer itemPerPage);
 
 	public Integer countByMemberId(Integer memberId);

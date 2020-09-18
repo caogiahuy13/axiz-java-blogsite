@@ -57,8 +57,9 @@ public class MemberController {
 
 		final Integer LIMIT = 3;
 
-		List<? extends Article> articles = articleService.findByMemberIdPagination(member.getMemberId(),
+		List<? extends Article> articles = articleService.findByMemberId(member.getMemberId(),
 				pageNumber, LIMIT);
+
 		int articleMaxPage = articleService.countByMemberId(memberId) / LIMIT + 1;
 		int memberRank = memberService.getRank(memberId);
 		int memberTotalReactions = reactionService.countByMemberId(memberId);

@@ -60,8 +60,7 @@ public class AuthController {
 		session.setAttribute(SessionUtil.CURRENT_MEMBER, member);
 		session.setAttribute(SessionUtil.TOTAL_REACTIONS, reactionCount);
 
-		//		return "redirect:/" + ScreenName.MY_PAGE + "?id=" + member.getMemberId();
-		return "redirect:/" + ScreenName.TOP;
+		return "redirect:/" + ScreenName.MY_PAGE + "?id=" + member.getMemberId();
 	}
 
 	@GetMapping(LOGOUT)
@@ -98,8 +97,8 @@ public class AuthController {
 		session.setAttribute(SessionUtil.CURRENT_MEMBER, currentMember);
 		session.removeAttribute(SessionUtil.REGISTER_MEMBER);
 
-		//		return "redirect:/" + ScreenName.MY_PAGE + "?id=" + currentMember.getMemberId();
-		return "redirect:/" + ScreenName.TOP;
+		return "redirect:/" + ScreenName.MY_PAGE + "?id=" + currentMember.getMemberId();
+
 	}
 
 	@PostMapping(REGISTER_CONFIRM)

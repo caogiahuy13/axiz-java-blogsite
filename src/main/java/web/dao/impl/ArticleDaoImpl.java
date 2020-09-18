@@ -89,10 +89,28 @@ public class ArticleDaoImpl implements ArticleDao {
 	@Override
 	public List<ArticleWithExtraInfo> findByMemberId(Integer memberId) {
 		String sql = SELECT_BASE_EXTRA_INFO
-				+ " WHERE m.member_id = :memberId";
+				+ " WHERE m.member_id = :memberId"
+				+ " ORDER BY a.created_at DESC";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("memberId", memberId);
+
+		return jdbcTemplate.query(sql, paramMap,
+				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));
+	}
+
+	@Override
+	public List<ArticleWithExtraInfo> findByMemberId(Integer memberId, Integer pageNumber,
+			Integer itemPerPage) {
+		String sql = SELECT_BASE_EXTRA_INFO
+				+ " WHERE a.member_id = :memberId"
+				+ " ORDER BY a.created_at DESC"
+				+ " OFFSET :offset LIMIT :limit";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("memberId", memberId);
+		paramMap.addValue("offset", (pageNumber - 1) * itemPerPage);
+		paramMap.addValue("limit", itemPerPage);
 
 		return jdbcTemplate.query(sql, paramMap,
 				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));
@@ -118,23 +136,6 @@ public class ArticleDaoImpl implements ArticleDao {
 		paramMap.addValue("memberId", memberId);
 
 		return jdbcTemplate.queryForObject(sql, paramMap, Integer.class);
-	}
-
-	@Override
-	public List<ArticleWithExtraInfo> findByMemberIdPagination(Integer memberId, Integer pageNumber,
-			Integer itemPerPage) {
-		String sql = SELECT_BASE_EXTRA_INFO
-				+ " WHERE m.member_id = :memberId"
-				+ " ORDER BY a.created_at DESC"
-				+ " OFFSET :offset LIMIT :limit";
-
-		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("memberId", memberId);
-		paramMap.addValue("offset", (pageNumber - 1) * itemPerPage);
-		paramMap.addValue("limit", itemPerPage);
-
-		return jdbcTemplate.query(sql, paramMap,
-				new BeanPropertyRowMapper<ArticleWithExtraInfo>(ArticleWithExtraInfo.class));
 	}
 
 	@Override
