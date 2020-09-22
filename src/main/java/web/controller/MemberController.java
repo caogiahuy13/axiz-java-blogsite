@@ -1,6 +1,5 @@
 package web.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import web.entity.Article;
 import web.entity.Member;
+import web.entity.ReactionsByAgeRangeAndGender;
 import web.entity.ReactionsByArticle;
 import web.form.UpdateMemberForm;
 import web.service.ArticleService;
@@ -159,18 +159,14 @@ public class MemberController {
 			return "redirect:/" + ScreenName.TOP;
 		}
 
-		HashMap<String, Integer> genderAnalytics = reactionService
-				.countByGenderByMemberIdOfArticle(currentMember.getMemberId());
-		HashMap<String, Integer> ageAnalytics = reactionService
-				.countByAgeRangeByMemberIdOfArticle(currentMember.getMemberId());
-		HashMap<String, Integer> accessAnalytics = viewService
-				.countByAccessByMemberIdOfArticle(currentMember.getMemberId());
-		List<ReactionsByArticle> reactionAnalytics = reactionService
-				.countMultipleByMemberIdOfArticle(currentMember.getMemberId());
+		Integer memberId = currentMember.getMemberId();
 
-		model.addAttribute("genderAnalytics", genderAnalytics);
-		model.addAttribute("ageAnalytics", ageAnalytics);
-		model.addAttribute("accessAnalytics", accessAnalytics);
+		List<ReactionsByAgeRangeAndGender> ageRangeAndGenderAnalytics = reactionService
+				.countByGenderAndAgeRangeAndMemberIdOfArticle(memberId);
+		List<ReactionsByArticle> reactionAnalytics = reactionService
+				.countMultipleByMemberIdOfArticle(memberId);
+
+		model.addAttribute("ageRangeAndGenderAnalytics", ageRangeAndGenderAnalytics);
 		model.addAttribute("reactionAnalytics", reactionAnalytics);
 
 		return ScreenName.ANALYTICS;

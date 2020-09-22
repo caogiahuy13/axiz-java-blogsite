@@ -19,10 +19,8 @@ public interface ReactionDao {
 
 	public HashMap<Integer, Integer> countMultipleByArticleId(Integer articleId);
 
-	public HashMap<String, Integer> countByGenderByMemberIdOfArticle(Integer memberId);
-
-	public HashMap<String, Integer> countByAgeRangeByMemberIdOfArticle(Integer memberId);
-
 	public List<ReactionsByArticle> countMultipleByMemberIdOfArticle(Integer memberId);
 
+	public Integer countByGenderAndAgeRangeAndMemberIdOfArticle(Integer memberId, Integer gender, Integer minAge,
+			Integer maxAge);
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import web.entity.Reaction;
+import web.entity.ReactionsByAgeRangeAndGender;
 import web.entity.ReactionsByArticle;
 
 public interface ReactionService {
@@ -19,9 +20,7 @@ public interface ReactionService {
 
 	public HashMap<Integer, Integer> countMultipleByArticleId(Integer articleId);
 
-	public HashMap<String, Integer> countByGenderByMemberIdOfArticle(Integer memberId);
-
-	public HashMap<String, Integer> countByAgeRangeByMemberIdOfArticle(Integer memberId);
-
 	public List<ReactionsByArticle> countMultipleByMemberIdOfArticle(Integer memberId);
+
+	public List<ReactionsByAgeRangeAndGender> countByGenderAndAgeRangeAndMemberIdOfArticle(Integer memberId);
 }

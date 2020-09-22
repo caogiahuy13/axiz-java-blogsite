@@ -93,57 +93,6 @@ public class ReactionDaoImpl implements ReactionDao {
 	}
 
 	@Override
-	public HashMap<String, Integer> countByGenderByMemberIdOfArticle(Integer memberId) {
-		String sql = "SELECT m.gender, COUNT(*) count "
-				+ " FROM reactions r"
-				+ " JOIN members m ON r.member_id = m.member_id"
-				+ " JOIN articles a ON r.article_id = a.article_id"
-				+ " WHERE a.member_id = :memberId"
-				+ " GROUP BY m.gender, a.member_id";
-
-		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("memberId", memberId);
-
-		return jdbcTemplate.query(sql, paramMap, (ResultSet rs) -> {
-			HashMap<String, Integer> results = new HashMap<>();
-			while (rs.next()) {
-				results.put(rs.getString("gender"), rs.getInt("count"));
-			}
-			return results;
-		});
-	}
-
-	@Override
-	public HashMap<String, Integer> countByAgeRangeByMemberIdOfArticle(Integer memberId) {
-		String sql = "SELECT"
-				+ " CASE"
-				+ " 	WHEN (date_part('year', now()) - birth_year) <18 THEN 'Under 18'"
-				+ " 	WHEN (date_part('year', now()) - birth_year) BETWEEN 18 AND 24 THEN '18-24'"
-				+ " 	WHEN (date_part('year', now()) - birth_year) BETWEEN 25 AND 34 THEN '25-34'"
-				+ " END AS age_range, COUNT(*) AS count"
-				+ " FROM ("
-				+ " 	SELECT r.*, m.birth_year, a.member_id"
-				+ " 	FROM reactions r"
-				+ " 	JOIN members m ON r.member_id = m.member_id"
-				+ " 	JOIN articles a ON r.article_id = a.article_id"
-				+ " 	WHERE a.member_id = :memberId"
-				+ " ) AS reaction"
-				+ " GROUP BY age_range"
-				+ " ORDER BY age_range";
-
-		MapSqlParameterSource paramMap = new MapSqlParameterSource();
-		paramMap.addValue("memberId", memberId);
-
-		return jdbcTemplate.query(sql, paramMap, (ResultSet rs) -> {
-			HashMap<String, Integer> results = new HashMap<>();
-			while (rs.next()) {
-				results.put(rs.getString("age_range"), rs.getInt("count"));
-			}
-			return results;
-		});
-	}
-
-	@Override
 	public List<ReactionsByArticle> countMultipleByMemberIdOfArticle(Integer memberId) {
 		String sql = " SELECT s.stamp_id, a.title, COUNT(CASE WHEN reaction_id IS NOT NULL THEN 1 ELSE NULL END)"
 				+ " FROM stamps s"
@@ -157,6 +106,27 @@ public class ReactionDaoImpl implements ReactionDao {
 
 		return jdbcTemplate.query(sql, paramMap,
 				new BeanPropertyRowMapper<ReactionsByArticle>(ReactionsByArticle.class));
+	}
+
+	@Override
+	public Integer countByGenderAndAgeRangeAndMemberIdOfArticle(Integer memberId, Integer gender, Integer minAge,
+			Integer maxAge) {
+		String sql = "SELECT COUNT(*) count "
+				+ "	FROM ( "
+				+ "		SELECT DISTINCT a.member_id, m.gender, m.birthdate "
+				+ "		FROM reactions r "
+				+ " 	JOIN articles a ON r.article_id = a.article_id "
+				+ " 	JOIN members m ON r.member_id = m.member_id "
+				+ " ) x "
+				+ " WHERE x.member_id = :memberId AND x.gender = :gender AND date_part('year',age(x.birthdate)) BETWEEN :minAge AND :maxAge ";
+
+		MapSqlParameterSource paramMap = new MapSqlParameterSource();
+		paramMap.addValue("memberId", memberId);
+		paramMap.addValue("gender", gender);
+		paramMap.addValue("minAge", minAge);
+		paramMap.addValue("maxAge", maxAge);
+
+		return jdbcTemplate.queryForObject(sql, paramMap, Integer.class);
 	}
 
 }
