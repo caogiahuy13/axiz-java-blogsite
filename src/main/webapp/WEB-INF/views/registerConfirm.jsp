@@ -12,50 +12,66 @@
 	<c:redirect url="top" />
 </c:if>
 
-<p>※以下の内容でよろしいですか？</p>
+<div style="text-align: left;">
+	<div style="margin: 20px 40px">
+		<p>※以下の内容でよろしいですか？</p>
 
-<c:if test="${not empty msg}">
-	<p class="error">${msg}</p>
-</c:if>
+		<c:if test="${not empty msg}">
+			<p class="error">${msg}</p>
+		</c:if>
 
-<form:form action="register" modelAttribute="rePassForm">
-	<fieldset class="label-130">
-		<div>
-			<label><fmt:message key="form.lbl.loginId" /></label> <input
-				value="${sessionScope.registerMember.loginId }" readonly />
-		</div>
-		<div>
-			<label><fmt:message key="form.lbl.name" /></label> <input
-				value="${sessionScope.registerMember.name }" readonly />
-		</div>
-		<div>
-			<label><fmt:message key="form.lbl.nickname" /></label> <input
-				value="${sessionScope.registerMember.nickname }" readonly />
-		</div>
-		<div>
-			<label><fmt:message key="form.lbl.gender" /></label>
-			<c:if test="${sessionScope.registerMember.gender == 1}">
-				<input value="男" readonly />
-			</c:if>
-			<c:if test="${sessionScope.registerMember.gender == 2}">
-				<input value="女" readonly />
-			</c:if>
-		</div>
-		<div>
-			<label><fmt:message key="form.lbl.birthdate" /></label> <input
-				value="${sessionScope.registerMember.birthdate }" readonly />
-		</div>
-		<div>
-			<label><fmt:message key="form.lbl.rePassword" /></label>
-			<form:input path="rePass" type="password" />
-			<form:errors path="rePass" cssStyle="color: red" />
-		</div>
-	</fieldset>
-	<form:button  name="register">
-		<fmt:message key="btn.register" />
-	</form:button>
-</form:form>
+		<form:form action="register" modelAttribute="rePassForm">
+			<fieldset class="label-200">
+				<div>
+					<label><fmt:message key="form.lbl.loginId" /></label> <input
+						value="${sessionScope.registerMember.loginId }"
+						style="font-size: 24px" readonly />
+				</div>
+				<div>
+					<label><fmt:message key="form.lbl.name" /></label> <input
+						value="${sessionScope.registerMember.name }"
+						style="font-size: 24px" readonly />
+				</div>
+				<div>
+					<label><fmt:message key="form.lbl.nickname" /></label> <input
+						value="${sessionScope.registerMember.nickname }"
+						style="font-size: 24px" readonly />
+				</div>
+				<div>
+					<label><fmt:message key="form.lbl.gender" /></label>
+					<c:if test="${sessionScope.registerMember.gender == 1}">
+						<input value="男" style="font-size: 24px" readonly />
+					</c:if>
+					<c:if test="${sessionScope.registerMember.gender == 2}">
+						<input value="女" style="font-size: 24px" readonly />
+					</c:if>
+				</div>
+				<div>
+					<label><fmt:message key="form.lbl.birthdate" /></label> <input
+						value="${sessionScope.registerMember.birthdate }"
+						style="font-size: 24px" readonly />
+				</div>
+				<div>
+					<label><fmt:message key="form.lbl.rePassword" /></label>
+					<form:input path="rePass" type="password" style="font-size: 24px" />
+					<form:errors path="rePass" cssStyle="color: red" />
+				</div>
+				<div style="margin-left: 230px;">
+					<label></label>
+					<form:button class="button" name="register">
+						<fmt:message key="btn.register" />
+					</form:button>
+				</div>
+				<div style="margin-left: 172px;">
+					<label></label>
+					<form:button class="button-link" name="return">
+						<fmt:message key="btn.returnToRegister" />
+					</form:button>
+				</div>
+			</fieldset>
+		</form:form>
+	</div>
 
-<a href="/register"><fmt:message key="btn.returnToRegister" /></a>
+</div>
 
 <jsp:include page="common/footTag.jsp" />

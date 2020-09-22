@@ -12,8 +12,6 @@
 	<c:redirect url="top" />
 </c:if>
 
-
-
 <div style="text-align: left">
 	<div style="margin: 20px 40px">
 		<c:if test="${not empty msg}">

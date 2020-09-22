@@ -50,6 +50,8 @@
 <link href="css/pagination.css" rel="stylesheet">
 <link href="css/footer.css" rel="stylesheet">
 <link href="css/backToTop.css" rel="stylesheet">
+<link href="css/radio.css" rel="stylesheet">
+<link href="css/checkbox.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css"

@@ -1,5 +1,7 @@
 package web.controller;
 
+import java.sql.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +73,16 @@ public class AuthController {
 
 	@GetMapping(REGISTER)
 	public String getRegister(@ModelAttribute RegisterForm registerForm) {
+		registerForm.setBirthdate(Date.valueOf("2000-01-01"));
 		return ScreenName.REGISTER;
 	}
 
-	@PostMapping(REGISTER)
+	@PostMapping(value = REGISTER, params = "return")
+	public String postRegisterReturn(@ModelAttribute RegisterForm registerForm) {
+		return ScreenName.REGISTER;
+	}
+
+	@PostMapping(value = REGISTER, params = "register")
 	public String postRegister(@Validated @ModelAttribute RePassForm rePassForm, BindingResult bindingResult,
 			Model model, @ModelAttribute RegisterForm registerForm) {
 		if (bindingResult.hasErrors()) {

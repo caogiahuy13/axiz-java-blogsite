@@ -120,6 +120,32 @@ a:active {
 	color: white;
 }
 
+.button-link {
+	border: none;
+	outline: none;
+	background: none;
+	cursor: pointer;
+	padding: 0;
+	text-decoration: none;
+	font-family: inherit;
+	font-size: inherit;
+	color: #8585ad;
+}
+
+.button-link:hover {
+	text-decoration: underline;
+	color: #33cc33;
+}
+
+.button-link: visited {
+	text-decoration: none;
+	color: #52527a;
+}
+
+.button-link:active {
+	text-decoration: underline;
+}
+
 table.myPageTable {
 	border: none;
 }
