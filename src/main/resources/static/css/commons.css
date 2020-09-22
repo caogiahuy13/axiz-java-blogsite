@@ -1,151 +1,147 @@
 @charset "UTF-8";
 
 fieldset {
-  border: none;
+	border: none;
 }
 
 fieldset label {
-  display: inline-block;
-  width: 43px;
+	display: inline-block;
+	width: 43px;
 }
 
 fieldset.label-60 label {
-  width: 60px;
+	width: 60px;
 }
 
 fieldset.label-130 label {
-  width: 130px;
+	width: 130px;
 }
 
 fieldset.label-120 label {
-  width: 120px;
+	width: 120px;
 }
 
 fieldset.label-140 label {
-  width: 140px;
+	width: 140px;
 }
 
 /*追加*/
 fieldset.label-160 label {
-  width: 160px;
+	width: 160px;
 }
 /*追加*/
 fieldset.label-200 label {
-  width: 200px;
+	width: 200px;
 }
 
 fieldset div {
-  margin: 5px;
+	margin: 5px;
 }
 
-form ~ div,
-table ~ div {
-  margin-top: 10px;
+form ~ div, table ~ div {
+	margin-top: 10px;
 }
 
-table,
-table th,
-table td {
-  border: solid 1px;
+table, table th, table td {
+	border: solid 1px;
 }
 
 input[readonly] {
-  background: #cccccc;
-  color: black;
+	background: #cccccc;
+	color: black;
 }
 
 .center {
-  text-align: center;
+	text-align: center;
 }
 
 .required::before {
-  content: "※";
-  color: red;
+	content: "※";
+	color: red;
 }
 
 .error {
-  color: red;
+	color: red;
 }
 
 a.btn {
-  color: white;
-  text-align: center;
-  font-size: 21px;
-  font-weight: bold;
-  background-color: #87cefa;
-  border-radius: 10px;
-  cursor: pointer;
-  border: 0px;
-  padding: 5px 20px 5px 20px;
-  text-decoration: none;
+	color: white;
+	text-align: center;
+	font-size: 21px;
+	font-weight: bold;
+	background-color: #87cefa;
+	border-radius: 10px;
+	cursor: pointer;
+	border: 0px;
+	padding: 5px 20px 5px 20px;
+	text-decoration: none;
 }
 
 .unstyled-button {
-  border: none;
-  padding: 0;
-  background: none;
+	border: none;
+	padding: 0;
+	background: none;
 }
 
 a:link {
-  text-decoration: none;
-  color: #8585ad;
+	text-decoration: none;
+	color: #8585ad;
 }
 
 a:visited {
-  text-decoration: none;
-  color: #52527a;
+	text-decoration: none;
+	color: #52527a;
 }
 
 a:hover {
-  text-decoration: underline;
-  color: #33cc33;
+	text-decoration: underline;
+	color: #33cc33;
 }
 
 a:active {
-  text-decoration: underline;
+	text-decoration: underline;
 }
 
 .button {
-  background-color: white;
-  border: 2px solid #4caf50;
-  color: black;
-  padding: 10px 10px;
-  /*変更*/
-  font-size: 24px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 8px;
+	background-color: white;
+	border: 2px solid #4caf50;
+	color: black;
+	padding: 10px 10px;
+	/*変更*/
+	font-size: 24px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 8px;
 }
 
 .button:hover {
-  background-color: #4caf50;
-  color: white;
+	background-color: #4caf50;
+	color: white;
 }
 
 table.myPageTable {
-  border: none;
+	border: none;
 }
 
 table.myPageTable td {
-  border: none;
-  height: 50px;
-  width: 280px;
+	border: none;
+	height: 50px;
+	width: 280px;
 }
 
 .button:focus {
-  outline: none;
+	outline: none;
 }
 
 .sticky {
-  position: fixed;
-  top: 0;
-  width: 100%;
+	position: fixed;
+	top: 0;
+	width: 100%;
 }
 
-/*追加*/
 body {
-  font-size: 24px;
+	font-size: 24px;
 }
