@@ -2,18 +2,18 @@
 
 /* Pagination links */
 .pagination a {
-	color: black;
-	padding: 8px 16px;
-	transition: background-color .3s;
-	text-decoration: none;
+  color: black;
+  padding: 8px 16px;
+  transition: background-color 0.3s;
+  text-decoration: none;
 }
 
 .pagination a.active {
-	background-color: dodgerblue;
-	color: white;
+  background-color: #4caf50;
+  color: white;
 }
 
 .pagination a:hover {
-	background-color: #ddd;
-	color: white;
+  background-color: #ddd;
+  color: white;
 }

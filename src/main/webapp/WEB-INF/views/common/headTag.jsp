@@ -52,11 +52,14 @@
 <link href="css/backToTop.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css"
+	rel="stylesheet" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body style="margin: 0px">
+<body id="top" style="margin: 0px; background-color: #ead3b2">
 
 	<jsp:include page="navbar.jsp" />
 
-	<div style="margin: 20px 40px">
+	<div
+		style="background-color: white; margin: 80px 120px 50px 120px; padding: 30px;">

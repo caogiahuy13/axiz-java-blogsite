@@ -1,5 +1,6 @@
 package web.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -161,11 +162,15 @@ public class MemberController {
 
 		Integer memberId = currentMember.getMemberId();
 
+		HashMap<String, Integer> accessAnalytics = viewService
+				.countByAccessByMemberIdOfArticle(currentMember.getMemberId());
 		List<ReactionsByAgeRangeAndGender> ageRangeAndGenderAnalytics = reactionService
 				.countByGenderAndAgeRangeAndMemberIdOfArticle(memberId);
 		List<ReactionsByArticle> reactionAnalytics = reactionService
 				.countMultipleByMemberIdOfArticle(memberId);
 
+		model.addAttribute("loginAccess", accessAnalytics.get("login"));
+		model.addAttribute("anonymousAccess", accessAnalytics.get("anonymous"));
 		model.addAttribute("ageRangeAndGenderAnalytics", ageRangeAndGenderAnalytics);
 		model.addAttribute("reactionAnalytics", reactionAnalytics);
 

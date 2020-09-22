@@ -50,7 +50,7 @@ public class ViewDaoImpl implements ViewDao {
 				+ "	END AS access, COUNT(*) count"
 				+ "	FROM views v"
 				+ "	JOIN articles a ON v.article_id = a.article_id"
-				+ "	JOIN members m ON a.member_id = u.member_id"
+				+ "	JOIN members m ON a.member_id = m.member_id"
 				+ "	WHERE a.member_id = 3"
 				+ "	GROUP BY access";
 
