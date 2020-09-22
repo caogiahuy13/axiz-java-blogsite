@@ -12,30 +12,39 @@
 	<c:redirect url="top" />
 </c:if>
 
-<c:if test="${not empty msg}">
-	<p class="error">${msg}</p>
-</c:if>
 
-<form:form action="login" modelAttribute="loginForm">
-	<fieldset class="label-130">
-		<div>
-			<label><fmt:message key="form.lbl.loginId" /></label>
-			<form:input path="loginId"/>
-			<form:errors path="loginId" cssStyle="color: red" />
-		</div>
-		<div>
-			<label><fmt:message key="form.lbl.password" /></label>
-			<form:input path="password" type="password" />
-			<form:errors path="password" cssStyle="color: red" />
-		</div>
-	</fieldset>
-	<form:button>
-		<fmt:message key="btn.login" />
-	</form:button>
-</form:form>
 
-<br>
+<div style="text-align: left">
+	<div style="margin: 20px 40px">
+		<c:if test="${not empty msg}">
+			<p class="error">${msg}</p>
+		</c:if>
 
-<a href="/register"><fmt:message key="btn.toRegister" /></a>
+		<form:form action="login" modelAttribute="loginForm">
+			<fieldset class="label-160">
+				<div>
+					<label><fmt:message key="form.lbl.loginId" />：</label>
+					<form:input path="loginId" style="font-size: 24px" />
+					<form:errors path="loginId" cssStyle="color: red" />
+				</div>
+				<div>
+					<label><fmt:message key="form.lbl.password" />：</label>
+					<form:input path="password" type="password" style="font-size: 24px" />
+					<form:errors path="password" cssStyle="color: red" />
+				</div>
+				<div style="margin-left: 3px;">
+					<label></label>
+					<form:button class="button">
+						<fmt:message key="btn.login" />
+					</form:button>
+				</div>
+				<div style="margin-left: 12px;">
+					<label></label> <a href="register"><fmt:message
+							key="btn.toRegister" /></a>
+				</div>
+			</fieldset>
+		</form:form>
+	</div>
+</div>
 
 <jsp:include page="common/footTag.jsp" />
