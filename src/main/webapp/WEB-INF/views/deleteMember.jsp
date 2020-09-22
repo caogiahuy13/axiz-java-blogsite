@@ -12,7 +12,7 @@
 
 <form action = "/deleteMember" method = "post">
 	<input type="hidden" name="memberId" value="${sessionScope.memberId}">
-	<button><fmt:message key="btn.delete"/></button>
+	<button><fmt:message key="btn.deleteMember"/></button>
 	<a href="javascript:history.back()"><fmt:message key="btn.return"/></a>
 </form>
 

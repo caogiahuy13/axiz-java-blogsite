@@ -132,9 +132,7 @@ public class MemberController {
 
 		Member updatedMember = memberService.findByMemberId(member.getMemberId());
 
-		session.setAttribute(SessionUtil.CURRENT_MEMBER, updatedMember);
-
-		return ScreenName.MY_PAGE;
+		return "redirect:/" + ScreenName.MY_PAGE + "?id=" + updatedMember.getMemberId();
 	}
 
 	@GetMapping(DELETE_MEMBER)
@@ -151,7 +149,7 @@ public class MemberController {
 		}
 
 		model.addAttribute("msg", Message.MEMBER_DELETE_SUCCESS);
-		return ScreenName.NOTIFICATION;
+		return ScreenName.DELETE_MEMBER_RESULT;
 	}
 
 	@GetMapping(ANALYTICS)

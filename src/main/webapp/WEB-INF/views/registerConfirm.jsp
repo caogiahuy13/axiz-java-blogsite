@@ -51,7 +51,7 @@
 			<form:errors path="rePass" cssStyle="color: red" />
 		</div>
 	</fieldset>
-	<form:button>
+	<form:button  name="register">
 		<fmt:message key="btn.register" />
 	</form:button>
 </form:form>

@@ -16,7 +16,7 @@
 %>
 
 <%
-	final int ratio = 50;
+	final int ratio = 100;
 	final int trophyMilestone = 200 / ratio;
 	final int bronzeMilestone = 300 / ratio;
 	final int silverMilestone = 500 / ratio;
@@ -30,10 +30,10 @@
 
 <%
 	HashMap<String, String> rankIcon = new HashMap<>();
-	rankIcon.put("gold", "㊎");
-	rankIcon.put("silver", "シルバー");
-	rankIcon.put("bronze", "ブロンズ");
-	rankIcon.put("normal", "");
+	rankIcon.put("gold", "🥉 ");
+	rankIcon.put("silver", "🥈 ");
+	rankIcon.put("bronze", "🥉 ");
+	rankIcon.put("normal", " ");
 
 	request.setAttribute("rankIcon", rankIcon);
 %>

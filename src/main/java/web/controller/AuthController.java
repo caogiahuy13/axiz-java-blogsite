@@ -66,7 +66,7 @@ public class AuthController {
 	@GetMapping(LOGOUT)
 	public String logout(@ModelAttribute LoginForm loginForm) {
 		SessionUtil.removeAllSession(session);
-		return ScreenName.LOGIN;
+		return ScreenName.LOGOUT;
 	}
 
 	@GetMapping(REGISTER)

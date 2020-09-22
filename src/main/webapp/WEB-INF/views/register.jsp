@@ -46,7 +46,7 @@
 		</div>
 		<div>
 			<label><fmt:message key="form.lbl.birthdate" /></label>
-			<form:input type="date" path="birthdate" value="2000-01-01" />
+			<form:input type="date" path="birthdate"/>
 			<form:errors path="birthdate" cssStyle="color: red" />
 		</div>
 		<div>
