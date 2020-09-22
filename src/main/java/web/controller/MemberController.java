@@ -32,7 +32,6 @@ import web.util.SessionUtil;
 @Controller
 public class MemberController {
 	private static final String MY_PAGE = "myPage";
-	private static final String MY_ARTICLES = "myArticles";
 	private static final String UPDATE_MEMBER = "updateMember";
 	private static final String DELETE_MEMBER = "deleteMember";
 	private static final String ANALYTICS = "analytics";
@@ -76,21 +75,6 @@ public class MemberController {
 		model.addAttribute("articleCurPage", pageNumber);
 
 		return ScreenName.MY_PAGE;
-	}
-
-	@GetMapping(MY_ARTICLES)
-	public String getMyArticles(Model model) {
-		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
-
-		List<? extends Article> articles = articleService.findByMemberId(currentMember.getMemberId());
-
-		if (articles.isEmpty()) {
-			model.addAttribute("msg", Message.MY_ARTICLES_NO_RESULT);
-		}
-
-		model.addAttribute("articles", articles);
-
-		return ScreenName.MY_ARTICLES;
 	}
 
 	@GetMapping(UPDATE_MEMBER)

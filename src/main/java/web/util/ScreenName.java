@@ -14,8 +14,6 @@ public final class ScreenName {
 	public static final String UPDATE_ARTICLE = "updateArticle";
 	public static final String DELETE_ARTICLE = "deleteArticle";
 	public static final String EDIT_ARTICLE = "editArticle";
-	public static final String MY_ARTICLES = "myArticles";
 	public static final String ANALYTICS = "analytics";
-	public static final String NOTIFICATION = "notification";
 	public static final String LOGOUT = "logout";
 }
