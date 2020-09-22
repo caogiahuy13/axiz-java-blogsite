@@ -12,85 +12,83 @@
 	<h2>
 		<table align="center" style="border: none;">
 			<tr style="border: none;">
-				<td style="border: none; width: 1000px;" align="right"><strong>${member.nickname }&nbsp
-						🥇&nbsp さんのマイページ</strong></td>
-				<td style="border: none; width: 200px;" align="right">
-					<form action="deleteMember">
-						<button class="button">
-							<fmt:message key="btn.deleteMember" />
-						</button>
-					</form>
-				</td>
-				<td style="border: none; width: 200px;" align="left">
-					<form action="updateMember">
-						<button class="button">
-							<fmt:message key="btn.update" />
-						</button>
-					</form>
-				</td>
+				<c:if test="${empty sessionScope.currentMember }">
+					<td style="border: none; width: 1000px;" align="center"><strong>${member.nickname }
+							${rankIcon[memberRankName]} さんのマイページ</strong></td>
+				</c:if>
+				<c:if test="${not empty sessionScope.currentMember }">
+					<td style="border: none; width: 1000px;" align="right"><strong>${member.nickname }
+							${rankIcon[memberRankName]}さんのマイページ</strong></td>
+					<td style="border: none; width: 200px;" align="right">
+						<form action="deleteMember">
+							<button class="button">
+								<fmt:message key="btn.deleteMember" />
+							</button>
+						</form>
+					</td>
+					<td style="border: none; width: 200px;" align="left">
+						<form action="updateMember">
+							<button class="button">
+								<fmt:message key="btn.update" />
+							</button>
+						</form>
+					</td>
+				</c:if>
 			</tr>
 		</table>
 	</h2>
 
 	<table align="center" class="myPageTable">
 		<tr>
-			<td style="border-bottom: 3px #4caf50 solid;"><strong
-				style="color: #4caf50;"><fmt:message key="form.lbl.loginId" /></strong></td>
-			<td colspan="4"
-				style="width: 850px; border-bottom: 3px #4caf50 solid;">${member.loginId }</td>
+			<td><strong><fmt:message key="form.lbl.loginId" /></strong></td>
+			<td colspan="4" style="width: 850px;">${member.loginId }</td>
 		</tr>
 		<tr>
-			<td style="border-bottom: 3px #4caf50 solid;"><strong
-				style="color: #4caf50;"><fmt:message
-						key="form.lbl.nickname" /></strong></td>
-			<td colspan="4" style="border-bottom: 3px #4caf50 solid;">${member.nickname }&nbsp
-				🥇</td>
+			<td><strong><fmt:message key="form.lbl.nickname" /></strong></td>
+			<td colspan="4">${member.nickname }&nbsp${rankIcon[memberRankName]}</td>
 		</tr>
 		<tr>
-			<td style="border-bottom: 3px #4caf50 solid;"><strong
-				style="color: #4caf50;"><fmt:message
-						key="form.lbl.totalReactions" /></strong></td>
-			<td colspan="4" style="border-bottom: 3px #4caf50 solid;">${memberTotalReactions}</td>
+			<td><strong><fmt:message key="form.lbl.totalReactions" /></strong></td>
+			<td colspan="4">${memberTotalReactions}</td>
 		</tr>
 		<tr>
-			<td style="border-bottom: 3px #4caf50 solid;"><strong
-				style="color: #4caf50;"><fmt:message
-						key="form.lbl.totalRanking" /></strong></td>
-			<td colspan="4" style="border-bottom: 3px #4caf50 solid;">${memberRank}位</td>
+			<td><strong><fmt:message key="form.lbl.totalRanking" /></strong></td>
+			<td colspan="4">${memberRank}位</td>
 		</tr>
 		<tr>
-			<td style="border-bottom: 3px #4caf50 solid;"><strong
-				style="color: #4caf50;"><fmt:message
-						key="form.lbl.introduction" /></strong></td>
-			<td colspan="4" align="left"
-				style="border-bottom: 3px #4caf50 solid;">${member.introduction }</td>
+			<td><strong><fmt:message key="form.lbl.introduction" /></strong></td>
+			<td colspan="4" align="left">${member.introduction }</td>
 		</tr>
-		<c:if test="${sessionScope.totalReactions >= goldMilestone }">
+		<c:if
+			test="${not empty sessionScope.currentMember && sessionScope.totalReactions >= goldMilestone }">
 			<tr>
-				<td rowspan="2" style="border-bottom: 3px #4caf50 solid;"><strong
-					style="color: #4caf50;"><fmt:message
+				<td rowspan="2"><strong><fmt:message
 							key="form.lbl.mySpace" /></strong></td>
-				<td colspan="4" rowspan="2" align="left"
-					style="border-bottom: 3px #4caf50 solid;">${member.mySpace }</td>
+				<td colspan="4" rowspan="2" align="left">${member.mySpace }</td>
 			</tr>
 		</c:if>
 	</table>
 
-	<c:if test="${sessionScope.totalReactions >= goldMilestone }">
+	<c:if test="${not empty sessionScope.currentMember }">
+		<c:if test="${sessionScope.totalReactions >= silverMilestone }">
+			<p>
+			<form action="analytics">
+				<button class="button" type="submit">
+					<fmt:message key="btn.analytics" />
+				</button>
+			</form>
+			</p>
+		</c:if>
+
 		<p>
-		<form action="analytics">
-			<button class="button" type="submit">お気に入り分析</button>
+		<form action="createArticle">
+			<button class="button" type="submit">
+				<fmt:message key="btn.createArticle" />
+			</button>
 		</form>
 		</p>
+		<br>
 	</c:if>
-
-	<p>
-	<form action="createArticle">
-		<button class="button" type="submit">記事投稿</button>
-	</form>
-	</p>
-
-	<br>
 
 	<h2>投稿記事一覧</h2>
 

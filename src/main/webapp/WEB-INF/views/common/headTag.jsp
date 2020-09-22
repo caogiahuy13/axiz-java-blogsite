@@ -16,7 +16,7 @@
 %>
 
 <%
-	final int ratio = 100;
+	final int ratio = 50;
 	final int trophyMilestone = 200 / ratio;
 	final int bronzeMilestone = 300 / ratio;
 	final int silverMilestone = 500 / ratio;

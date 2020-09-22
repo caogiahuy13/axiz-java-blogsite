@@ -25,11 +25,10 @@ fieldset.label-140 label {
 	width: 140px;
 }
 
-/*追加*/
 fieldset.label-160 label {
 	width: 160px;
 }
-/*追加*/
+
 fieldset.label-200 label {
 	width: 200px;
 }
@@ -107,7 +106,6 @@ a:active {
 	border: 2px solid #4caf50;
 	color: black;
 	padding: 10px 10px;
-	/*変更*/
 	font-size: 24px;
 	text-align: center;
 	text-decoration: none;
@@ -130,6 +128,11 @@ table.myPageTable td {
 	border: none;
 	height: 50px;
 	width: 280px;
+	border-bottom: 3px #4caf50 solid;
+}
+
+table.myPageTable td strong {
+	color: #4caf50;
 }
 
 .button:focus {

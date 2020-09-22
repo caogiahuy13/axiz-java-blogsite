@@ -52,7 +52,7 @@
 					<form:textarea path="introduction" rows="6" cols="40"
 						style="vertical-align: top; resize: none; font-size: 24px;" />
 				</div>
-				<c:if test="${sessionScope.totalReactions >=15 }">
+				<c:if test="${sessionScope.totalReactions >= goldMilestone }">
 					<div>
 						<label><fmt:message key="form.lbl.mySpace" /></label>
 						<form:textarea path="mySpace" rows="6" cols="40"

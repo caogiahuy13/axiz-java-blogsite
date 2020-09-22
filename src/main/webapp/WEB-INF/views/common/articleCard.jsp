@@ -10,7 +10,7 @@
 		<p style="text-align: left">
 			<b>${fn:escapeXml(article.title)}</b>
 			<c:if test="${article.trophy eq true }">
-				<i class="fas fa-trophy" style="color: orange"></i>
+				<span>🏆</span>
 			</c:if>
 			<br> <i style="font-size: 14px;"> @${article.name }&nbsp
 				${rankIcon[article.memberRank]}&nbsp <fmt:formatDate type="date"

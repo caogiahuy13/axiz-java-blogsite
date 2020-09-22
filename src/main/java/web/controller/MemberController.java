@@ -25,6 +25,7 @@ import web.service.MemberService;
 import web.service.ReactionService;
 import web.service.ViewService;
 import web.util.Message;
+import web.util.RankName;
 import web.util.ScreenName;
 import web.util.SessionUtil;
 
@@ -64,9 +65,11 @@ public class MemberController {
 		int articleMaxPage = articleService.countByMemberId(memberId) / LIMIT + 1;
 		int memberRank = memberService.getRank(memberId);
 		int memberTotalReactions = reactionService.countByMemberId(memberId);
+		String memberRankName = RankName.getMemberRank(memberTotalReactions);
 
 		model.addAttribute("member", member);
 		model.addAttribute("memberRank", memberRank);
+		model.addAttribute("memberRankName", memberRankName);
 		model.addAttribute("memberTotalReactions", memberTotalReactions);
 		model.addAttribute("articles", articles);
 		model.addAttribute("articleMaxPage", articleMaxPage);

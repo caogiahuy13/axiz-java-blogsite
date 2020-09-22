@@ -69,7 +69,6 @@
 	});
 
 	window.onload = function() {
-
 		var ageAndGenderChart = new CanvasJS.Chart("ageAndGenderChart", {
 	          axisX: {
 	            interval: 1,
