@@ -183,7 +183,13 @@ public class ArticleController {
 			return ScreenName.TOP;
 		}
 
+		Member writer = memberService.findByMemberId(article.getMemberId());
+		int writerReactionCount = reactionService.countByMemberId(writer.getMemberId());
+		String writerRank = RankName.getMemberRank(writerReactionCount);
+
 		model.addAttribute("article", article);
+		model.addAttribute("writer", writer);
+		model.addAttribute("writerRank", writerRank);
 
 		return ScreenName.ARTICLE_DELETE;
 	}
