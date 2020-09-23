@@ -102,8 +102,8 @@
 <script type="text/javascript"
 	src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-
-<div style="text-align: center">
+<div
+	style="background-color: white; margin: 80px 120px 50px 120px; padding: 30px; text-align: center">
 
 	<h1>お気に入り分析</h1>
 	<div style="display: flex; flex-direction: row">

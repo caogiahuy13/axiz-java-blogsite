@@ -8,7 +8,10 @@
 
 <meta http-equiv="refresh" content="3;url=/top" />
 
-<h2>ログアウトしました</h2>
-<h2>3秒後にトップへ遷移します</h2>
+<div
+	style="margin: 80px 120px 50px 120px; text-align: center; padding: 30px;">
+	<p>ログアウトしました</p>
+	<p>※３秒後にトップへ遷移します</p>
+</div>
 
 <jsp:include page="commonFootTag.jsp" />

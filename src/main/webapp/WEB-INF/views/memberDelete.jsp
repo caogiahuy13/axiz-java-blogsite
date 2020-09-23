@@ -8,14 +8,23 @@
 
 <%@ include file="commonLoginCheck.jsp"%>
 
-<fmt:message key="member.delete.confirm" />
+<div
+	style="margin: 80px 120px 50px 120px; text-align: center; padding: 30px;">
 
-<form action="/deleteMember" method="post">
-	<input type="hidden" name="memberId" value="${sessionScope.memberId}">
-	<button>
-		<fmt:message key="btn.deleteMember" />
-	</button>
-	<a href="javascript:history.back()"><fmt:message key="btn.return" /></a>
-</form>
+	<h1>本当に退会してもよろしいですか？</h1>
+
+	<form action="/deleteMember" method="post">
+		<input type="hidden" name="memberId" value="${sessionScope.memberId}">
+		<button class="button">
+			<fmt:message key="btn.deleteMember" />
+		</button>
+
+		<p>
+			<a href="javascript:history.back()"><fmt:message key="btn.return" /></a>
+		</p>
+	</form>
+
+</div>
+
 
 <jsp:include page="commonFootTag.jsp" />

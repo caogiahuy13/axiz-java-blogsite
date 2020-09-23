@@ -5,8 +5,6 @@
 	<span>©2020 axiz.groupB All rights reserved. </span>
 </div>
 
-</div>
-
 <script>
 	$("#back2Top").hide();
 	$(window).scroll(function() {

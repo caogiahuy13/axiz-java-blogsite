@@ -7,8 +7,8 @@
 <jsp:include page="commonHeadTag.jsp">
 	<jsp:param name="title" value="screen.myPage.title" />
 </jsp:include>
-
-<div class="center">
+<div
+	style="background-color: white; margin: 80px 120px 50px 120px; text-align: center; padding: 30px;">
 	<h2>
 		<table align="center" style="border: none;">
 			<tr style="border: none;">

@@ -12,7 +12,8 @@
 	<c:redirect url="top" />
 </c:if>
 
-<div style="text-align: left; position: relative">
+<div
+	style="background-color: white; margin: 80px 120px 50px 120px; padding: 30px; text-align: left; position: relative">
 	<div style="margin: 20px 40px">
 		<p>※情報を入力してください</p>
 

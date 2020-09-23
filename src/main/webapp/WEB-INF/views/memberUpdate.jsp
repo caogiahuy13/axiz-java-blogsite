@@ -10,7 +10,8 @@
 
 <%@ include file="commonLoginCheck.jsp"%>
 
-<div style="text-align: left;">
+<div
+	style="background-color: white; margin: 80px 120px 50px 120px; text-align: left; padding: 30px;">
 	<div style="margin: 20px 40px">
 		<h2>
 			<fmt:message key="screen.updateMember.caption" />
