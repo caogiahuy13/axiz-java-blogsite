@@ -1,5 +1,5 @@
 #back2Top {
-	width: 90px;
+	width: 120px;
 	line-height: 40px;
 	overflow: hidden;
 	z-index: 999;
@@ -9,7 +9,7 @@
 	text-align: left;
 	font-size: 24px;
 	box-shadow: 1px 1px 2px #000000;
-	background-color: rgba(255, 255, 255, 1);
+	background-color: rgba(229, 231, 229, 0.637);
 	padding-left: 10px;
 }
 

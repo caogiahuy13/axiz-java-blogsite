@@ -37,7 +37,9 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<? extends Article> find(Integer memberId, String keyword, String searchType, String sortType) {
+	public List<? extends Article> find(Integer memberId, String keyword, String searchType, String sortType,
+			Integer pageNumber,
+			Integer itemPerPage) {
 		final String FAVORITES = "favorites";
 		final String RANKING = "ranking";
 		final String NEWEST = "newest";
@@ -50,7 +52,7 @@ public class ArticleServiceImpl implements ArticleService {
 			sortBy = "created_at";
 		}
 
-		return articleDao.find(keyword, sortBy, memberId, null, null);
+		return articleDao.find(keyword, sortBy, memberId, pageNumber, itemPerPage);
 	}
 
 	@Override

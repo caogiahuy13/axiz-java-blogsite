@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import web.entity.Article;
 import web.entity.Member;
@@ -38,7 +39,8 @@ public class TopController {
 	}
 
 	@PostMapping(value = TOP, params = PARAM_KEYWORD_SEARCH)
-	public String keywordSearch(@ModelAttribute SearchForm searchForm, Model model) {
+	public String keywordSearch(@ModelAttribute SearchForm searchForm,
+			@RequestParam(defaultValue = "1") Integer pageNumber, Model model) {
 		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
 
 		String keyword = searchForm.getKeyword();
@@ -50,7 +52,7 @@ public class TopController {
 			memberId = currentMember.getMemberId();
 		}
 
-		List<? extends Article> articles = articleService.find(memberId, keyword, searchType, sortType);
+		List<? extends Article> articles = articleService.find(memberId, keyword, searchType, sortType, null, null);
 
 		if (articles.isEmpty()) {
 			model.addAttribute("msg", Message.SEARCH_NO_RESULT);
@@ -65,7 +67,7 @@ public class TopController {
 	public String allSearch(@ModelAttribute SearchForm searchForm, Model model) {
 		String sortType = searchForm.getSortType();
 
-		List<? extends Article> articles = articleService.find(null, "", null, sortType);
+		List<? extends Article> articles = articleService.find(null, "", null, sortType, null, null);
 
 		if (articles.isEmpty()) {
 			model.addAttribute("msg", Message.SEARCH_NO_RESULT);
