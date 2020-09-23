@@ -1,5 +1,6 @@
 package web.controller;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 
@@ -64,26 +65,43 @@ public class ArticleController {
 	}
 
 	@PostMapping(CREATE_ARTICLE)
-	public String postCreateArticle(@Validated @ModelAttribute CreateArticleForm createArticleForm,
+	public String postCreateArticle(Model model) {
+		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
+		Article createArticle = (Article) session.getAttribute(SessionUtil.CREATE_ARTICLE);
+
+		if (articleService.create(createArticle) <= 0) {
+			return ScreenName.POST_ARTICLE;
+		}
+
+		Article article = articleService.findLatestByMemberId(currentMember.getMemberId());
+
+		return "redirect:/" + ScreenName.ARTICLE + "?id=" + article.getArticleId();
+	}
+
+	@PostMapping(CREATE_ARTICLE_CONFIRM)
+	public String postCreateArticleConfirm(@Validated @ModelAttribute CreateArticleForm createArticleForm,
 			BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			return ScreenName.POST_ARTICLE;
 		}
 
 		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
+		int writerReactionCount = reactionService.countByMemberId(currentMember.getMemberId());
+		String writerRank = RankName.getMemberRank(writerReactionCount);
 
 		Article article = new Article();
 		article.setTitle(createArticleForm.getTitle());
 		article.setContent(createArticleForm.getContent());
 		article.setMemberId(currentMember.getMemberId());
+		article.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
-		if (articleService.create(article) <= 0) {
-			return ScreenName.POST_ARTICLE;
-		}
+		model.addAttribute("article", article);
+		model.addAttribute("writer", currentMember);
+		model.addAttribute("writerRank", writerRank);
 
-		article = articleService.findLatestByMemberId(currentMember.getMemberId());
+		session.setAttribute(SessionUtil.CREATE_ARTICLE, article);
 
-		return "redirect:/" + ScreenName.ARTICLE + "?id=" + article.getArticleId();
+		return ScreenName.POST_ARTICLE_CONFIRM;
 	}
 
 	@GetMapping(ARTICLE)

@@ -15,7 +15,7 @@
 	<h2>記事投稿</h2>
 
 	<div class="common">
-		<form:form action="createArticle" modelAttribute="createArticleForm">
+		<form:form action="createArticleConfirm" modelAttribute="createArticleForm">
 			<div style="margin: 10px; text-align: left; font-size: 24px;">
 				<label><fmt:message key="form.lbl.title" /></label>
 				<form:input path="title" maxlength="20"
