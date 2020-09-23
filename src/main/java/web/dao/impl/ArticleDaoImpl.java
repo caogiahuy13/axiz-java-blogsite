@@ -22,7 +22,7 @@ public class ArticleDaoImpl implements ArticleDao {
 			+ " FROM ( "
 			+ "		SELECT a.*, COUNT(r.reaction_id) article_reaction_count "
 			+ "		FROM articles a "
-			+ "		JOIN reactions r ON a.article_id = r.article_id "
+			+ "		LEFT JOIN reactions r ON a.article_id = r.article_id "
 			+ "		GROUP BY a.article_id "
 			+ " ) AS x "
 			+ " JOIN ( "

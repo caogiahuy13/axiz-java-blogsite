@@ -214,7 +214,6 @@ public class ArticleController {
 
 	@PostMapping(DELETE_ARTICLE)
 	public String postDeleteArticle(@RequestParam Integer articleId, Model model) {
-		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
 		Article article = articleService.findById(articleId);
 
 		if (article == null) {
@@ -223,7 +222,7 @@ public class ArticleController {
 
 		articleService.delete(articleId);
 
-		return "redirect:/" + ScreenName.MY_PAGE + "?id=" + currentMember.getMemberId();
+		return ScreenName.ARTICLE_DELETE_RESULT;
 	}
 
 }

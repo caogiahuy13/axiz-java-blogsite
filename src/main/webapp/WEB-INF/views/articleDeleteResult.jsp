@@ -6,7 +6,8 @@
 	<jsp:param name="title" value="screen.articleDeleteResult.title" />
 </jsp:include>
 
-<meta http-equiv="refresh" content="3;url=/myPage" />
+<meta http-equiv="refresh"
+	content="3;url=/myPage?id=${sessionScope.currentMember.memberId }" />
 
 <div
 	style="margin: 80px 120px 50px 120px; text-align: center; padding: 30px;">
