@@ -28,6 +28,7 @@ import web.service.MemberService;
 import web.service.ReactionService;
 import web.service.ViewService;
 import web.util.Milestone;
+import web.util.RankName;
 import web.util.ScreenName;
 import web.util.SessionUtil;
 
@@ -95,6 +96,9 @@ public class ArticleController {
 			return "redirect:/" + ScreenName.TOP;
 		}
 
+		Member writer = memberService.findByMemberId(article.getMemberId());
+		int writerReactionCount = reactionService.countByMemberId(writer.getMemberId());
+		String writerRank = RankName.getMemberRank(writerReactionCount);
 		int reactionCount = reactionService.countByArticleId(articleId);
 		List<CommentWithExtraInfo> comments = commentService.findByArticleId(articleId);
 		List<Member> reactedMembers = memberService.findMembersReactAnArticle(articleId);
@@ -119,6 +123,8 @@ public class ArticleController {
 		viewService.insert(view);
 
 		model.addAttribute("article", article);
+		model.addAttribute("writer", writer);
+		model.addAttribute("writerRank", writerRank);
 		model.addAttribute("reactionCount", reactionCount);
 		model.addAttribute("comments", comments);
 		model.addAttribute("reactedMembers", reactedMembers);

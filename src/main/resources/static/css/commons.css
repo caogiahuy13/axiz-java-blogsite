@@ -167,6 +167,37 @@ a.btn--shadow {
 	box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
 }
 
+input.btn {
+	color: white;
+	text-align: center;
+	font-size: 21px;
+	font-weight: bold;
+	background-color: #87cefa;
+	border-radius: 10px;
+	cursor: pointer;
+	border: 0px;
+	padding: 5px 20px 5px 20px;
+	text-decoration: none;
+}
+
+input.btn--orange {
+	color: #fff;
+	background-color: #eb6100;
+	border-bottom: 5px solid #b84c00;
+}
+
+input.btn--orange:hover {
+	margin-top: 3px;
+	color: #fff;
+	background: #f56500;
+	border-bottom: 2px solid #b84c00;
+}
+
+input.btn--shadow {
+	-webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+	box-shadow: 0 3px 5px rgba(0, 0, 0, .3);
+}
+
 .fancy-border {
 	border: 25px solid #B88846;
 	border-image:

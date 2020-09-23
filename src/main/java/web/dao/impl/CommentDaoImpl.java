@@ -52,7 +52,7 @@ public class CommentDaoImpl implements CommentDao {
 
 	@Override
 	public List<CommentWithExtraInfo> findByArticleId(Integer articleId) {
-		String sql = "SELECT comment_id, article_id, c.member_id, content, c.created_at, c.updated_at, m.name FROM comments c JOIN members m ON c.member_id = m.member_id WHERE article_id = :articleId";
+		String sql = "SELECT comment_id, article_id, c.member_id, content, c.created_at, c.updated_at, m.name, m.nickname FROM comments c JOIN members m ON c.member_id = m.member_id WHERE article_id = :articleId";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("articleId", articleId);

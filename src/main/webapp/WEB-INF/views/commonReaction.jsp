@@ -7,10 +7,10 @@
 	<input type="hidden" name="stampIdStr" value="${param.stampId}" />
 	<button class="unstyled-button">
 		<c:if test="${isReacted == param.stampId}">
-			<span style="font-size: 20px;"> ${param.stampName}</span>
+			<span style="font-size: 24px;"> ${param.stampName}</span>
 		</c:if>
 		<c:if test="${isReacted != param.stampId}">
-			<span style="opacity: 50%; font-size: 20px;">
+			<span style="opacity: 50%; font-size: 24px;">
 				${param.stampName}</span>
 		</c:if>
 	</button>
