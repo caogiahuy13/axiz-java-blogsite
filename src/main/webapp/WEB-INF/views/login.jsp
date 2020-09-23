@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<jsp:include page="common/headTag.jsp">
+<jsp:include page="commonHeadTag.jsp">
 	<jsp:param name="title" value="screen.login.title" />
 </jsp:include>
 
@@ -45,4 +45,4 @@
 	</div>
 </div>
 
-<jsp:include page="common/footTag.jsp" />
+<jsp:include page="commonFootTag.jsp" />

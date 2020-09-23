@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<jsp:include page="common/headTag.jsp">
+<jsp:include page="commonHeadTag.jsp">
 	<jsp:param name="title" value="screen.article.title" />
 </jsp:include>
 
@@ -44,7 +44,7 @@
 		<c:when test="${articleMemberReactionCount >= bronzeMilestone}">
 			<c:forEach var="entry" items="${stampIcon}">
 				<c:if test="${entry.key != 1 }">
-					<jsp:include page="common/reaction.jsp">
+					<jsp:include page="commonReaction.jsp">
 						<jsp:param name="stampId" value="${entry.key}" />
 						<jsp:param name="stampName" value="${entry.value}" />
 					</jsp:include>
@@ -52,7 +52,7 @@
 			</c:forEach>
 		</c:when>
 		<c:otherwise>
-			<jsp:include page="common/reaction.jsp">
+			<jsp:include page="commonReaction.jsp">
 				<jsp:param name="stampId" value="1" />
 				<jsp:param name="stampName" value="&#x1f44d" />
 			</jsp:include>
@@ -90,7 +90,8 @@
 
 <c:forEach var="comment" items="${comments}">
 	<div>
-		<c:if test="${sessionScope.currentMember.memberId != comment.memberId}">
+		<c:if
+			test="${sessionScope.currentMember.memberId != comment.memberId}">
 			<div>
 				<b>${comment.name}</b><br>
 				<div>
@@ -99,7 +100,8 @@
 			</div>
 		</c:if>
 
-		<c:if test="${sessionScope.currentMember.memberId == comment.memberId}">
+		<c:if
+			test="${sessionScope.currentMember.memberId == comment.memberId}">
 			<div>
 				<b>${comment.name}</b><br>
 				<div contenteditable="true">
@@ -161,4 +163,4 @@
 	}
 </script>
 
-<jsp:include page="common/footTag.jsp" />
+<jsp:include page="commonFootTag.jsp" />

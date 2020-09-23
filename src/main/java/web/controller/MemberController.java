@@ -88,25 +88,25 @@ public class MemberController {
 		updateMemberForm.setIntroduction(currentMember.getIntroduction());
 		updateMemberForm.setMySpace(currentMember.getMySpace());
 
-		return ScreenName.UPDATE_MEMBER;
+		return ScreenName.MEMBER_UPDATE;
 	}
 
 	@PostMapping(UPDATE_MEMBER)
 	public String postUpdateMember(@Validated @ModelAttribute UpdateMemberForm updateMemberForm,
 			BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
-			return ScreenName.UPDATE_MEMBER;
+			return ScreenName.MEMBER_UPDATE;
 		}
 
 		if (!updateMemberForm.getPassword().equals(updateMemberForm.getRePassword())) {
 			model.addAttribute("msg", Message.PASSWORD_IS_NOT_MATCH);
-			return ScreenName.UPDATE_MEMBER;
+			return ScreenName.MEMBER_UPDATE;
 		}
 
 		Member existedMember = memberService.findByLoginId(updateMemberForm.getLoginId());
 		if (existedMember != null && existedMember.getMemberId() != updateMemberForm.getMemberId()) {
 			model.addAttribute("msg", Message.LOGIN_ID_IS_EXISTED);
-			return ScreenName.UPDATE_MEMBER;
+			return ScreenName.MEMBER_UPDATE;
 		}
 
 		Member member = memberService.findByMemberId(updateMemberForm.getMemberId());
@@ -125,7 +125,7 @@ public class MemberController {
 
 	@GetMapping(DELETE_MEMBER)
 	public String getDeleteMember() {
-		return ScreenName.DELETE_MEMBER;
+		return ScreenName.MEMBER_DELETE;
 	}
 
 	@PostMapping(DELETE_MEMBER)
@@ -137,7 +137,7 @@ public class MemberController {
 		}
 
 		model.addAttribute("msg", Message.MEMBER_DELETE_SUCCESS);
-		return ScreenName.DELETE_MEMBER_RESULT;
+		return ScreenName.MEMBER_DELETE_RESULT;
 	}
 
 	@GetMapping(ANALYTICS)

@@ -37,6 +37,7 @@ public class ArticleController {
 	private static final String ARTICLE = "article";
 	private static final String EDIT_ARTICLE = "editArticle";
 	private static final String DELETE_ARTICLE = "deleteArticle";
+	private static final String CREATE_ARTICLE_CONFIRM = "createArticleConfirm";
 
 	@Autowired
 	ArticleService articleService;
@@ -58,14 +59,14 @@ public class ArticleController {
 
 	@GetMapping(CREATE_ARTICLE)
 	public String getCreateArticle(@ModelAttribute CreateArticleForm createArticleForm) {
-		return ScreenName.CREATE_ARTICLE;
+		return ScreenName.POST_ARTICLE;
 	}
 
 	@PostMapping(CREATE_ARTICLE)
 	public String postCreateArticle(@Validated @ModelAttribute CreateArticleForm createArticleForm,
 			BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
-			return ScreenName.CREATE_ARTICLE;
+			return ScreenName.POST_ARTICLE;
 		}
 
 		Member currentMember = (Member) session.getAttribute(SessionUtil.CURRENT_MEMBER);
@@ -76,7 +77,7 @@ public class ArticleController {
 		article.setMemberId(currentMember.getMemberId());
 
 		if (articleService.create(article) <= 0) {
-			return ScreenName.CREATE_ARTICLE;
+			return ScreenName.POST_ARTICLE;
 		}
 
 		article = articleService.findLatestByMemberId(currentMember.getMemberId());
@@ -141,14 +142,14 @@ public class ArticleController {
 		editArticleForm.setTitle(article.getTitle());
 		editArticleForm.setContent(article.getContent());
 
-		return ScreenName.EDIT_ARTICLE;
+		return ScreenName.ARTICLE_UPDATE;
 	}
 
 	@PostMapping(EDIT_ARTICLE)
 	public String postEditArticle(@Validated @ModelAttribute EditArticleForm editArticleForm,
 			BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
-			return ScreenName.EDIT_ARTICLE;
+			return ScreenName.ARTICLE_UPDATE;
 		}
 
 		Article article = articleService.findById(editArticleForm.getArticleId());
@@ -178,7 +179,7 @@ public class ArticleController {
 
 		model.addAttribute("article", article);
 
-		return ScreenName.DELETE_ARTICLE;
+		return ScreenName.ARTICLE_DELETE;
 	}
 
 	@PostMapping(DELETE_ARTICLE)

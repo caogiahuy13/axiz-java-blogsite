@@ -61,7 +61,7 @@
 </head>
 <body id="top" style="margin: 0px; background-color: #ead3b2">
 
-	<jsp:include page="navbar.jsp" />
+	<jsp:include page="commonNavBar.jsp" />
 
 	<div
 		style="background-color: white; margin: 80px 120px 50px 120px; padding: 30px;">

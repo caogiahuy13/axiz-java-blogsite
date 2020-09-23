@@ -4,11 +4,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<jsp:include page="common/headTag.jsp">
+<jsp:include page="commonHeadTag.jsp">
 	<jsp:param name="title" value="screen.createArticle.title" />
 </jsp:include>
 
-<%@ include file="common/checkLogin.jsp"%>
+<%@ include file="commonLoginCheck.jsp"%>
 
 <h3>
 	<fmt:message key="screen.editArticle.caption" />
@@ -33,4 +33,4 @@
 	</form:button>
 </form:form>
 
-<jsp:include page="common/footTag.jsp" />
+<jsp:include page="commonFootTag.jsp" />

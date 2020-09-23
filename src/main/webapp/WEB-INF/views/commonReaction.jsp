@@ -10,7 +10,8 @@
 			<span style="font-size: 20px;"> ${param.stampName}</span>
 		</c:if>
 		<c:if test="${isReacted != param.stampId}">
-			<span style="opacity: 50%; font-size: 20px;"> ${param.stampName}</span>
+			<span style="opacity: 50%; font-size: 20px;">
+				${param.stampName}</span>
 		</c:if>
 	</button>
 </form>
