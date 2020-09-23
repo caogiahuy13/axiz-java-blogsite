@@ -2,7 +2,7 @@ package web.entity;
 
 import java.sql.Timestamp;
 
-public class CommentWithMemberInfo {
+public class CommentWithExtraInfo {
 	private Integer commentId;
 	private String content;
 	private Integer articleId;
@@ -11,11 +11,11 @@ public class CommentWithMemberInfo {
 	private Timestamp updatedAt;
 	private String name;
 
-	public CommentWithMemberInfo() {
+	public CommentWithExtraInfo() {
 
 	}
 
-	public CommentWithMemberInfo(Integer commentId, String content, Integer articleId, Integer memberId,
+	public CommentWithExtraInfo(Integer commentId, String content, Integer articleId, Integer memberId,
 			Timestamp createdAt,
 			Timestamp updatedAt,
 			String name) {

@@ -30,7 +30,7 @@
 
 <%
 	HashMap<String, String> rankIcon = new HashMap<>();
-	rankIcon.put("gold", "🥉 ");
+	rankIcon.put("gold", "🥇");
 	rankIcon.put("silver", "🥈 ");
 	rankIcon.put("bronze", "🥉 ");
 	rankIcon.put("normal", " ");

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import web.dao.CommentDao;
 import web.entity.Comment;
-import web.entity.CommentWithMemberInfo;
+import web.entity.CommentWithExtraInfo;
 import web.service.CommentService;
 
 @Service
@@ -33,7 +33,7 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public List<CommentWithMemberInfo> findByArticleId(Integer articleId) {
+	public List<CommentWithExtraInfo> findByArticleId(Integer articleId) {
 		return commentDao.findByArticleId(articleId);
 	}
 

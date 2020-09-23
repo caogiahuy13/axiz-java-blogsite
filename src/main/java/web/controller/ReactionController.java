@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import web.entity.Reaction;
 import web.entity.Member;
+import web.entity.Reaction;
 import web.service.ReactionService;
 import web.util.ScreenName;
 import web.util.SessionUtil;

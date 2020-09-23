@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import web.dao.CommentDao;
 import web.entity.Comment;
-import web.entity.CommentWithMemberInfo;
+import web.entity.CommentWithExtraInfo;
 
 @Repository
 public class CommentDaoImpl implements CommentDao {
@@ -51,14 +51,14 @@ public class CommentDaoImpl implements CommentDao {
 	}
 
 	@Override
-	public List<CommentWithMemberInfo> findByArticleId(Integer articleId) {
+	public List<CommentWithExtraInfo> findByArticleId(Integer articleId) {
 		String sql = "SELECT comment_id, article_id, c.member_id, content, c.created_at, c.updated_at, m.name FROM comments c JOIN members m ON c.member_id = m.member_id WHERE article_id = :articleId";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();
 		paramMap.addValue("articleId", articleId);
 
 		return jdbcTemplate.query(sql, paramMap,
-				new BeanPropertyRowMapper<CommentWithMemberInfo>(CommentWithMemberInfo.class));
+				new BeanPropertyRowMapper<CommentWithExtraInfo>(CommentWithExtraInfo.class));
 	}
 
 	@Override

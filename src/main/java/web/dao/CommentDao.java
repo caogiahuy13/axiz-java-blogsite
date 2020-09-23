@@ -3,7 +3,7 @@ package web.dao;
 import java.util.List;
 
 import web.entity.Comment;
-import web.entity.CommentWithMemberInfo;
+import web.entity.CommentWithExtraInfo;
 
 public interface CommentDao {
 	public int create(Comment comment);
@@ -12,7 +12,7 @@ public interface CommentDao {
 
 	public int delete(Integer commentId);
 
-	public List<CommentWithMemberInfo> findByArticleId(Integer articleId);
+	public List<CommentWithExtraInfo> findByArticleId(Integer articleId);
 
 	public Comment findById(Integer commentId);
 }

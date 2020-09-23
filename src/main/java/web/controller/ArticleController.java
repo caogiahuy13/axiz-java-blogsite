@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import web.entity.Article;
-import web.entity.CommentWithMemberInfo;
+import web.entity.CommentWithExtraInfo;
 import web.entity.Member;
 import web.entity.Reaction;
 import web.entity.View;
@@ -27,6 +27,7 @@ import web.service.CommentService;
 import web.service.MemberService;
 import web.service.ReactionService;
 import web.service.ViewService;
+import web.util.Milestone;
 import web.util.ScreenName;
 import web.util.SessionUtil;
 
@@ -94,13 +95,13 @@ public class ArticleController {
 		}
 
 		int reactionCount = reactionService.countByArticleId(articleId);
-		List<CommentWithMemberInfo> comments = commentService.findByArticleId(articleId);
+		List<CommentWithExtraInfo> comments = commentService.findByArticleId(articleId);
 		List<Member> reactedMembers = memberService.findMembersReactAnArticle(articleId);
 		HashMap<Integer, Integer> reactions = reactionService.countMultipleByArticleId(articleId);
 
 		int articleMemberReactionCount = reactionService.countByMemberId(article.getMemberId());
 		String articleMemberMySpace = "";
-		if (articleMemberReactionCount >= 15) {
+		if (articleMemberReactionCount >= Milestone.GOLD_RANK) {
 			articleMemberMySpace = memberService.findByMemberId(article.getMemberId()).getMySpace();
 		}
 

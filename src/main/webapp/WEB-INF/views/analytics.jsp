@@ -114,9 +114,9 @@
 			<h2 style="display: inline">会員アクセス数</h2>
 		</div>
 		<div style="flex-grow: 0.25; text-align: left">
-			<h2 style="display: inline">: ${loginAccess}</h2>
+			<h2 style="display: inline">: ${loginAccess + anonymousAccess}</h2>
 			<br />
-			<h2 style="display: inline">: ${anonymousAccess }</h2>
+			<h2 style="display: inline">: ${loginAccess }</h2>
 		</div>
 		<div style="flex-grow: 1"></div>
 	</div>
