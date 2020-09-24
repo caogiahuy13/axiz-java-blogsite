@@ -136,8 +136,7 @@
 	<div id="back2Top">
 		<a id="btnToTop" title="Back to top" href="#top">☝先頭</a> <br /> <a
 			title="My page"
-			href="/myPage?id=${sessionScope.currentMember.memberId }">マイ<br />ページ
-		</a>
+			href="/myPage?id=${sessionScope.currentMember.memberId }">マイページ </a>
 
 	</div>
 </div>

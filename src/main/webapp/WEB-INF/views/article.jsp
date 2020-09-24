@@ -27,8 +27,9 @@
 	</div>
 
 	<p style="margin-left: 15%;">
-		<span>${writer.nickname }${rankIcon[writerRank]}</span> <span>＠${writer.loginId }</span>
-		<span><fmt:formatDate type="date" value="${article.createdAt}" /></span>
+		<span><a href="myPage?id=${writer.memberId }">${writer.nickname }</a>${rankIcon[writerRank]}</span>
+		<span>＠${writer.loginId }</span> <span><fmt:formatDate
+				type="date" value="${article.createdAt}" /></span>
 	</p>
 
 	<div style="margin: 10px" class="center">
@@ -46,7 +47,7 @@
 				</c:forEach>
 				<span class="popuptext" id="myPopup"> <c:forEach var="member"
 						items="${reactedMembers}">
-						<span>${member.name}</span>
+						<span>${member.nickname}</span>
 						<br>
 					</c:forEach>
 				</span>

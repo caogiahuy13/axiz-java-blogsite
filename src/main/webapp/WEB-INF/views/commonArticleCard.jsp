@@ -12,7 +12,7 @@
 			<c:if test="${article.trophy eq true }">
 				<span>🏆</span>
 			</c:if>
-			<br> <i style="font-size: 14px;"> @${article.name }&nbsp
+			<br> <i style="font-size: 14px;"> @${article.nickname }&nbsp
 				${rankIcon[article.memberRank]}&nbsp <fmt:formatDate type="date"
 					value="${article.createdAt}" />
 			</i>

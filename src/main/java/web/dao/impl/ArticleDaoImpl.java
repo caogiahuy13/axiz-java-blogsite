@@ -18,7 +18,7 @@ public class ArticleDaoImpl implements ArticleDao {
 	private static final String SELECT_BASE = "SELECT * FROM articles ";
 
 	private static final String ARTICLES_JOIN_MEMBERS_JOIN_REACTIONS_TABLE = " SELECT "
-			+ "	x.*, y.name, y.member_reaction_count "
+			+ "	x.*, y.nickname, y.member_reaction_count "
 			+ " FROM ( "
 			+ "		SELECT a.*, COUNT(r.reaction_id) article_reaction_count "
 			+ "		FROM articles a "
@@ -26,7 +26,7 @@ public class ArticleDaoImpl implements ArticleDao {
 			+ "		GROUP BY a.article_id "
 			+ " ) AS x "
 			+ " JOIN ( "
-			+ "		SELECT m.member_id, m.name, COUNT(r.reaction_id) member_reaction_count "
+			+ "		SELECT m.member_id, m.nickname, COUNT(r.reaction_id) member_reaction_count "
 			+ "		FROM members m  "
 			+ "		LEFT JOIN articles a ON a.member_id = m.member_id "
 			+ "		LEFT JOIN reactions r ON r.article_id = a.article_id "
@@ -156,6 +156,10 @@ public class ArticleDaoImpl implements ArticleDao {
 
 		for (int i = 0; i < whereStr.size(); i++) {
 			sql += " AND " + whereStr.get(i) + " ";
+		}
+
+		if (sortBy == null) {
+			sql += " ORDER BY a.created_at DESC ";
 		}
 
 		if (sortBy != null && !sortBy.isBlank()) {

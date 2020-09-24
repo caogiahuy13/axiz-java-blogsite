@@ -79,7 +79,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public List<Member> findMembersReactAnArticle(Integer articleId) {
-		String sql = "SELECT members.member_id, login_id, name, password, members.created_at, members.updated_at FROM members "
+		String sql = "SELECT members.member_id, login_id, name, nickname, password, members.created_at, members.updated_at FROM members "
 				+ "JOIN reactions ON members.member_id = reactions.member_id WHERE reactions.article_id = :articleId";
 
 		MapSqlParameterSource paramMap = new MapSqlParameterSource();

@@ -7,7 +7,7 @@ public class ArticleWithExtraInfo extends Article {
 
 	private Integer articleReactionCount;
 
-	private String name;
+	private String nickname;
 
 	private Integer memberReactionCount;
 
@@ -35,12 +35,12 @@ public class ArticleWithExtraInfo extends Article {
 		this.articleReactionCount = articleReactionCount;
 	}
 
-	public String getName() {
-		return name;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public Integer getMemberReactionCount() {

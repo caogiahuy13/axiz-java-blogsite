@@ -12,11 +12,13 @@
 	<h2>
 		<table align="center" style="border: none;">
 			<tr style="border: none;">
-				<c:if test="${empty sessionScope.currentMember }">
+				<c:if
+					test="${empty sessionScope.currentMember || (not empty sessionScope.currentMember && sessionScope.currentMember.memberId != member.memberId )  }">
 					<td style="border: none; width: 1000px;" align="center"><strong>${member.nickname }
 							${rankIcon[memberRankName]} さんのマイページ</strong></td>
 				</c:if>
-				<c:if test="${not empty sessionScope.currentMember }">
+				<c:if
+					test="${not empty sessionScope.currentMember && sessionScope.currentMember.memberId == member.memberId }">
 					<td style="border: none; width: 1000px;" align="right"><strong>${member.nickname }
 							${rankIcon[memberRankName]}さんのマイページ</strong></td>
 					<td style="border: none; width: 200px;" align="right">
@@ -60,7 +62,7 @@
 			<td colspan="4" align="left">${member.introduction }</td>
 		</tr>
 		<c:if
-			test="${not empty sessionScope.currentMember && sessionScope.totalReactions >= goldMilestone }">
+			test="${not empty sessionScope.currentMember && sessionScope.currentMember.memberId == member.memberId && sessionScope.totalReactions >= goldMilestone }">
 			<tr>
 				<td rowspan="2"><strong><fmt:message
 							key="form.lbl.mySpace" /></strong></td>
@@ -69,7 +71,8 @@
 		</c:if>
 	</table>
 
-	<c:if test="${not empty sessionScope.currentMember }">
+	<c:if
+		test="${not empty sessionScope.currentMember && sessionScope.currentMember.memberId == member.memberId }">
 		<c:if test="${sessionScope.totalReactions >= silverMilestone }">
 			<p>
 			<form action="analytics">
