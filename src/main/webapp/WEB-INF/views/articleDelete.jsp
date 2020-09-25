@@ -34,7 +34,10 @@
 	<c:if test="${not empty msg}">
 		<div class="center"
 			style="margin-left: 2%; font-size: 24px; color: red;">${msg }</div>
+
 	</c:if>
+
+
 
 	<form action="/deleteArticle" method="post" style="margin-left: 70%;">
 		<input type="hidden" name="articleId" value="${article.articleId}">

@@ -205,9 +205,36 @@ public class ArticleController {
 		int writerReactionCount = reactionService.countByMemberId(writer.getMemberId());
 		String writerRank = RankName.getMemberRank(writerReactionCount);
 
+		int articleReactionCount = reactionService.countByArticleId(article.getArticleId());
+		boolean isDownRank = false;
+		int writerReactionCountAfterDelete = writerReactionCount - articleReactionCount;
+		String downRank = "";
+		int currentMilestone = 0;
+
+		if (writerRank.equals(RankName.GOLD)) {
+			downRank = "シルバー";
+			currentMilestone = Milestone.GOLD_RANK;
+		} else if (writerRank.equals(RankName.SILVER)) {
+			downRank = "ブロンズ";
+			currentMilestone = Milestone.SILVER_RANK;
+		} else if (writerRank.equals(RankName.SILVER)) {
+			downRank = "ノーマル";
+			currentMilestone = Milestone.BRONZE_RANK;
+		}
+
+		if (currentMilestone != 0 && writerReactionCount >= currentMilestone
+				&& writerReactionCountAfterDelete < currentMilestone) {
+			isDownRank = true;
+		}
+
 		model.addAttribute("article", article);
 		model.addAttribute("writer", writer);
 		model.addAttribute("writerRank", writerRank);
+
+		if (isDownRank) {
+			model.addAttribute("msg", String.format("※この記事を削除すると累計のお気に入り数が%dになるため、 %s会員になりますがよろしいですか？",
+					writerReactionCountAfterDelete, downRank));
+		}
 
 		return ScreenName.ARTICLE_DELETE;
 	}
